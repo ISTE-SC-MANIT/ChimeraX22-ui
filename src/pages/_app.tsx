@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               '"Segoe UI Symbol"',
           ].join(','),
       },
-      props: themeProps,
+      // props: themeProps,
       palette: {
         primary: {
             main: defaultPrimary,
@@ -41,6 +41,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
        <ThemeProvider theme={currentTheme}>
+            <themeContext.Provider
+                value={{
+                    mode: currentTheme.palette.mode,
+                    primary: currentTheme.palette.primary.main,
+                    secondary: currentTheme.palette.secondary.main,
+                    toggleMode: () => toggleMode(setCurrentTheme),
+                    updateColors: () => {
+                        /* Do nothing */
+                    },
+                }}>
+                        </themeContext.Provider>
       <Component {...pageProps} />
      </ThemeProvider>
      </ApolloProvider>

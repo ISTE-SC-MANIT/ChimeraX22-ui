@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createStyles, Theme, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { withStyles, makeStyles } from '@mui/material/styles';
+import { withStyles, makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Fade, Link, Grid , useMediaQuery } from '@mui/material';
@@ -11,6 +11,7 @@ import NavbarHeader from '../components/navbarheader';
 import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import { url } from 'inspector';
+import { useContext } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -99,18 +100,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// const Btn = withStyles((theme) => ({
-//   root: {
-//     color: theme.palette.getContrastText('#3997F5'),
-//     backgroundColor: '#3997F5',
-//     border: '2px solid white',
-//     borderRadius: '25px',
-//     padding: '10px 20px',
-//     '&:hover': {
-//       backgroundColor: '#1976D2',
-//     },
-//   },
-// }))(Button);
+const Btn = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText('#3997F5'),
+    backgroundColor: '#3997F5',
+    border: '2px solid white',
+    borderRadius: '25px',
+    padding: '10px 20px',
+    '&:hover': {
+      backgroundColor: '#1976D2',
+    },
+  },
+}))(Button);
 
 
 

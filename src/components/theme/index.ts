@@ -6,7 +6,7 @@ import {
 } from "@mui/material/styles";
 import { blue, orange } from "@mui/material/colors";
 import React from "react";
-export const themeProps: ThemeOptions['props'] = {
+export const themeProps: ThemeOptions["props"] = {
   MuiTextField: {
     variant: 'outlined',
     margin: 'dense',
@@ -44,7 +44,7 @@ export function toggleMode(
 ): void {
   setTheme((oldTheme) => {
     return createTheme({
-      props: themeProps,
+      // props: themeProps,
       palette: {
         primary: {
           main: oldTheme.palette.primary.main,
