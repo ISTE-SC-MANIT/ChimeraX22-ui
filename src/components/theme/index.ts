@@ -17,7 +17,7 @@ export const defaultPrimary = blue[500];
 export const defaultSecondary = orange[500];
 export const defaultMode = "light";
 export interface ThemeContext {
-  mode: ThemeOptions["palette"]["type"];
+  mode: ThemeOptions["palette"]["props"];
   primary: SimplePaletteColorOptions["main"];
   secondary: SimplePaletteColorOptions["main"];
   toggleMode: () => void;
@@ -52,7 +52,7 @@ export function toggleMode(
         secondary: {
           main: oldTheme.palette.secondary.main,
         },
-        type: oldTheme.palette.type === 'dark' ? 'light' : 'dark',
+        mode: oldTheme.palette.mode === 'dark' ? 'light' : 'dark',
       },
       typography: {
         fontFamily: [
