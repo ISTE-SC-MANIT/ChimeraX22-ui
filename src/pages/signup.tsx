@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import { Theme, useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Image from 'next/image'
 import TextField from '@mui/material/TextField';
@@ -10,7 +11,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { withStyles, makeStyles, useTheme } from '@mui/material/styles';
+import { withStyles, makeStyles } from '@mui/styles';
 import * as yup from "yup";
 import axios from "axios"
 import { authenticate } from '../components/utils';
@@ -36,7 +37,7 @@ const LoginButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
   },
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url('/Vector2.png')`,
     backgroundRepeat: 'no-repeat',
     backgroundColor: 
-      theme.palette.type === 'light' ? 'white' : theme.palette.grey[800],
+      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('xs')]: {
       backgroundColor:
-        theme.palette.type === 'light' ? 'white' : theme.palette.grey[800],
+        theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     },
   },
   paper: {
@@ -309,7 +310,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                   Registrations are closed now.
                 </Typography>
               </Box>
-              {/* 
+              
               <Box mt={5}>
                 {' '}
                 <Typography align="center" variant="subtitle1">
@@ -317,7 +318,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                 </Typography>
               </Box>
               <Box>
-                <Grid container justify="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center">
                   <GoogleLogin
                     clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
                     onSuccess={responseGoogle}
@@ -335,7 +336,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                     )}
                   ></GoogleLogin>
                 </Grid>
-              </Box> */}
+              </Box>
             </Form>
           </Formik>
           {/* </form> */}
@@ -349,7 +350,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
           </Typography>
         </Box>
         <Box className={classes.loginBtn}>
-          <Grid container justify="center" alignItems="center">
+          <Grid container justifyContent="center" alignItems="center">
             <LoginButton onClick={() => router.push('/login')}>Log In</LoginButton>
           </Grid>
         </Box>
