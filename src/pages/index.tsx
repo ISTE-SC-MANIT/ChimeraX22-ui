@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { createStyles, Theme, useTheme } from '@mui/material/styles';
+import {  Theme, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { withStyles, makeStyles } from '@mui/styles';
+import { withStyles, makeStyles, createStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Fade, Link, Grid , useMediaQuery } from '@mui/material';
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       flexDirection: 'column',
     },
-  })
+  }),
 );
 
 const Btn = withStyles((theme) => ({
@@ -162,6 +162,7 @@ const Landing: React.FC = () => {
                   : '/ChimeraX-logo-whitebg.svg'
               }
               width="256px"
+              height="100%"
               alt="logo"
               onClick={() => router.push('/')}
             />
@@ -248,6 +249,7 @@ const Landing: React.FC = () => {
                       src={theme.palette.mode === 'light' ? '/first.svg' : '/first-white.svg'}
                       alt="first"
                       width="70px"
+                      height="100%"
                     />
                     <Typography variant="h6">
                       <b>₹ 15,000</b>
@@ -259,6 +261,7 @@ const Landing: React.FC = () => {
                     <Image
                       src={theme.palette.mode=== 'light' ? '/second.svg' : '/second-white.svg'}
                       alt="first"
+                      height="100%"
                       width="70px"
                     />
                     <Typography variant="h6">
@@ -272,6 +275,7 @@ const Landing: React.FC = () => {
                       src={theme.palette.mode === 'light' ? '/third.svg' : '/third-white.svg'}
                       alt="first"
                       width="70px"
+                      height="100%"
                     />
                     <Typography variant="h6">
                       <b>₹ 5,000</b>
