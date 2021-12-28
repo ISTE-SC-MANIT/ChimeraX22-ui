@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React from "react";
 // import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 // import {
@@ -226,3 +227,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />;
 }
 export default MyApp;
+=======
+import type { AppProps } from 'next/app';
+import { ApolloProvider } from '@apollo/client';
+import { client } from '../lib/apollo';
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <ApolloProvider client={client}>
+      <Component {...pageProps} />
+    </ApolloProvider>
+  );
+}
+
+export default MyApp;
+>>>>>>> 72ef46eae9936127b1e7faae6634e6acfa1078df
