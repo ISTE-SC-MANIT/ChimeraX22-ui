@@ -4,6 +4,16 @@ import { ApolloProvider } from '@apollo/client';
 import { client } from '../lib/apollo';
 import { ThemeProvider , createTheme } from "@mui/material/styles";
 import { themeProps, defaultPrimary, defaultSecondary, defaultMode, themeContext, toggleMode } from "../components/theme";
+
+
+export interface ComponentProps {
+  environment: Environment
+  viewer: AppViewerQueryResponse["viewer"]
+  refetch: () => void,
+  setSuccessMessage: (message: string) => void,
+  setErrorMessage: (message: string) => void
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
 
   const [currentTheme, setCurrentTheme] = React.useState(() =>
@@ -37,6 +47,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
   })
 );
+
+
 
   return (
     <ApolloProvider client={client}>

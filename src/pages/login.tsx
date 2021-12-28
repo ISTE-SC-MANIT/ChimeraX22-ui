@@ -14,14 +14,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { GoogleLogin, GoogleLoginResponse } from "react-google-login";
 import axios from "axios"
-import { withStyles, makeStyles, useTheme } from '@mui/material/styles';
+import { withStyles, makeStyles } from '@mui/styles';
+import{useTheme} from '@mui/material/styles'
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
 import { authenticate } from '../components/utils';
-import { InputAdornment, IconButton } from '@mui/material';
+import { InputAdornment, IconButton, Theme } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import { ComponentProps } from './_app';
+import  ComponentProps  from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -39,14 +40,14 @@ const SigninButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme:Theme) => ({
   root: {
     height: '100vh',
   },
   image: {
     backgroundImage: `url('/vector.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor: theme.palette.type === 'light' ? 'white' : theme.palette.grey[800],
+    backgroundColor: theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
@@ -258,7 +259,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
             />
           </Box>
           <Box className={classes.signinBtn}>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
               <SigninButton
                 onClick={() => {
                   router.push('/signin');
@@ -268,7 +269,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
               </SigninButton>
             </Grid>
           </Box>
-          <VectorImg classes={classes} />
+          {/* <VectorImg classes={classes} /> */}
         </Grid>
         <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
           <div className={classes.paper}>
@@ -371,7 +372,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
                   </Typography>
                 </Box>
                 <Box>
-                  <Grid container justify="center" alignItems="center">
+                  <Grid container justifyContent="center" alignItems="center">
                     <GoogleLogin
                       clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
                       onSuccess={responseGoogle}
