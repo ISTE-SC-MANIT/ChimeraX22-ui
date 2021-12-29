@@ -15,9 +15,9 @@ import { viewer } from '../lib/queries/viewer';
 
 export interface ComponentProps {
   viewer: viewer_viewer;
-  refetch: () => void;
-  setSuccessMessage: (message: string) => void;
-  setErrorMessage: (message: string) => void;
+  // refetch: () => void;
+  // setSuccessMessage: (message: string) => void;
+  // setErrorMessage: (message: string) => void;
 }
 
 const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWNiNDllMjA5MmU2OWI5YmNmMWJlZjMiLCJpYXQiOjE2NDA3MTI2NzQsImV4cCI6MTY0MTMxNzQ3NH0.AoPn1dNacdtSLUfQmWzBF3ho_g6uEmHHYRX8aKaJ7KY`;
@@ -34,7 +34,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   /* Page loading animation */
   const [routeChange, setRouteChange] = React.useState<boolean>(false);
-  // const [loading, setLoading] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [viewerData, setViewerData] = React.useState<viewer_viewer | null>();
 
   const isProtectedRoute = React.useMemo(() => {
     return first === 'dashboard';
@@ -57,7 +58,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     [mode]
   );
 
-  const { data, loading, error } = useQuery<viewer_viewer>(viewer); // goes into return
+  const viewerQuery = useQuery<viewer_viewer>(viewer, { client: client });
 
   return (
     <ApolloProvider client={client}>
@@ -68,24 +69,19 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <ThemeProvider theme={theme}>
           {routeChange && <h1>loading</h1>}
-
-          {
-            /* {!isProtectedRoute ? (
+          {!isProtectedRoute ? (
+            <Component {...pageProps} />
+          ) : viewerQuery.loading ? (
             <>
-              <Component {...pageProps} />
+              <h1>Loading</h1>
             </>
-          ) :*/ data && isProtectedRoute ? (
-              <>
-                <Component {...pageProps} viewer={data} />
-              </>
-            ) : loading ? (
-              <>
-                <h1>Loading</h1>
-              </>
-            ) : (
-              <h1>Error </h1>
-            )
-          }
+          ) : viewerQuery.data ? (
+            <Component {...pageProps} viewer={viewerQuery.data.viewer}/>
+          ) : (
+            <>
+              <h1>Error</h1>
+            </>
+          )}
         </ThemeProvider>
       </ThemeContext.Provider>
     </ApolloProvider>
