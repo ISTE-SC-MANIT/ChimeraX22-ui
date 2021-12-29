@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { InputAdornment, IconButton } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import { ComponentProps } from './_app';
+import ComponentProps  from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   image: {
     backgroundImage: `url('/Vector2.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor: 
+    backgroundColor:
       theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -196,7 +196,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
         });
       })
       .catch((error) => {
-        setErrorMessage(error);
+        // setErrorMessage(error);
         return error;
       });
   };
@@ -310,7 +310,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                   Registrations are closed now.
                 </Typography>
               </Box>
-              
+
               <Box mt={5}>
                 {' '}
                 <Typography align="center" variant="subtitle1">

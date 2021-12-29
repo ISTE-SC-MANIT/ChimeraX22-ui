@@ -182,7 +182,7 @@ const Landing: React.FC = () => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => router.push('/signin')}
+              onClick={() => router.push('/signup')}
               className={classes.menuBtn}
             >
               Sign up

@@ -262,7 +262,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
             <Grid container justifyContent="center" alignItems="center">
               <SigninButton
                 onClick={() => {
-                  router.push('/signin');
+                  router.push('/signup');
                 }}
               >
                 Sign Up
