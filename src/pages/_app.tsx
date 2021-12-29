@@ -1,72 +1,94 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import { ApolloProvider } from '@apollo/client';
-import { client } from '../lib/apollo';
-import { ThemeProvider , createTheme } from "@mui/material/styles";
-import { themeProps, defaultPrimary, defaultSecondary, defaultMode, themeContext, toggleMode } from "../components/theme";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  useQuery,
+} from '@apollo/client';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeContext, toggleMode } from '../components/theme';
+import { useRouter } from 'next/router';
+import { viewer_viewer } from '../__generated__/viewer';
+import { viewer } from '../lib/queries/viewer';
 
 export interface ComponentProps {
-  environment: Environment
-  viewer: AppViewerQueryResponse["viewer"]
-  refetch: () => void,
-  setSuccessMessage: (message: string) => void,
-  setErrorMessage: (message: string) => void
+  viewer: viewer_viewer;
+  refetch: () => void;
+  setSuccessMessage: (message: string) => void;
+  setErrorMessage: (message: string) => void;
 }
 
+const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWNiNDllMjA5MmU2OWI5YmNmMWJlZjMiLCJpYXQiOjE2NDA3MTI2NzQsImV4cCI6MTY0MTMxNzQ3NH0.AoPn1dNacdtSLUfQmWzBF3ho_g6uEmHHYRX8aKaJ7KY`;
+const client = new ApolloClient({
+  uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
+  headers: { authorization: token },
+  cache: new InMemoryCache(),
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const paths = router.route.split('/');
+  const first = paths[1];
 
-  const [currentTheme, setCurrentTheme] = React.useState(() =>
-  createTheme({
-      typography: {
-          fontFamily: [
-              'Nunito',
-              'Montserrat',
-              'Roboto',
-              'sans-serif',
-              'Arial',
-              '-apple-system',
-              'BlinkMacSystemFont',
-              '"Segoe UI"',
-              'Roboto',
-              '"Helvetica Neue"',
-              '"Apple Color Emoji"',
-              '"Segoe UI Emoji"',
-              '"Segoe UI Symbol"',
-          ].join(','),
-      },
-      // props: themeProps,
-      palette: {
-        primary: {
-            main: defaultPrimary,
-          },
-          secondary: {
-              main: defaultSecondary,
-          },
-          mode: defaultMode,
-      },
-  })
-);
+  /* Page loading animation */
+  const [routeChange, setRouteChange] = React.useState<boolean>(false);
+  // const [loading, setLoading] = React.useState<boolean>(false);
 
+  const isProtectedRoute = React.useMemo(() => {
+    return first === 'dashboard';
+  }, [first]);
 
+  // Router.events.on('routeChangeStart', () => {
+  //   setRouteChange(true);
+  // });
+  // Router.events.on('routeChangeComplete', () => setRouteChange(false));
+  // Router.events.on('routeChangeError', () => setRouteChange(false));
+
+  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
+  );
+
+  const { data, loading, error } = useQuery<viewer_viewer>(viewer); // goes into return
 
   return (
     <ApolloProvider client={client}>
-       <ThemeProvider theme={currentTheme}>
-            <themeContext.Provider
-                value={{
-                    mode: currentTheme.palette.mode,
-                    primary: currentTheme.palette.primary.main,
-                    secondary: currentTheme.palette.secondary.main,
-                    toggleMode: () => toggleMode(setCurrentTheme),
-                    updateColors: () => {
-                        /* Do nothing */
-                    },
-                }}>
-                        </themeContext.Provider>
-      <Component {...pageProps} />
-     </ThemeProvider>
-     </ApolloProvider>
+      <ThemeContext.Provider
+        value={{
+          toggleMode: () => toggleMode(setMode),
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          {routeChange && <h1>loading</h1>}
+
+          {
+            /* {!isProtectedRoute ? (
+            <>
+              <Component {...pageProps} />
+            </>
+          ) :*/ data && isProtectedRoute ? (
+              <>
+                <Component {...pageProps} viewer={data} />
+              </>
+            ) : loading ? (
+              <>
+                <h1>Loading</h1>
+              </>
+            ) : (
+              <h1>Error </h1>
+            )
+          }
+        </ThemeProvider>
+      </ThemeContext.Provider>
+    </ApolloProvider>
   );
 }
 

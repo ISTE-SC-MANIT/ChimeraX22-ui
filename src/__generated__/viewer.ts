@@ -6,10 +6,10 @@
 import { Role, Step } from "./globalTypes";
 
 // ====================================================
-// GraphQL query operation: AppViewerQuery
+// GraphQL query operation: viewer
 // ====================================================
 
-export interface AppViewerQuery_viewer {
+export interface viewer_viewer {
   __typename: "User";
   _id: string | null;
   name: string;
@@ -23,6 +23,6 @@ export interface AppViewerQuery_viewer {
   city: string;
 }
 
-export interface AppViewerQuery {
-  viewer: AppViewerQuery_viewer;
+export interface viewer {
+  viewer: viewer_viewer;
 }

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-const AppViewerQuery = gql`
-  query AppViewerQuery {
+export const viewer = gql`
+  query viewer {
     viewer {
       _id
       name
