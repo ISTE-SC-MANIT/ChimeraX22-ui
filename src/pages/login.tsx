@@ -269,7 +269,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
               </SigninButton>
             </Grid>
           </Box>
-          {/* <VectorImg classes={classes} /> */}
+          <VectorImg classes={classes} />
         </Grid>
         <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
           <div className={classes.paper}>
@@ -393,11 +393,11 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
                     {/* <Grid item>
                       
                     </Grid> */}
-                    {/* <Grid item>
+                    <Grid item>
                       <IconButton>
                         <img src="/fb-logo.png" alt="fb" height={60} className={classes.logoIcon} />
                       </IconButton>
-                    </Grid> */}
+                    </Grid>
                   </Grid>
                 </Box>
               </Form>
