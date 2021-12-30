@@ -27,6 +27,14 @@ export enum Step {
   TEST = "TEST",
 }
 
+export interface UserInput {
+  name?: string | null;
+  phone?: string | null;
+  year?: number | null;
+  city?: string | null;
+  college?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

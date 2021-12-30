@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Image from 'next/image'
-import * as yup from "yup";
+import Image from 'next/image';
+import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,20 +12,19 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { GoogleLogin, GoogleLoginResponse } from "react-google-login";
-import axios from "axios"
+import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
+import axios from 'axios';
 import { withStyles, makeStyles } from '@mui/styles';
-import{useTheme} from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles';
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
 import { authenticate } from '../components/utils';
 import { InputAdornment, IconButton, Theme } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import  ComponentProps  from './_app';
+import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 
 const SigninButton = withStyles((theme) => ({
   root: {
@@ -40,14 +39,15 @@ const SigninButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const useStyles = makeStyles((theme:Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
   },
   image: {
     backgroundImage: `url('/vector.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor: theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    backgroundColor:
+      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
@@ -124,15 +124,15 @@ const useStyles = makeStyles((theme:Theme) => ({
     cursor: 'pointer',
   },
 }));
-const VectorImg = (classes) => {
+const VectorImg = (classes: any) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   if (mobile) {
     return (
       <Box className={classes.vector}>
         <Image
-          src="/login.png"
-          alt="logo"
+          src='/login.png'
+          alt='logo'
           className={classes.imageV}
           width={window.innerWidth}
           height={window.innerWidth / 1.45}
@@ -142,15 +142,24 @@ const VectorImg = (classes) => {
   }
   return (
     <Box className={classes.vector}>
-      <Image src="/login.png" alt="logo" className={classes.imageV} width={500} height={345} />
+      <Image
+        src='/login.png'
+        alt='logo'
+        className={classes.imageV}
+        width={500}
+        height={345}
+      />
     </Box>
   );
 };
 
-const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }) => {
+const Login: React.FC<ComponentProps> = ({
+  setErrorMessage,
+  setSuccessMessage,
+}) => {
   const classes = useStyles();
-  const [openPass, setOpenPass] = React.useState(false)
-  const [pending, setPending] = React.useState(false)
+  const [openPass, setOpenPass] = React.useState(false);
+  const [pending, setPending] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
   const router = useRouter();
 
@@ -158,19 +167,19 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
     setVisible(!visible);
   };
   const initialValues = {
-    password: "",
-    email: "",
-  }
+    password: '',
+    email: '',
+  };
 
   const validationSchema = yup.object({
-
     email: yup
       .string()
-      .email("Provide a valid Email ID")
-      .required("Email cannot be empty"),
-    password: yup.string().min(6, "Password must be minimum of 6 characters").required("Password cannot be empty")
-
-
+      .email('Provide a valid Email ID')
+      .required('Email cannot be empty'),
+    password: yup
+      .string()
+      .min(6, 'Password must be minimum of 6 characters')
+      .required('Password cannot be empty'),
   });
 
   const getStep = (step: 'REGISTER' | 'CHOOSE_TEAM' | 'PAYMENT' | 'TEST') => {
@@ -190,51 +199,52 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
     }
   };
 
-  const sendGoogleToken = (tokenId) => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/googlelogin`, {
-        idToken: tokenId,
-      })
-      .then((response) => {
-        authenticate(response, () => {
-          router.push(getStep(response.data.user.step))
-        })
+  // const sendGoogleToken = (tokenId) => {
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/googlelogin`, {
+  //       idToken: tokenId,
+  //     })
+  //     .then((response) => {
+  //       authenticate(response, () => {
+  //         router.push(getStep(response.data.user.step))
+  //       })
 
-      })
-      .catch((error) => {
-        // console.log(error)
-        setErrorMessage("You might have been singed up from email and password")
-        // return error;
-      });
-  };
+  //     })
+  //     .catch((error) => {
+  //       // console.log(error)
+  //       setErrorMessage("You might have been singed up from email and password")
+  //       // return error;
+  //     });
+  // };
 
-  const responseGoogle = (response: GoogleLoginResponse) => {
-  
-    if (Boolean(response.tokenId)){
-      sendGoogleToken(response.tokenId);
-    }
-    
-  }
+  // const responseGoogle = (response: GoogleLoginResponse) => {
 
+  //   if (Boolean(response.tokenId)){
+  //     sendGoogleToken(response.tokenId);
+  //   }
+
+  // }
 
   const handleLocalLogin = (values: typeof initialValues) => {
-    setPending(true)
-    axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/login`, { ...values }).then((response) => {
-      console.log(response)
+    setPending(true);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/login`, { ...values })
+      .then((response) => {
+        console.log(response);
 
-      authenticate(response, () => {
-        router.push(getStep(response.data.user.step))
+        authenticate(response, () => {
+          router.push(getStep(response.data.user.step));
+        });
+        setSuccessMessage('Successfully logged in');
+        setPending(false);
       })
-      setSuccessMessage("Successfully logged in")
-      setPending(false)
-    }).catch((error) => {
-      // console.log(error.response.data)
-      setErrorMessage(error.response.data.errors)
-      setPending(false)
-      return error;
-    })
+      .catch((error) => {
+        console.log(error.response.data);
+        setErrorMessage(error.response.data.errors);
+        setPending(false);
+        return error;
+      });
   };
-
 
   return (
     <>
@@ -246,20 +256,20 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
           setErrorMessage={setErrorMessage}
         />
       )}
-      <Grid container component="main" className={classes.root}>
+      <Grid container component='main' className={classes.root}>
         <Grid item xs={false} sm={6} className={classes.image}>
           <Box className={classes.logo}>
             <Image
               className={classes.link}
-              src="/ChimeraX-logo-white.svg"
-              alt="logo"
+              src='/ChimeraX-logo-white.svg'
+              alt='logo'
               width={400}
               height={104}
               onClick={() => router.push('/')}
             />
           </Box>
           <Box className={classes.signinBtn}>
-            <Grid container justifyContent="center" alignItems="center">
+            <Grid container justifyContent='center' alignItems='center'>
               <SigninButton
                 onClick={() => {
                   router.push('/signup');
@@ -276,7 +286,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h2">
+            <Typography component='h1' variant='h2'>
               Log In
             </Typography>
             {/* <form className={classes.form} noValidate> */}
@@ -285,43 +295,49 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
               validationSchema={validationSchema}
               initialValues={initialValues}
             >
-              <Form aria-label="Sign up form" id="sign-up-form">
-                <Field name="email">
-                  {({ field, meta }: FieldProps<typeof initialValues['email']>) => (
+              <Form aria-label='Sign up form' id='sign-up-form'>
+                <Field name='email'>
+                  {({
+                    field,
+                    meta,
+                  }: FieldProps<typeof initialValues['email']>) => (
                     <TextField
                       fullWidth
-                      id="name-input"
-                      label="Email Address"
+                      id='name-input'
+                      label='Email Address'
                       required
                       {...field}
                       error={!!(meta.touched && meta.error)}
                       helperText={meta.touched ? meta.error : ''}
-                      variant="outlined"
+                      variant='outlined'
                       // className={classes.field}
-                      margin="normal"
+                      margin='normal'
                     />
                   )}
                 </Field>
-                <Field name="password" className={classes.field}>
-                  {({ field, meta }: FieldProps<typeof initialValues['password']>) => (
+                <Field name='password' className={classes.field}>
+                  {({
+                    field,
+                    meta,
+                  }: FieldProps<typeof initialValues['password']>) => (
                     <TextField
                       fullWidth
-                      id="password-input"
-                      label="Password"
+                      id='password-input'
+                      label='Password'
                       required
                       {...field}
                       error={!!(meta.touched && meta.error)}
                       helperText={meta.touched ? meta.error : ''}
-                      variant="outlined"
-                      margin="normal"
+                      variant='outlined'
+                      margin='normal'
                       type={visible ? 'text' : 'password'}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">
+                          <InputAdornment position='end'>
                             <IconButton
-                              aria-label="toggle password visibility"
+                              aria-label='toggle password visibility'
                               onClick={handleShowPassword}
-                              edge="end"
+                              edge='end'
                             >
                               {visible ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
@@ -333,15 +349,15 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
                 </Field>
 
                 <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
+                  control={<Checkbox value='remember' color='primary' />}
+                  label='Remember me'
                 />
                 <Button
-                  type="submit"
+                  type='submit'
                   fullWidth
-                  variant="contained"
+                  variant='contained'
                   className={classes.submit}
-                  color="primary"
+                  color='primary'
                 >
                   Log In
                 </Button>
@@ -349,7 +365,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
                   <Grid item xs>
                     <Link
                       onClick={() => setOpenPass(true)}
-                      variant="body2"
+                      variant='body2'
                       className={classes.link}
                     >
                       Forget password?
@@ -358,7 +374,7 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
                   <Grid item>
                     <Link
                       onClick={() => router.push('/signin')}
-                      variant="body2"
+                      variant='body2'
                       className={classes.link}
                     >
                       {"Don't have an account? Sign Up"}
@@ -367,22 +383,25 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
                 </Grid>
                 <Box mt={5}>
                   {' '}
-                  <Typography align="center" variant="subtitle1">
+                  <Typography align='center' variant='subtitle1'>
                     Or Log in with other social platforms
                   </Typography>
                 </Box>
                 <Box>
-                  <Grid container justifyContent="center" alignItems="center">
+                  <Grid container justifyContent='center' alignItems='center'>
                     <GoogleLogin
                       clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
-                      onSuccess={responseGoogle}
-                      onFailure={responseGoogle}
+                      // onSuccess={responseGoogle}
+                      // onFailure={responseGoogle}
                       cookiePolicy={'single_host_origin'}
                       render={(renderProps) => (
-                        <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                        <IconButton
+                          onClick={renderProps.onClick}
+                          disabled={renderProps.disabled}
+                        >
                           <img
-                            src="/google-logo.png"
-                            alt="google"
+                            src='/google-logo.png'
+                            alt='google'
                             height={60}
                             className={classes.logoIcon}
                           />
@@ -408,6 +427,6 @@ const Login: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage })
       </Grid>
     </>
   );
-}
+};
 
-export default Login
+export default Login;
