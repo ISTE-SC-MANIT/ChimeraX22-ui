@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {  Theme, useTheme } from '@mui/material/styles';
+import { Theme, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { withStyles, makeStyles, createStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Box, Fade, Link, Grid , useMediaQuery } from '@mui/material';
+import { Box, Fade, Link, Grid, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import NavbarHeader from '../components/navbarheader';
 import ThemeToggleButton from '../components/theme/modeToggle';
@@ -168,11 +168,11 @@ const Landing: React.FC = () => {
             />
           </Box>
           <Box display="flex" alignItems="center" justifyContent="center">
-            <Fade in={true}>
+            {/* <Fade in={true}>
               <Box className={classes.darkTheme}>
                 <ThemeToggleButton />
               </Box>
-            </Fade>
+            </Fade> */}
             <Button
               variant="contained"
               onClick={() => router.push('/login')}
@@ -259,7 +259,7 @@ const Landing: React.FC = () => {
                 <Grid item xs={4} container justifyContent="center" alignItems="center">
                   <Box className={classes.flexColumn}>
                     <Image
-                      src={theme.palette.mode=== 'light' ? '/second.svg' : '/second-white.svg'}
+                      src={theme.palette.mode === 'light' ? '/second.svg' : '/second-white.svg'}
                       alt="first"
                       height="100%"
                       width="70px"
@@ -269,7 +269,7 @@ const Landing: React.FC = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                <Grid  item xs={4} container justifyContent="center" alignItems="center">
+                <Grid item xs={4} container justifyContent="center" alignItems="center">
                   <Box className={classes.flexColumn}>
                     <Image
                       src={theme.palette.mode === 'light' ? '/third.svg' : '/third-white.svg'}
@@ -295,7 +295,7 @@ const Landing: React.FC = () => {
           </Grid>
         </Grid>
       </div>
-  
+
     </>
   );
 }

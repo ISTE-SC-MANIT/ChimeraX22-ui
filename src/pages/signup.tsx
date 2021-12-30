@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { InputAdornment, IconButton } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import ComponentProps  from './_app';
+import ComponentProps from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
@@ -254,7 +254,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                     variant="outlined"
                     // className={classes.field}
                     margin="normal"
-                    disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -265,7 +265,7 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                     id="password-input"
                     label="Password"
                     required
-                    disabled
+                    // disabled
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
@@ -290,17 +290,17 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                 )}
               </Field>
 
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 className={classes.submit}
                 color="primary"
-                disabled
+              // disabled
               >
                 {formData.text}
               </Button>
