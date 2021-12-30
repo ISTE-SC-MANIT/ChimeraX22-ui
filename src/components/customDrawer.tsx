@@ -11,20 +11,21 @@ import {
   Box,
   Typography,
   Fade,
-} from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+} from "@mui/material";
+import {  Theme } from "@mui/material/styles";
+import {makeStyles} from '@mui/styles'
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import clsx from "clsx";
 import ThemeToggleButton from "../components/theme/modeToggle";
-import ImportantDevicesIcon from "@material-ui/icons/ImportantDevices";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import GamepadIcon from "@material-ui/icons/Gamepad";
-import InfoIcon from "@material-ui/icons/Info";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import GamepadIcon from "@mui/icons-material/Gamepad";
+import InfoIcon from "@mui/icons-material/Info";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useRouter } from "next/dist/client/router";
 import cookie from "js-cookie"
 import VerticalStepper from "./VerticalStepper";
