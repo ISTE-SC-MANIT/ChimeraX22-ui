@@ -8,6 +8,24 @@
 //==============================================================
 
 /**
+ * type of answer question is having
+ */
+export enum QuestionAnswerType {
+  DOUBLE = "DOUBLE",
+  SINGLE = "SINGLE",
+}
+
+/**
+ * type of question
+ */
+export enum QuestionType {
+  AUDIO = "AUDIO",
+  IMAGE = "IMAGE",
+  TEXT = "TEXT",
+  VIDEO = "VIDEO",
+}
+
+/**
  * role of user in team
  */
 export enum Role {
@@ -25,6 +43,24 @@ export enum Step {
   PAYMENT = "PAYMENT",
   REGISTER = "REGISTER",
   TEST = "TEST",
+}
+
+/**
+ * tells wether player is individual or team
+ */
+export enum TeamStatus {
+  INDIVIDUAL = "INDIVIDUAL",
+  NOT_INITIALIZED = "NOT_INITIALIZED",
+  TEAM = "TEAM",
+}
+
+/**
+ * status of quiz
+ */
+export enum UserQuizStatus {
+  ENDED = "ENDED",
+  NOT_STARTED = "NOT_STARTED",
+  STARTED = "STARTED",
 }
 
 export interface UserInput {
