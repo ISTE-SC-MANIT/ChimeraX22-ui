@@ -36,7 +36,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Chimera-X 2022</title>
           <link rel='icon' href='/logo.png' type='image/x-icon' />
           <link rel='preconnect' href='https://fonts.gstatic.com' />
           <link
