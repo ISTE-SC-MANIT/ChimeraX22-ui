@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       minHeight: '100vh',
-      width:'100%',
-      margin: '0px',
-      padding: '0px', 
+      margin: 0,
+      padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
       background: `url('/bg.svg')`,
@@ -163,7 +162,7 @@ const Landing: React.FC = () => {
                   : '/ChimeraX-logo-whitebg.svg'
               }
               width="256px"
-              height="80%"
+              height="100%"
               alt="logo"
               onClick={() => router.push('/')}
             />
@@ -228,7 +227,7 @@ const Landing: React.FC = () => {
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
-                <Btn onClick={() => router.push('/dashboard/register')}>Register Now</Btn>
+                {/* <Btn onClick={() => router.push('/signin')}>Register Now</Btn> */}
                 <Link
                   target="_blank"
                   href="https://drive.google.com/file/d/18fYq_uSXg76WQ4Ov6BTZ4rjJFkwTXThV/view?usp=sharing"
