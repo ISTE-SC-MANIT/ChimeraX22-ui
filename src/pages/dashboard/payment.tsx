@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 // import CreateOrder from "../../components/relay/mutations/CreateOrderMutation"
-// import PayOrder from "../../components/relay/mutations/PayOrderMutation"
+// import PayOrder  from "../../lib/mutations/PayOrderMutation";
 import Typography from '@mui/material/Typography';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import { useTheme, Theme } from '@mui/material/styles';
@@ -30,12 +30,24 @@ import { loadScript } from '../../components/utils';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CustomDrawer from '../../components/customDrawer';
 import Navbar from '../../components/Navbar';
-// import { useQuery } from 'relay-hooks';
-// import query from "../../components/relay/queries/GetTeamDetailsQuery"
-// import { GetTeamDetailsQuery } from '../../__generated__/GetTeamDetailsQuery.graphql';
+import query from '../../lib/queries/GetTeamDetailsQuery';
 import LoadingScreen from '../../components/loadingScreen';
 import { useRouter } from 'next/router';
 import ScrollDialog from '../../components/t&c';
+import { useMutation, useQuery } from '@apollo/client';
+import { GetTeamDetailsQuery } from '../../__generated__/GetTeamDetailsQuery';
+import { CreateOrder } from '../../lib/mutations/CreateOrderMutation';
+import {
+  CreateOrderInput,
+  PayOrderInput,
+} from '../../__generated__/globalTypes';
+import {
+  CreateOrderMutation,
+  CreateOrderMutation_createOrder,
+} from '../../__generated__/CreateOrderMutation';
+import { PayOrder } from '../../lib/mutations/PayOrderMutation';
+import { PayOrderMutation } from '../../__generated__/PayOrderMutation';
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minHeight: '100vh',
@@ -44,7 +56,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundImage: `url('/Vector3.png')`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.grey[500],
+      theme.palette.mode === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[500],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
@@ -53,7 +67,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('xs')]: {
       minHeight: '60vh',
       backgroundColor:
-        theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.grey[500],
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[50]
+          : theme.palette.grey[500],
     },
   },
   paper: {
@@ -118,7 +134,7 @@ const VectorImg = () => {
       <Box>
         <Image
           src='/payment.png'
-          alt="logo"
+          alt='logo'
           width={window.innerWidth}
           height={window.innerWidth / 1.46}
         />
@@ -127,58 +143,56 @@ const VectorImg = () => {
   }
   return (
     <Box>
-      <Image src="/payment.png" alt="logo" width={500} height={394} />
+      <Image src='/payment.png' alt='logo' width={500} height={394} />
     </Box>
   );
 };
 const RazorpayImg = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const source = theme.palette.mode === 'light' ? '/razorpay.png' : '/razorpay-dark.png';
-  return (
-    <img src={source} width="180px" className={classes.box} />
-  );
+  const source =
+    theme.palette.mode === 'light' ? '/razorpay.png' : '/razorpay-dark.png';
+  return <img src={source} width='180px' className={classes.box} />;
 };
 const Payment: React.FC<ComponentProps> = ({
   viewer,
-  environment,
   setSuccessMessage,
   setErrorMessage,
-  refetch
+  refetch,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [teamName, setTeamName] = React.useState("")
-  const [referralCode, setReferralCode] = React.useState("")
-  const [checked, setChecked] = React.useState(false)
-  const router = useRouter()
-
+  const [teamName, setTeamName] = React.useState('');
+  const [referralCode, setReferralCode] = React.useState('');
+  const [checked, setChecked] = React.useState(false);
+  const router = useRouter();
 
   React.useEffect(() => {
-    if (viewer.step === "REGISTER") {
-
+    if (viewer.step === 'REGISTER') {
     }
-    if (viewer.step === "PAYMENT") {
-      router.push("/dashboard/payment")
+    if (viewer.step === 'PAYMENT') {
+      router.push('/dashboard/payment');
     }
-    if (viewer.step === "TEST") {
-      router.push("/dashboard/test")
+    if (viewer.step === 'TEST') {
+      router.push('/dashboard/test');
     }
-    if (viewer.step === "CHOOSE_TEAM") {
-      router.push("/dashboard/team")
+    if (viewer.step === 'CHOOSE_TEAM') {
+      router.push('/dashboard/team');
     }
+  }, []);
 
-  }, [])
+  const { data, error, loading } = useQuery<GetTeamDetailsQuery>(query);
 
-  // const { data, error, retry, isLoading } = useQuery<GetTeamDetailsQuery>(query);
-  // if (isLoading) {
-  //   return <LoadingScreen loading />
-  // }
+  const [CreateOrderFunction, createOrderResponse] = useMutation(CreateOrder);
 
+  const [PayOrderFunction, payOrderResponse] = useMutation(PayOrder);
 
+  if (loading) {
+    return <LoadingScreen loading />;
+  }
 
-  const handleSuccess = (res: CreateOrderMutationResponse) => {
+  const handleSuccess = (res: CreateOrderMutation) => {
     const { name, email, phone } = viewer;
 
     const options = {
@@ -189,19 +203,18 @@ const Payment: React.FC<ComponentProps> = ({
       name: 'ISTE SC MANIT',
       description: 'Payment for chimera x',
 
-      handler: async (response) => {
-        await PayOrder(
-          environment,
-          { paymentId: response.razorpay_payment_id },
-          {
-            onCompleted: () => {
-              setSuccessMessage('Payment Successful'),
-                refetch()
-              router.push("/dashboard/test")
-            },
-            onError: () => setErrorMessage('Payment Failed')
-          }
-        );
+      handler: async (response: { razorpay_payment_id: any }) => {
+        const payOrderInput: PayOrderInput = {
+          paymentId: response.razorpay_payment_id,
+        };
+        await PayOrderFunction({
+          variables: { input: payOrderInput },
+          onCompleted: () => {
+            setSuccessMessage('Payment Successful'), refetch();
+            router.push('/dashboard/test');
+          },
+          onError: () => setErrorMessage('Payment Failed'),
+        });
       },
       prefill: {
         name,
@@ -215,7 +228,9 @@ const Payment: React.FC<ComponentProps> = ({
   };
 
   const handleRazorpay = async () => {
-    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+    const res = await loadScript(
+      'https://checkout.razorpay.com/v1/checkout.js'
+    );
 
     if (!res) {
       alert('Razorpay SDK failed to load. Are you online?');
@@ -223,27 +238,33 @@ const Payment: React.FC<ComponentProps> = ({
       return;
     }
 
-    CreateOrder(
-      environment,
-      { teamName: teamName, referralCode: referralCode },
-      {
-        onCompleted: (res) => handleSuccess(res),
-        onError: () => {
-
-          setErrorMessage("Payment failed! You might be entering wrong referral code.")
-        },
-      }
-    );
-
-
+    const createOrderInput: CreateOrderInput = {
+      teamName: teamName,
+      referralCode: referralCode,
+    };
+    CreateOrderFunction({
+      variables: { input: createOrderInput },
+      onCompleted: (res) => handleSuccess(res),
+      onError: () => {
+        setErrorMessage(
+          'Payment failed! You might be entering wrong referral code.'
+        );
+      },
+    });
   };
 
-  const disable = !Boolean(teamName) || Boolean(viewer.role === "TEAM_HELPER") || !Boolean(checked)
+  const disable =
+    !Boolean(teamName) ||
+    Boolean(viewer.role === 'TEAM_HELPER') ||
+    !Boolean(checked);
   const teamHelperDisable = Boolean(viewer.role === 'TEAM_HELPER');
 
   return (
     <>
-      <ScrollDialog openDialog={openDialog} onClose={() => setOpenDialog(false)} />
+      <ScrollDialog
+        openDialog={openDialog}
+        onClose={() => setOpenDialog(false)}
+      />
       <div className={classes.root}>
         <CustomDrawer
           name={viewer.name}
@@ -258,23 +279,25 @@ const Payment: React.FC<ComponentProps> = ({
           setSuccessMessage={setSuccessMessage}
           setErrorMessage={setErrorMessage}
         />
-        <Grid container component="main" onClick={() => setOpen(false)}>
+        <Grid container component='main' onClick={() => setOpen(false)}>
           <Grid item xs={12} sm={8} md={6} className={classes.leftGrid}>
             <Box className={classes.heading}>
-              <Typography variant="h4">
+              <Typography variant='h4'>
                 <b>Step-3 , Payment for Chimera-X 2021</b>
               </Typography>
             </Box>
 
             <Box>
               <List>
-                <ListItem alignItems="flex-start">
+                <ListItem alignItems='flex-start'>
                   <ListItemText
                     className={classes.listItem}
-                    primary="Enter your team name"
+                    primary='Enter your team name'
                     secondary={
                       <React.Fragment>
-                        {'You / your team will be recognized by your Team name '}
+                        {
+                          'You / your team will be recognized by your Team name '
+                        }
                       </React.Fragment>
                     }
                     primaryTypographyProps={{ variant: 'h6' }}
@@ -291,12 +314,12 @@ const Payment: React.FC<ComponentProps> = ({
                   setTeamName(e.target.value);
                 }}
                 className={classes.input}
-                size="small"
-                id="password-input"
-                label="Enter Team Name"
+                size='small'
+                id='password-input'
+                label='Enter Team Name'
                 required
-                variant="outlined"
-                margin="normal"
+                variant='outlined'
+                margin='normal'
                 disabled={teamHelperDisable}
               />
               <TextField
@@ -306,38 +329,44 @@ const Payment: React.FC<ComponentProps> = ({
                   setReferralCode(e.target.value);
                 }}
                 className={classes.input}
-                size="small"
-                id="password-input"
-                label="Enter Referral Code"
+                size='small'
+                id='password-input'
+                label='Enter Referral Code'
                 required
-                variant="outlined"
-                margin="normal"
+                variant='outlined'
+                margin='normal'
                 disabled={teamHelperDisable}
-                helperText={teamHelperDisable ? "" : "If you don't have any referral code , Please leave this field blank"}
+                helperText={
+                  teamHelperDisable
+                    ? ''
+                    : "If you don't have any referral code , Please leave this field blank"
+                }
               />
             </Box>
             <Divider></Divider>
             <Box>
-              <ListItem alignItems="flex-start">
+              <ListItem alignItems='flex-start'>
                 <ListItemText
-                  primary="Verify your team details"
+                  primary='Verify your team details'
                   secondary={
                     <React.Fragment>
-                      {'Check your team details, if anything looks wrong contact us'}
+                      {
+                        'Check your team details, if anything looks wrong contact us'
+                      }
                     </React.Fragment>
                   }
                   primaryTypographyProps={{ variant: 'h6' }}
                 />
               </ListItem>
             </Box>
-            <Box display="flex" className={classes.box}>
+            <Box display='flex' className={classes.box}>
               <Typography>
                 {' '}
                 <b>Team Status:</b> &nbsp;
               </Typography>
               {/* <Typography> {data.getTeamDetails.status} </Typography> */}
             </Box>
-            <Box display="flex" className={classes.box}>
+            <Box display='flex' className={classes.box}>
               <Typography>
                 {' '}
                 <b>Team Leader:</b> &nbsp;
@@ -361,9 +390,9 @@ const Payment: React.FC<ComponentProps> = ({
 
             <Divider></Divider>
             <Box>
-              <ListItem alignItems="flex-start">
+              <ListItem alignItems='flex-start'>
                 <ListItemText
-                  primary="Complete your payment"
+                  primary='Complete your payment'
                   primaryTypographyProps={{ variant: 'h6' }}
                 />
               </ListItem>
@@ -372,25 +401,25 @@ const Payment: React.FC<ComponentProps> = ({
               <RazorpayImg />
             </Box>
             <Box>
-              <Grid container className={classes.box} alignItems="center">
+              <Grid container className={classes.box} alignItems='center'>
                 <Grid item xs={6}>
-                  <Typography variant="h6">
+                  <Typography variant='h6'>
                     <b>AMOUNT</b>&nbsp;
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant="h6">
+                  <Typography variant='h6'>
                     <b> ₹ 100 </b>
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid container alignItems="center">
+              <Grid container alignItems='center'>
                 <Grid item xs={12}>
                   <Box>
                     <ListItem>
                       <ListItemIcon>
                         <Checkbox
-                          color="primary"
+                          color='primary'
                           onChange={() => setChecked(!checked)}
                           disabled={teamHelperDisable}
                         />
@@ -399,7 +428,10 @@ const Payment: React.FC<ComponentProps> = ({
                         primary={
                           <>
                             I agree to the{' '}
-                            <Link className={classes.link} onClick={() => setOpenDialog(true)}>
+                            <Link
+                              className={classes.link}
+                              onClick={() => setOpenDialog(true)}
+                            >
                               Terms and Condition
                             </Link>{' '}
                             of ISTE-SC-MANIT{' '}
@@ -409,7 +441,9 @@ const Payment: React.FC<ComponentProps> = ({
                     </ListItem>
                     {viewer.role === 'TEAM_HELPER' && (
                       <Box className={classes.box}>
-                        <Typography>Please ask your team leader to complete payment</Typography>
+                        <Typography>
+                          Please ask your team leader to complete payment
+                        </Typography>
                       </Box>
                     )}
                   </Box>
@@ -417,10 +451,10 @@ const Payment: React.FC<ComponentProps> = ({
                 <Grid item xs={12}>
                   <Box className={classes.box}>
                     <Button
-                      color="primary"
-                      variant="contained"
+                      color='primary'
+                      variant='contained'
                       onClick={handleRazorpay}
-                      disabled={true}
+                      disabled={disable}
                     >
                       Proceed for payment
                     </Button>
@@ -436,8 +470,8 @@ const Payment: React.FC<ComponentProps> = ({
             sm={4}
             md={6}
             className={classes.image}
-            justifyContent="center"
-            alignItems="flex-end"
+            justifyContent='center'
+            alignItems='flex-end'
           >
             <VectorImg />
           </Grid>
@@ -447,4 +481,4 @@ const Payment: React.FC<ComponentProps> = ({
   );
 };
 
-export default Payment
+export default Payment;

@@ -85,6 +85,11 @@ export interface AcceptInvitationInput {
   receiverId: string;
 }
 
+export interface CreateOrderInput {
+  teamName: string;
+  referralCode?: string | null;
+}
+
 export interface DeleteInvitationInput {
   invitationId: string;
 }
@@ -93,6 +98,10 @@ export interface InvitationInput {
   receiverId: string;
   receiverName: string;
   receiverEmail: string;
+}
+
+export interface PayOrderInput {
+  paymentId: string;
 }
 
 export interface UserInput {
