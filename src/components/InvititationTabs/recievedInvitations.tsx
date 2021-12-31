@@ -47,6 +47,9 @@ const ReceivedInvitation: React.FC<Props> = ({
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
+  const [deleteInvite, DeleteInvitationResponse] =
+    useMutation(DeleteInvititation);
+
   if (loading) {
     return (
       <Box ml={32} mt={12}>
@@ -54,8 +57,7 @@ const ReceivedInvitation: React.FC<Props> = ({
       </Box>
     );
   }
-  const [deleteInvite, DeleteInvitationResponse] =
-    useMutation<DeleteInvitationMutation>(DeleteInvititation);
+  
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };

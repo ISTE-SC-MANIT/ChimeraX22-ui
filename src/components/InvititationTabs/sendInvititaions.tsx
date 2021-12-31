@@ -37,19 +37,20 @@ const SendInvitation: React.FC<Props> = ({
   const { data, error, loading, refetch } =
     useQuery<GetInvitationQuery>(GetInvitation);
 
-  // React.useEffect(() => {
-  //   refetch();
-  // }, [send]);
-
-  // if (loading) {
-  //   return (
-  //     <Box ml={32} mt={12}>
-  //       <CircularProgress disableShrink size={60} />
-  //     </Box>
-  //   );
-  // }
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
+
+  // React.useEffect(() => {
+   
+  // }, [send]);
+
+  if (loading) {
+    return (
+      <Box ml={32} mt={12}>
+        <CircularProgress disableShrink size={60} />
+      </Box>
+    );
+  }
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
@@ -58,6 +59,7 @@ const SendInvitation: React.FC<Props> = ({
       variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Deleted');
+        refetch();
       },
       onError: (err) => {
         setErrorMessage(err.message);

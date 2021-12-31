@@ -30,7 +30,7 @@ import { loadScript } from '../../components/utils';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CustomDrawer from '../../components/customDrawer';
 import Navbar from '../../components/Navbar';
-import query from '../../lib/queries/GetTeamDetailsQuery';
+import { GetTeamDetails } from '../../lib/queries/GetTeamDetailsQuery';
 import LoadingScreen from '../../components/loadingScreen';
 import { useRouter } from 'next/router';
 import ScrollDialog from '../../components/t&c';
@@ -182,11 +182,12 @@ const Payment: React.FC<ComponentProps> = ({
     }
   }, []);
 
-  const { data, error, loading } = useQuery<GetTeamDetailsQuery>(query);
+  const teamDetailResponse = useQuery<GetTeamDetailsQuery>(GetTeamDetails);
 
   const [CreateOrderFunction, createOrderResponse] = useMutation(CreateOrder);
 
   const [PayOrderFunction, payOrderResponse] = useMutation(PayOrder);
+  const loading = teamDetailResponse.loading;
 
   if (loading) {
     return <LoadingScreen loading />;
@@ -364,29 +365,34 @@ const Payment: React.FC<ComponentProps> = ({
                 {' '}
                 <b>Team Status:</b> &nbsp;
               </Typography>
-              {/* <Typography> {data.getTeamDetails.status} </Typography> */}
+              <Typography>
+                {' '}
+                {teamDetailResponse.data?.getTeamDetails.status}{' '}
+              </Typography>
             </Box>
             <Box display='flex' className={classes.box}>
               <Typography>
                 {' '}
                 <b>Team Leader:</b> &nbsp;
               </Typography>
-              {/* <Typography>
+              <Typography>
                 {' '}
-                {data.getTeamDetails.teamLeader.name} ({data.getTeamDetails.teamLeader.email}){' '}
-              </Typography> */}
+                {teamDetailResponse.data?.getTeamDetails.teamLeader.name} (
+                {teamDetailResponse.data?.getTeamDetails.teamLeader.email}){' '}
+              </Typography>
             </Box>
-            {/* {data.getTeamDetails.status === 'TEAM' && (
-              <Box display="flex" className={classes.box}>
+            {teamDetailResponse.data?.getTeamDetails.status === 'TEAM' && (
+              <Box display='flex' className={classes.box}>
                 <Typography>
                   <b> Paired With:</b> &nbsp;
                 </Typography>
                 <Typography>
                   {' '}
-                  {data.getTeamDetails.teamHelper.name} ({data.getTeamDetails.teamHelper.email})
+                  {teamDetailResponse.data.getTeamDetails.teamHelper.name} (
+                  {teamDetailResponse.data.getTeamDetails.teamHelper.email})
                 </Typography>
               </Box>
-            )} */}
+            )}
 
             <Divider></Divider>
             <Box>
