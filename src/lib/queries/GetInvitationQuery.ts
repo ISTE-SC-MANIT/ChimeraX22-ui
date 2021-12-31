@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GetInvitationQuery = gql`
+export const GetInvitation = gql`
   query GetInvitationQuery {
     getInvitations {
       sentInvitations {
@@ -26,5 +26,3 @@ const GetInvitationQuery = gql`
     }
   }
 `;
-
-export default GetInvitationQuery;

@@ -154,6 +154,7 @@ const VectorImg = (classes: any) => {
 };
 
 const Login: React.FC<ComponentProps> = ({
+  refetch,
   setErrorMessage,
   setSuccessMessage,
 }) => {
@@ -231,7 +232,7 @@ const Login: React.FC<ComponentProps> = ({
       .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/login`, { ...values })
       .then((response) => {
         console.log(response);
-
+        refetch();
         authenticate(response, () => {
           router.push(getStep(response.data.user.step));
         });

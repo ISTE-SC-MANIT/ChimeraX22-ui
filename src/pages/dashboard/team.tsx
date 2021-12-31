@@ -6,31 +6,17 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
-  Grid,
-  Paper,
-  Tabs,
-  Tab,
+  Avatar,
   Box,
   Divider,
+  Grid,
+  Paper,
   Radio,
-  ListItemText,
+  Tab,
+  Tabs,
   TextField,
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  Badge,
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-// import { useQuery } from 'relay-hooks';
-// import query from "../../components/relay/queries/GetUserQuery"
-// import teamQuery from "../../components/relay/queries/GetTeamDetailsQuery"
-// import { GetUserQuery } from '../../__generated__/GetUserQuery.graphql';
-// import ReceivedInvitation from '../../components/recivedInvitations';
-// import SendInvitation from '../../components/sentInvitation';
-// import { InvitationInput } from '../../__generated__/SendInvitationMutation.graphql';
-// import SendInvitationMutation from "../../components/relay/mutations/SendInvitationMutation"
 import { ComponentProps } from '../_app';
 import CustomDrawer from '../../components/customDrawer';
 import VerticalStepper from '../../components/VerticalStepper';
@@ -41,6 +27,17 @@ import cookie from 'js-cookie';
 import Navbar from '../../components/Navbar';
 import LoadingScreen from '../../components/loadingScreen';
 import DialogBox from '../../components/dialog';
+import { useMutation, useQuery } from '@apollo/client';
+import { GetSingleUser } from '../../lib/queries/GetSingleUserQuery';
+import {
+  GetSingleUserQuery,
+  GetSingleUserQuery_getSingleUsers,
+} from '../../__generated__/GetSingleUserQuery';
+import { SendInvititation } from '../../lib/mutations/SendInvititationMutation';
+import { InvitationInput } from '../../__generated__/globalTypes';
+import { PlayAsIndividual } from '../../lib/mutations/PlayAsIndividualMutation';
+import SendInvitation from '../../components/InvititationTabs/sendInvititaions';
+import ReceivedInvitation from '../../components/InvititationTabs/recievedInvitations';
 
 class Amount extends Component {
   render() {
@@ -136,6 +133,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+interface userInfo {
+  _id: String;
+  name: String;
+  email: string;
+}
 const Team: React.FC<ComponentProps> = ({
   viewer,
   setSuccessMessage,
@@ -167,14 +169,20 @@ const Team: React.FC<ComponentProps> = ({
     }
   }, []);
 
-  // const { data, error, retry, isLoading } = useQuery<GetUserQuery>(query);
+  //Queries And Mutation
 
-  // if (isLoading && !rendered) {
-  //   return <LoadingScreen loading />;
-  // }
+  const [sendIntvite, SendInvititationResponse] = useMutation(SendInvititation);
+  const [playIndividual, playIndividualResponse] =
+    useMutation(PlayAsIndividual);
+  const SingleUserResponse = useQuery<GetSingleUserQuery>(GetSingleUser);
+  //if (SendInvititation.loading && !rendered) return <h1>Loading</h1>;
+  const EligibleUsers = SingleUserResponse.data?.getSingleUsers.map((u) => {
+    const name = u.name;
+    const email = u.email;
+    const _id = u._id ? u._id : '';
 
-  // let dummyUsers = data?.getSingleUsers.filter((user) => user.city === viewer.city);
-
+    return { _id, name, email };
+  });
   const handleSendInvitation = () => {
     console.log(receiver);
     const receiverInput: InvitationInput = {
@@ -182,36 +190,34 @@ const Team: React.FC<ComponentProps> = ({
       receiverEmail: receiver.email,
       receiverName: receiver.name,
     };
-    //   SendInvitationMutation(environment, receiverInput, {
-    //     onCompleted: (res) => {
-    //       setSuccessMessage('Invitation Sent');
+    sendIntvite({
+      variables: { input: receiverInput },
+      onCompleted: () => {
+        setSuccessMessage('Invitation Sent');
+        setReceiver(null);
+        setSend(!send);
+      },
+      onError: (err) => {
+        setErrorMessage('Something went wrong Please try again later!');
+      },
+    });
 
-    //       setReceiver(null);
-    //       setRendered(true);
-    //       setSend(!send);
-    //       retry();
-
-    //       refetchRef.current && refetchRef.current.retry();
-    //     },
-    //     onError: (err) => {
-    //       setErrorMessage('Something went wrong Please try again later!');
-    //     },
-    //   });
+    //check this->
+    //retry()
+    //refetchRef.current && refetchRef.current.retry();
   };
-  // const handlePlayAsIndividual = () => {
-  //   PlayAsIndividualMutation(environment, {
-  //     onCompleted: () => {
-
-  //       setSuccessMessage('Redirecting ....');
-  //       router.push("/dashboard/payment")
-  //       refetch()
-
-  //     }, onError: () => {
-  //       setErrorMessage('Something went wrong Please try again later!');
-  //     }
-  //   })
-  // }
-
+  const handlePlayAsIndividual = () => {
+    playIndividual({
+      onCompleted: () => {
+        setSuccessMessage('Redirecting ....');
+        refetch();
+        router.push('/dashboard/payment');
+      },
+      onError: () => {
+        setErrorMessage('Something went wrong Please try again later!');
+      },
+    });
+  };
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue);
   };
@@ -301,7 +307,7 @@ const Team: React.FC<ComponentProps> = ({
                             setOpenDialog(true);
                           }}
                         >
-                          PROCEED TO PAY{' '}
+                          PROCEED TO PAY
                         </Button>
                       </Box>
                     </Grid>
@@ -332,31 +338,31 @@ const Team: React.FC<ComponentProps> = ({
                 </Box>
                 <Box display='flex'>
                   <Autocomplete
-                    id='combo-box-demo'
-                    //@ts-ignore
-                    options={dummyUsers}
-                    value={receiver}
+                    id='country-select-demo'
+                    sx={{ width: 300 }}
+                    options={EligibleUsers ? EligibleUsers : []}
                     onChange={(event: any, newValue: any) => {
                       setReceiver(newValue);
                     }}
-                    getOptionLabel={(option) =>
-                      `${option.name} (${option.email})`
-                    }
-                    renderOption={(option) => (
-                      <React.Fragment>
-                        <span>
-                          <Avatar alt='Remy Sharp' src='/dummy.png' />
-                        </span>
-                        &nbsp; {option.name} ({option.email})
-                      </React.Fragment>
+                    autoHighlight
+                    getOptionLabel={(option) => option.name}
+                    renderOption={(props, option) => (
+                      <Box
+                        component='li'
+                        sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
+                        {...props}
+                      >
+                        {option.name} ({option.email})
+                      </Box>
                     )}
-                    style={{ width: 400 }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         label='Search Team Member'
-                        variant='outlined'
-                        size='small'
+                        inputProps={{
+                          ...params.inputProps,
+                          autoComplete: 'new-password', // disable autocomplete and autofill
+                        }}
                       />
                     )}
                   />
@@ -409,23 +415,21 @@ const Team: React.FC<ComponentProps> = ({
                 classsName={classes.tab}
               </Tabs>
               <Divider />
-              {/* {tab === 0 ? (
+              {tab === 0 ? (
                 <SendInvitation
                   refetchRef={refetchRef}
                   send={send}
-                  environment={environment}
                   setSuccessMessage={setSuccessMessage}
                   setErrorMessage={setErrorMessage}
                 />
               ) : (
                 <ReceivedInvitation
                   refetchRef={refetchRef}
-                  environment={environment}
                   setSuccessMessage={setSuccessMessage}
                   setErrorMessage={setErrorMessage}
                   refetch={refetch}
                 />
-              )} */}
+              )}
             </Paper>
           </Grid>
         </Grid>

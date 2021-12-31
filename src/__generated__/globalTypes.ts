@@ -8,6 +8,14 @@
 //==============================================================
 
 /**
+ * payment status of team
+ */
+export enum PaymentStatus {
+  PAID = "PAID",
+  UNPAID = "UNPAID",
+}
+
+/**
  * type of answer question is having
  */
 export enum QuestionAnswerType {
@@ -36,6 +44,15 @@ export enum Role {
 }
 
 /**
+ * status of invitation
+ */
+export enum Status {
+  ACCEPTED = "ACCEPTED",
+  PENDING = "PENDING",
+  REJECTED = "REJECTED",
+}
+
+/**
  * Step on which user is present
  */
 export enum Step {
@@ -61,6 +78,21 @@ export enum UserQuizStatus {
   ENDED = "ENDED",
   NOT_STARTED = "NOT_STARTED",
   STARTED = "STARTED",
+}
+
+export interface AcceptInvitationInput {
+  invitationId: string;
+  receiverId: string;
+}
+
+export interface DeleteInvitationInput {
+  invitationId: string;
+}
+
+export interface InvitationInput {
+  receiverId: string;
+  receiverName: string;
+  receiverEmail: string;
 }
 
 export interface UserInput {

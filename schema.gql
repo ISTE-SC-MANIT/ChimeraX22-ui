@@ -135,6 +135,7 @@ input PayOrderInput {
 type Query {
   viewer: User!
   getInvitations: InvitationResponse!
+  getSingleUsers: [User!]!
   getQuestions: [Question!]!
   getTeamDetails: TeamResponse!
   getQuizDetails: QuizDetailsResponse!

@@ -36,7 +36,7 @@ import * as yup from 'yup';
 import { cities } from '../../components/cities';
 import CustomDrawer from '../../components/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
-import { RegisterUser } from '../../lib/mutations/register';
+import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
 import { useMutation } from '@apollo/client';
 const validationSchema = yup.object({
   name: yup
