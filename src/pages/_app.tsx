@@ -10,6 +10,7 @@ import { User } from '../lib/queries/user';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import SEO from '../components/SEO';
+import { AuthProvider } from '../Auth/AuthContext';
 export interface ComponentProps {
   viewer: viewer_viewer;
   refetch: () => void;
@@ -71,52 +72,54 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <SEO />
-      <ApolloProvider client={client}>
-        <ThemeContext.Provider
-          value={{
-            toggleMode: () => toggleMode(setMode),
-          }}
-        >
-          <ThemeProvider theme={theme}>
-            <>
-              {routeChange && <h1>loading</h1>}
-              {!isProtectedRoute ? (
-                <Component
-                  {...pageProps}
-                  setSuccessMessage={setSuccessMessage}
-                  setErrorMessage={setErrorMessage}
-                />
-              ) : viewerQuery.loading ? (
-                <>
-                  <h1>Loading</h1>
-                </>
-              ) : viewerQuery.data ? (
-                <Component
-                  {...pageProps}
-                  viewer={viewerQuery.data.viewer}
-                  refetch={viewerQuery.refetch}
-                  setSuccessMessage={setSuccessMessage}
-                  setErrorMessage={setErrorMessage}
-                />
-              ) : (
-                <>
-                  <h1>Error</h1>
-                </>
-              )}
-              <Snackbar open={true} autoHideDuration={6000}>
-                <Alert onClose={handleClose} severity='success'>
-                  {successMsg}
-                </Alert>
-              </Snackbar>
-              <Snackbar open={errors} autoHideDuration={6000}>
-                <Alert onClose={handleClose} severity='error'>
-                  {errorMsg}
-                </Alert>
-              </Snackbar>
-            </>
-          </ThemeProvider>
-        </ThemeContext.Provider>
-      </ApolloProvider>
+      <AuthProvider>
+        <ApolloProvider client={client}>
+          <ThemeContext.Provider
+            value={{
+              toggleMode: () => toggleMode(setMode),
+            }}
+          >
+            <ThemeProvider theme={theme}>
+              <>
+                {routeChange && <h1>loading</h1>}
+                {!isProtectedRoute ? (
+                  <Component
+                    {...pageProps}
+                    setSuccessMessage={setSuccessMessage}
+                    setErrorMessage={setErrorMessage}
+                  />
+                ) : viewerQuery.loading ? (
+                  <>
+                    <h1>Loading</h1>
+                  </>
+                ) : viewerQuery.data ? (
+                  <Component
+                    {...pageProps}
+                    viewer={viewerQuery.data.viewer}
+                    refetch={viewerQuery.refetch}
+                    setSuccessMessage={setSuccessMessage}
+                    setErrorMessage={setErrorMessage}
+                  />
+                ) : (
+                  <>
+                    <h1>Error</h1>
+                  </>
+                )}
+                <Snackbar open={true} autoHideDuration={6000}>
+                  <Alert onClose={handleClose} severity='success'>
+                    {successMsg}
+                  </Alert>
+                </Snackbar>
+                <Snackbar open={errors} autoHideDuration={6000}>
+                  <Alert onClose={handleClose} severity='error'>
+                    {errorMsg}
+                  </Alert>
+                </Snackbar>
+              </>
+            </ThemeProvider>
+          </ThemeContext.Provider>
+        </ApolloProvider>
+      </AuthProvider>
     </>
   );
 }
