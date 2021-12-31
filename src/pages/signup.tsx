@@ -2,7 +2,7 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import { Theme, useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import Image from 'next/image'
+import Image from 'next/image';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,17 +12,18 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { withStyles, makeStyles } from '@mui/styles';
-import * as yup from "yup";
-import axios from "axios"
+import * as yup from 'yup';
+import axios from 'axios';
 import { authenticate } from '../components/utils';
 import { useRouter } from 'next/router';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { InputAdornment, IconButton } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
-import ComponentProps from './_app';
+import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
+import { NextPage } from 'next';
 
 const LoginButton = withStyles((theme) => ({
   root: {
@@ -123,49 +124,74 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 }));
-const VectorImg = (classes) => {
+const VectorImg = () => {
+  const classes = useStyles();
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   if (mobile) {
     return (
       <Box className={classes.vector}>
-        <Image src="/signin.png" alt="logo" className={classes.imageV} width={window.innerWidth} height={window.innerWidth / 1.25} />
+        <Image
+          src='/signin.png'
+          alt='logo'
+          className={classes.imageV}
+          width={window.innerWidth}
+          height={window.innerWidth / 1.25}
+        />
       </Box>
     );
   }
   return (
     <Box className={classes.vector}>
-      <Image src="/signin.png" alt="logo" className={classes.imageV} width={460} height={367} />
+      <Image
+        src='/signin.png'
+        alt='logo'
+        className={classes.imageV}
+        width={460}
+        height={367}
+      />
     </Box>
   );
 };
-const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }) => {
+export interface FormValues {
+  fullName: string;
+  email: string;
+  password: string;
+}
+const SignUp: NextPage<ComponentProps> = ({
+  setErrorMessage,
+  setSuccessMessage,
+}) => {
   const classes = useStyles();
-  const [formData, setFormData] = React.useState({ email: "", password: "", text: "Sign Up" })
-
-  const [visible, setVisible] = React.useState(false)
-  const router = useRouter()
+  const router = useRouter();
+  const [visible, setVisible] = React.useState(false);
+  const [formValues, setFormValues] = React.useState<FormValues>({
+    fullName: '',
+    email: '',
+    password: '',
+  });
 
   const handleShowPassword = () => {
     setVisible(!visible);
-  }
+  };
   const handleChange = (field: string) => (e: any) => {
     setFormData({ ...formData, [field]: e.target.value });
-  }
+  };
   const initialValues = {
-    password: "",
-    email: "",
-  }
-
+    fullName: '',
+    email: '',
+    password: '',
+  };
   const validationSchema = yup.object({
-
+    fullName: yup.string().required(),
     email: yup
       .string()
-      .email("Provide a valid Email ID")
-      .required("Email cannot be empty"),
-    password: yup.string().min(6, "Password must be minimum of 6 characters").required("Password cannot be empty")
-
-
+      .email('Provide a valid Email ID')
+      .required('Email cannot be empty'),
+    password: yup
+      .string()
+      .min(6, 'Password must be minimum of 6 characters')
+      .required('Password cannot be empty'),
   });
 
   const getStep = (step: 'REGISTER' | 'CHOOSE_TEAM' | 'PAYMENT' | 'TEST') => {
@@ -185,54 +211,53 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
     }
   };
 
-  const sendGoogleToken = (tokenId) => {
+  // const sendGoogleToken = (tokenId) => {
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/googlelogin`, {
+  //       idToken: tokenId,
+  //     })
+  //     .then((response) => {
+  //       authenticate(response, () => {
+  //         router.push(getStep(response.data.user.step));
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       // setErrorMessage(error);
+  //       return error;
+  //     });
+  // };
+
+  // const responseGoogle = (response: GoogleLoginResponse) => {
+  //   console.log(response);
+  //   sendGoogleToken(response.tokenId);
+  // };
+
+  const handleSubmit = (values: typeof initialValues) => {
+    setFormData({ ...formData, text: 'Submitting .....' });
+
     axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/googlelogin`, {
-        idToken: tokenId,
-      })
+      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/register`, { ...values })
       .then((response) => {
         authenticate(response, () => {
-          router.push(getStep(response.data.user.step));
+          router.push('/dashboard/register');
         });
+        setSuccessMessage('Successfully signed in');
       })
       .catch((error) => {
-        // setErrorMessage(error);
+        setFormData({ ...formData, text: 'Sign Up' });
+        setErrorMessage(error.response.data.errors);
         return error;
       });
   };
 
-  const responseGoogle = (response: GoogleLoginResponse) => {
-    console.log(response);
-    sendGoogleToken(response.tokenId);
-  };
-
-  const handleSubmit = (values: typeof initialValues) => {
-
-    setFormData({ ...formData, text: "Submitting ....." })
-
-    axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/register`, { ...values }).then((response) => {
-      authenticate(response, () => {
-        router.push("/dashboard/register")
-      })
-      setSuccessMessage("Successfully signed in")
-
-    }).catch((error) => {
-      setFormData({ ...formData, text: 'Sign Up' });
-      setErrorMessage(error.response.data.errors)
-      return error;
-    })
-
-  }
-
-
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component='main' className={classes.root}>
       <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h2">
+          <Typography component='h1' variant='h2'>
             Sign Up
           </Typography>
           <Formik
@@ -240,46 +265,52 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
             validationSchema={validationSchema}
             initialValues={initialValues}
           >
-            <Form aria-label="login up form" id="log-in-form">
-              <Field name="email">
-                {({ field, meta }: FieldProps<typeof initialValues['email']>) => (
+            <Form aria-label='sign up form' id='sign-up-form'>
+              <Field name='email'>
+                {({
+                  field,
+                  meta,
+                }: FieldProps<typeof initialValues['email']>) => (
                   <TextField
                     fullWidth
-                    id="name-input"
-                    label="Email Address"
+                    id='name-input'
+                    label='Email Address'
                     required
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
-                    variant="outlined"
+                    variant='outlined'
                     // className={classes.field}
-                    margin="normal"
-                  // disabled
+                    margin='normal'
+                    // disabled
                   />
                 )}
               </Field>
-              <Field name="password">
-                {({ field, meta }: FieldProps<typeof initialValues['password']>) => (
+              <Field name='password'>
+                {({
+                  field,
+                  meta,
+                }: FieldProps<typeof initialValues['password']>) => (
                   <TextField
                     fullWidth
-                    id="password-input"
-                    label="Password"
+                    id='password-input'
+                    label='Password'
                     required
                     // disabled
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
-                    variant="outlined"
+                    variant='outlined'
                     // className={classes.field}
-                    margin="normal"
+                    margin='normal'
                     type={visible ? 'text' : 'password'}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">
+                        <InputAdornment position='end'>
                           <IconButton
-                            aria-label="toggle password visibility"
+                            aria-label='toggle password visibility'
                             onClick={handleShowPassword}
-                            edge="end"
+                            edge='end'
                           >
                             {visible ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
@@ -295,46 +326,42 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
                 label="Remember me"
               /> */}
               <Button
-                type="submit"
+                type='submit'
                 fullWidth
-                variant="contained"
+                variant='contained'
                 className={classes.submit}
-                color="primary"
-              // disabled
+                color='primary'
+                // disabled
               >
-                {formData.text}
+                Create new account
               </Button>
               <Box mt={5}>
                 {' '}
-                <Typography align="center" variant="h6">
+                <Typography align='center' variant='h6'>
                   Registrations are closed now.
                 </Typography>
               </Box>
 
               <Box mt={5}>
                 {' '}
-                <Typography align="center" variant="subtitle1">
+                <Typography align='center' variant='subtitle1'>
                   Or Sign up with other social platforms
                 </Typography>
               </Box>
               <Box>
-                <Grid container justifyContent="center" alignItems="center">
-                  <GoogleLogin
-                    clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                    render={(renderProps) => (
-                      <IconButton onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                        <img
-                          src="/google-logo.png"
-                          alt="google"
-                          height={60}
-                          className={classes.logoIcon}
-                        />
-                      </IconButton>
-                    )}
-                  ></GoogleLogin>
+                <Grid container justifyContent='center' alignItems='center'>
+                  <IconButton
+                  // onClick={}
+                  // disabled={}
+                  >
+                    <Image
+                      src='/google-logo.png'
+                      alt='google'
+                      width={60}
+                      height={60}
+                      className={classes.logoIcon}
+                    />
+                  </IconButton>
                 </Grid>
               </Box>
             </Form>
@@ -345,19 +372,26 @@ const SignIn: React.FC<ComponentProps> = ({ setErrorMessage, setSuccessMessage }
 
       <Grid item xs={false} sm={6} className={classes.image}>
         <Box className={classes.logo}>
-          <Typography component="span" variant="h3" color="inherit" className={classes.imageTitle2}>
+          <Typography
+            component='span'
+            variant='h3'
+            color='inherit'
+            className={classes.imageTitle2}
+          >
             One of us?
           </Typography>
         </Box>
         <Box className={classes.loginBtn}>
-          <Grid container justifyContent="center" alignItems="center">
-            <LoginButton onClick={() => router.push('/login')}>Log In</LoginButton>
+          <Grid container justifyContent='center' alignItems='center'>
+            <LoginButton onClick={() => router.push('/login')}>
+              Log In
+            </LoginButton>
           </Grid>
         </Box>
-        <VectorImg classes={classes} />
+        <VectorImg />
       </Grid>
     </Grid>
   );
-}
+};
 
-export default SignIn
+export default SignUp;
