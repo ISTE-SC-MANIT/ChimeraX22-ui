@@ -53,8 +53,9 @@ const SendInvitation: React.FC<Props> = ({
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
+    console.log(id);
     deleteInvite({
-      variables: { deleteInvitationInput: input },
+      variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Deleted');
       },

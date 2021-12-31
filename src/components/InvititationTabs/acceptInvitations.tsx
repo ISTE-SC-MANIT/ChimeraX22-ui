@@ -42,7 +42,7 @@ const AcceptInvitationPage: React.FC<Props> = ({
     };
 
     accpetInvite({
-      variables: { acceptInvitationMutation: input },
+      variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Teammate Selected');
         router.push('/dashboard/payment');
