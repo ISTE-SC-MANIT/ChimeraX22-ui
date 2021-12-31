@@ -203,7 +203,7 @@ const Register: React.FC<ComponentProps> = ({
       onCompleted: () => {
         setSuccessMessage('Registered Successfully');
         refetch();
-        router.push('/dashboard/teams');
+        router.push('/dashboard/team');
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');

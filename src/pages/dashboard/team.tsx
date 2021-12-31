@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
-import {  Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Grid, Paper, Tabs, Tab, Box, Divider, Radio, ListItemText, TextField, Avatar, List, ListItem, ListItemAvatar, ListItemSecondaryAction, Badge } from '@mui/material';
+import {
+  Grid,
+  Paper,
+  Tabs,
+  Tab,
+  Box,
+  Divider,
+  Radio,
+  ListItemText,
+  TextField,
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  Badge,
+} from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 // import { useQuery } from 'relay-hooks';
 // import query from "../../components/relay/queries/GetUserQuery"
@@ -15,42 +31,35 @@ import Autocomplete from '@mui/material/Autocomplete';
 // import SendInvitation from '../../components/sentInvitation';
 // import { InvitationInput } from '../../__generated__/SendInvitationMutation.graphql';
 // import SendInvitationMutation from "../../components/relay/mutations/SendInvitationMutation"
-import { ComponentProps } from "../_app"
+import { ComponentProps } from '../_app';
 import CustomDrawer from '../../components/customDrawer';
 import VerticalStepper from '../../components/VerticalStepper';
 import { ThemeContext } from '../../components/theme';
 // import PlayAsIndividualMutation from "../../components/relay/mutations/PlayAsIndividualMutation"
 import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar';
 import LoadingScreen from '../../components/loadingScreen';
 import DialogBox from '../../components/dialog';
 
-
-
-
 class Amount extends Component {
-   render() {
-      return (
-        <>
-          <Grid item xs={6} sm={4}>
-            <Typography variant="h6" align="center">
-              <b>AMOUNT</b>&nbsp;
-            </Typography>
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <Typography variant="h6" align="center">
-              <b> ₹ 100 </b>
-            </Typography>
-          </Grid>
-        </>
-      );
+  render() {
+    return (
+      <>
+        <Grid item xs={6} sm={4}>
+          <Typography variant='h6' align='center'>
+            <b>AMOUNT</b>&nbsp;
+          </Typography>
+        </Grid>
+        <Grid item xs={6} sm={4}>
+          <Typography variant='h6' align='center'>
+            <b> ₹ 100 </b>
+          </Typography>
+        </Grid>
+      </>
+    );
   }
 }
-
-
-
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -128,11 +137,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Team: React.FC<ComponentProps> = ({
-  environment,
   viewer,
   setSuccessMessage,
   setErrorMessage,
-  refetch
+  refetch,
 }) => {
   const classes = useStyles();
   const [tab, setTab] = React.useState(0);
@@ -142,24 +150,22 @@ const Team: React.FC<ComponentProps> = ({
   const refetchRef = React.useRef<any>(null);
   const [radio, setRadio] = React.useState<'A' | 'B'>('A');
   const [open, setOpen] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(false)
-  const router = useRouter()
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const router = useRouter();
 
   React.useEffect(() => {
-    if (viewer.step === "REGISTER") {
-      router.push("/dashboard/register")
+    if (viewer.step === 'REGISTER') {
+      router.push('/dashboard/register');
     }
-    if (viewer.step === "PAYMENT") {
-      router.push("/dashboard/payment")
+    if (viewer.step === 'PAYMENT') {
+      router.push('/dashboard/payment');
     }
-    if (viewer.step === "TEST") {
-      router.push("/dashboard/test")
+    if (viewer.step === 'TEST') {
+      router.push('/dashboard/test');
     }
-    if (viewer.step === "CHOOSE_TEAM") {
-
+    if (viewer.step === 'CHOOSE_TEAM') {
     }
-
-  }, [])
+  }, []);
 
   // const { data, error, retry, isLoading } = useQuery<GetUserQuery>(query);
 
@@ -176,21 +182,21 @@ const Team: React.FC<ComponentProps> = ({
       receiverEmail: receiver.email,
       receiverName: receiver.name,
     };
-  //   SendInvitationMutation(environment, receiverInput, {
-  //     onCompleted: (res) => {
-  //       setSuccessMessage('Invitation Sent');
+    //   SendInvitationMutation(environment, receiverInput, {
+    //     onCompleted: (res) => {
+    //       setSuccessMessage('Invitation Sent');
 
-  //       setReceiver(null);
-  //       setRendered(true);
-  //       setSend(!send);
-  //       retry();
+    //       setReceiver(null);
+    //       setRendered(true);
+    //       setSend(!send);
+    //       retry();
 
-  //       refetchRef.current && refetchRef.current.retry();
-  //     },
-  //     onError: (err) => {
-  //       setErrorMessage('Something went wrong Please try again later!');
-  //     },
-  //   });
+    //       refetchRef.current && refetchRef.current.retry();
+    //     },
+    //     onError: (err) => {
+    //       setErrorMessage('Something went wrong Please try again later!');
+    //     },
+    //   });
   };
   // const handlePlayAsIndividual = () => {
   //   PlayAsIndividualMutation(environment, {
@@ -206,9 +212,6 @@ const Team: React.FC<ComponentProps> = ({
   //   })
   // }
 
-
-
-
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue);
   };
@@ -222,7 +225,6 @@ const Team: React.FC<ComponentProps> = ({
   return (
     <>
       <DialogBox
-        environment={environment}
         openDialog={openDialog}
         handleClose={handleClose}
         setSuccessMessage={setSuccessMessage}
@@ -243,50 +245,57 @@ const Team: React.FC<ComponentProps> = ({
           setSuccessMessage={setSuccessMessage}
           setErrorMessage={setErrorMessage}
         />
-        <Grid container component="main" onClick={() => setOpen(false)}>
+        <Grid container component='main' onClick={() => setOpen(false)}>
           <Grid item xs={12} md={8} className={classes.leftGrid}>
             <Box mt={5} mb={5} className={classes.header}>
-              <Grid container justifyContent="flex-start" alignItems="center">
-                <Grid item sm={4} alignItems="center">
-                  <img src="/dashboard.png" className={classes.dashboardImg}></img>
+              <Grid container justifyContent='flex-start' alignItems='center'>
+                <Grid item sm={4} alignItems='center'>
+                  <img
+                    src='/dashboard.png'
+                    className={classes.dashboardImg}
+                  ></img>
                 </Grid>
                 <Grid item sm={8}>
-                  <Typography variant="h4" className={classes.Head_title}>
-                    <b>Hello, {viewer.name[0].toUpperCase() + viewer.name.substring(1)}</b>
+                  <Typography variant='h4' className={classes.Head_title}>
+                    <b>
+                      Hello,{' '}
+                      {viewer.name[0].toUpperCase() + viewer.name.substring(1)}
+                    </b>
                   </Typography>
                   <Typography>Welcome to your ChimeraX dashboard</Typography>
                 </Grid>
               </Grid>
             </Box>
             <Box ml={2} mb={2}>
-              <Typography variant="h5">
-                Step-2, Select whether you want to play as an individual or as a team?
+              <Typography variant='h5'>
+                Step-2, Select whether you want to play as an individual or as a
+                team?
               </Typography>
             </Box>
             <Box>
-              <Box display="flex" mb={2}>
+              <Box display='flex' mb={2}>
                 <Radio
                   className={classes.radioBtn}
                   checked={radio === 'A'}
-                  value="A"
-                  name="radio-button-demo"
+                  value='A'
+                  name='radio-button-demo'
                   inputProps={{ 'aria-label': 'A' }}
                   onClick={() => setRadio('A')}
                 />
                 <div>
-                  <Typography variant="h6">Play as an Individual</Typography>
+                  <Typography variant='h6'>Play as an Individual</Typography>
                   <Typography>Be a lone ranger</Typography>
                 </div>
               </Box>
               {radio === 'A' && (
                 <Box>
-                  <Grid container alignItems="center">
+                  <Grid container alignItems='center'>
                     <Amount />
                     <Grid item xs={12} sm={4}>
                       <Box className={classes.proceed_button}>
                         <Button
-                          variant="contained"
-                          color="primary"
+                          variant='contained'
+                          color='primary'
                           // onClick={handlePlayAsIndividual}
                           onClick={() => {
                             setOpenDialog(true);
@@ -299,40 +308,44 @@ const Team: React.FC<ComponentProps> = ({
                   </Grid>
                 </Box>
               )}
-              <Box display="flex">
+              <Box display='flex'>
                 <Radio
                   className={classes.radioBtn}
                   checked={radio === 'B'}
-                  value="B"
-                  name="radio-button-demo"
+                  value='B'
+                  name='radio-button-demo'
                   inputProps={{ 'aria-label': 'B' }}
                   onClick={() => setRadio('B')}
                 />
                 <div>
-                  <Typography variant="h6">Play as a Team</Typography>
+                  <Typography variant='h6'>Play as a Team</Typography>
                   <Typography>Be a dynamic duo</Typography>
                 </div>
               </Box>
             </Box>
             {radio === 'B' && (
               <Box ml={8}>
-                <Box display="flex">
-                  <Typography variant="body1">Send Invitation to your teammate</Typography>
+                <Box display='flex'>
+                  <Typography variant='body1'>
+                    Send Invitation to your teammate
+                  </Typography>
                 </Box>
-                <Box display="flex">
+                <Box display='flex'>
                   <Autocomplete
-                    id="combo-box-demo"
+                    id='combo-box-demo'
                     //@ts-ignore
                     options={dummyUsers}
                     value={receiver}
                     onChange={(event: any, newValue: any) => {
                       setReceiver(newValue);
                     }}
-                    getOptionLabel={(option) => `${option.name} (${option.email})`}
+                    getOptionLabel={(option) =>
+                      `${option.name} (${option.email})`
+                    }
                     renderOption={(option) => (
                       <React.Fragment>
                         <span>
-                          <Avatar alt="Remy Sharp" src="/dummy.png" />
+                          <Avatar alt='Remy Sharp' src='/dummy.png' />
                         </span>
                         &nbsp; {option.name} ({option.email})
                       </React.Fragment>
@@ -341,15 +354,15 @@ const Team: React.FC<ComponentProps> = ({
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label="Search Team Member"
-                        variant="outlined"
-                        size="small"
+                        label='Search Team Member'
+                        variant='outlined'
+                        size='small'
                       />
                     )}
                   />
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     disabled={receiver === null}
                     onClick={handleSendInvitation}
                     className={classes.invitation_button}
@@ -365,14 +378,15 @@ const Team: React.FC<ComponentProps> = ({
               </Box>
             )}
             <Box className={classes.note}>
-              <Typography variant="h6" align="justify">
+              <Typography variant='h6' align='justify'>
                 <b>Note:</b>
                 <br />
-                The amount is same for each team whether you play as an individual or as a team. If
-                you play as a team, the one who sends the invitation becomes the Team Leader and the
-                other becomes the Team Helper. The payment can only be done by the team leader. The
-                team leader and team helper both will be able to see the questions but only the team
-                leader can answer.
+                The amount is same for each team whether you play as an
+                individual or as a team. If you play as a team, the one who
+                sends the invitation becomes the Team Leader and the other
+                becomes the Team Helper. The payment can only be done by the
+                team leader. The team leader and team helper both will be able
+                to see the questions but only the team leader can answer.
               </Typography>
             </Box>
           </Grid>
@@ -386,12 +400,12 @@ const Team: React.FC<ComponentProps> = ({
               <Tabs
                 value={tab}
                 onChange={handleChange}
-                indicatorColor="primary"
+                indicatorColor='primary'
                 // textColor="primary"
-                variant="fullWidth"
+                variant='fullWidth'
               >
-                <Tab label="Sent Invitations" />
-                <Tab label="Received Invitations" />
+                <Tab label='Sent Invitations' />
+                <Tab label='Received Invitations' />
                 classsName={classes.tab}
               </Tabs>
               <Divider />
@@ -420,4 +434,4 @@ const Team: React.FC<ComponentProps> = ({
   );
 };
 
-export default Team
+export default Team;
