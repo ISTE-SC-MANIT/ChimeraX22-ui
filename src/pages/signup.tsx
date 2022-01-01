@@ -43,6 +43,7 @@ const LoginButton = withStyles((theme) => ({
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
+    overflow: 'hidden',
   },
   image: {
     backgroundImage: `url('/Vector2.png')`,
@@ -308,7 +309,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -328,7 +329,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -376,7 +377,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 variant='contained'
                 className={classes.submit}
                 color='primary'
-                // disabled
+              // disabled
               >
                 {status === Status.LOADING
                   ? `Submitting...`
@@ -392,7 +393,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
                     onClick={handleGoogleSignIn}
-                    // disabled={}
+                  // disabled={}
                   >
                     <Image
                       src='/google-logo.png'

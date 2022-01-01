@@ -283,7 +283,7 @@ const Login: React.FC<ComponentProps> = ({
               </SigninButton>
             </Grid>
           </Box>
-          {/* <VectorImg classes={classes} /> */}
+          <VectorImg classes={classes} />
         </Grid>
         <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
           <div className={classes.paper}>
@@ -395,7 +395,7 @@ const Login: React.FC<ComponentProps> = ({
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
                       onClick={handleGoogleLogin}
-                      // disabled={}
+                    // disabled={}
                     >
                       <Image
                         src='/google-logo.png'

@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     body: {
       minHeight: '80vh',
+      overflow: 'hidden',
     },
     typo: {
       color: theme.palette.mode === 'light' ? '#1976D2' : 'white',
@@ -147,7 +148,7 @@ const Landing: React.FC = () => {
     <>
       <NavbarHeader open={open} setOpen={setOpen} />
       <div className={classes.root} onClick={() => setOpen(false)}>
-        <Box padding={4} className={classes.header}>
+        <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
               // style={{ cursor: 'pointer' }}
@@ -163,11 +164,11 @@ const Landing: React.FC = () => {
             />
           </Box>
           <Box display='flex' alignItems='center' justifyContent='center'>
-            {/* <Fade in={true}>
+            <Fade in={true}>
               <Box className={classes.darkTheme}>
                 <ThemeToggleButton />
               </Box>
-            </Fade> */}
+            </Fade>
             <Button
               variant='contained'
               onClick={() => router.push('/login')}
@@ -218,11 +219,11 @@ const Landing: React.FC = () => {
                 <Typography variant='h5' align='center'>
                   Prelims
                   <br />
-                  30th Jan' 2021
+                  30th Jan' 2022
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
-                {/* <Btn onClick={() => router.push('/signin')}>Register Now</Btn> */}
+                <Btn onClick={() => router.push('/signup')}>Register Now</Btn>
                 <Link
                   target='_blank'
                   href='https://drive.google.com/file/d/18fYq_uSXg76WQ4Ov6BTZ4rjJFkwTXThV/view?usp=sharing'
