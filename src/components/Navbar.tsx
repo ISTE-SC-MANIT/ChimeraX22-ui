@@ -5,10 +5,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {  Theme } from '@mui/material/styles';
-import{makeStyles} from '@mui/styles';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
+import firebaseSDK from '../firebase';
+import nookies from 'nookies';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -22,31 +24,46 @@ interface NavbarProps {
   setErrorMessage: (message: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ setOpen, setSuccessMessage, setErrorMessage }) => {
-    const classes = useStyles();
-    const router = useRouter();
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const logoutHandle = () => {
-        setSuccessMessage('Logged out');
-        cookie.remove('token');
-        router.push('/');
-    };
-    return (
-        <AppBar position="sticky">
-            <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
-                <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={classes.title}>
-                Chimera-X
-                </Typography>
-                <Button color="inherit" onClick={logoutHandle}>
-                Log out
-                </Button>
-            </Toolbar>
-        </AppBar>
-    );
+const Navbar: React.FC<NavbarProps> = ({
+  setOpen,
+  setSuccessMessage,
+  setErrorMessage,
+}) => {
+  const classes = useStyles();
+  const router = useRouter();
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const logoutHandle = () => {
+    firebaseSDK
+      .auth()
+      .signOut()
+      .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+      .then(() => router.push('/'))
+      .catch(() => {
+        console.log('error deleting token');
+      });
+  };
+  return (
+    <AppBar position='sticky'>
+      <Toolbar>
+        <IconButton
+          edge='start'
+          color='inherit'
+          aria-label='menu'
+          onClick={handleDrawerOpen}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant='h6' className={classes.title}>
+          Chimera-X
+        </Typography>
+        <Button color='inherit' onClick={logoutHandle}>
+          Log out
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
 };
 export default Navbar;

@@ -41,7 +41,8 @@ import cookie from 'js-cookie';
 import Navbar from '../../components/Navbar';
 import LoadingScreen from '../../components/loadingScreen';
 import DialogBox from '../../components/dialog';
-
+import firebaseSDK from '../../firebase';
+import nookies from 'nookies';
 class Amount extends Component {
   render() {
     return (
@@ -217,8 +218,14 @@ const Team: React.FC<ComponentProps> = ({
   };
 
   const logoutHandle = () => {
-    cookie.remove('token');
-    router.push('/');
+    firebaseSDK
+      .auth()
+      .signOut()
+      .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+      .then(() => router.push('/'))
+      .catch(() => {
+        console.log('error deleting token');
+      });
   };
   const handleClose = () => setOpenDialog(false);
 
