@@ -157,7 +157,6 @@ const VectorImg = (classes: any) => {
 };
 
 const Login: React.FC<ComponentProps> = ({
-  refetch,
   setErrorMessage,
   setSuccessMessage,
 }) => {
@@ -235,7 +234,7 @@ const Login: React.FC<ComponentProps> = ({
       });
   };
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleLogin = () => {
     const provider = new firebaseSDK.auth.GoogleAuthProvider();
     firebaseSDK
       .auth()
@@ -300,7 +299,7 @@ const Login: React.FC<ComponentProps> = ({
               validationSchema={validationSchema}
               initialValues={initialValues}
             >
-              <Form aria-label='Sign up form' id='sign-up-form'>
+              <Form aria-label='log in form' id='log-in-form'>
                 <Field name='email'>
                   {({
                     field,
@@ -308,7 +307,7 @@ const Login: React.FC<ComponentProps> = ({
                   }: FieldProps<typeof initialValues['email']>) => (
                     <TextField
                       fullWidth
-                      id='name-input'
+                      id='email-input'
                       label='Email Address'
                       required
                       {...field}
@@ -395,7 +394,7 @@ const Login: React.FC<ComponentProps> = ({
                 <Box>
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
-                      onClick={handleGoogleSignIn}
+                      onClick={handleGoogleLogin}
                       // disabled={}
                     >
                       <Image

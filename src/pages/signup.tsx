@@ -195,7 +195,7 @@ const SignUp: NextPage<ComponentProps> = ({
     setVisible(!visible);
   };
 
-  const handleSubmit = (values: typeof initialValues) => {
+  const handleSignUp = (values: typeof initialValues) => {
     setStatus(Status.LOADING);
     firebaseSDK
       .auth()
@@ -221,6 +221,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setSuccessMessage(
               'Successfully created account. Please log in with your new account.'
             );
+            return router.push('/dashboard/register');
           })
           .catch((error) => {
             setFormValues({ ...formValues });
@@ -228,7 +229,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setErrorMessage(error.response.data.errors);
             return error;
           });
-        await firebaseSDK.auth().signOut();
+        // await firebaseSDK.auth().signOut();
         return router.push('/login');
       })
       .catch((error) => {
@@ -238,6 +239,7 @@ const SignUp: NextPage<ComponentProps> = ({
         return error;
       });
   };
+
   const handleGoogleSignIn = () => {
     const provider = new firebaseSDK.auth.GoogleAuthProvider();
     firebaseSDK
@@ -257,6 +259,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setSuccessMessage(
               'Successfully created account. Please log in with your new account.'
             );
+            return router.push('/dashboard/register');
           })
           .catch((error) => {
             setFormValues({ ...formValues });
@@ -264,7 +267,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setErrorMessage(error.response.data.errors);
             return error;
           });
-        await firebaseSDK.auth().signOut();
+        // await firebaseSDK.auth().signOut();
         return router.push('/login');
       })
       .catch((error) => {
@@ -283,7 +286,7 @@ const SignUp: NextPage<ComponentProps> = ({
             Sign Up
           </Typography>
           <Formik
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values) => handleSignUp(values)}
             validationSchema={validationSchema}
             initialValues={initialValues}
           >

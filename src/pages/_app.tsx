@@ -104,6 +104,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 ) : (
                   <>
                     <h1>Error</h1>
+                    {viewerQuery.error?.message}
                   </>
                 )}
                 <Snackbar open={true} autoHideDuration={6000}>
