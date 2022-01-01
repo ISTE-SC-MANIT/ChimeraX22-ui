@@ -157,6 +157,7 @@ const VectorImg = (classes: any) => {
 };
 
 const Login: React.FC<ComponentProps> = ({
+  refetch,
   setErrorMessage,
   setSuccessMessage,
 }) => {

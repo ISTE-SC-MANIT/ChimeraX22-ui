@@ -6,10 +6,10 @@
 import { UserInput } from "./globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: register
+// GraphQL mutation operation: RegisterUserMutation
 // ====================================================
 
-export interface register_registerUser {
+export interface RegisterUserMutation_registerUser {
   __typename: "User";
   name: string;
   id: string | null;
@@ -19,10 +19,10 @@ export interface register_registerUser {
   strategy: string;
 }
 
-export interface register {
-  registerUser: register_registerUser;
+export interface RegisterUserMutation {
+  registerUser: RegisterUserMutation_registerUser;
 }
 
-export interface registerVariables {
+export interface RegisterUserMutationVariables {
   input: UserInput;
 }

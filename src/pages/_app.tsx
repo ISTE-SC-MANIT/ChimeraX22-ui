@@ -85,6 +85,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 {!isProtectedRoute ? (
                   <Component
                     {...pageProps}
+                    refetch={viewerQuery.refetch}
                     setSuccessMessage={setSuccessMessage}
                     setErrorMessage={setErrorMessage}
                   />

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GetTeamDetailsQuery = gql`
+export const GetTeamDetails = gql`
   query GetTeamDetailsQuery {
     getTeamDetails {
       teamLeader {
@@ -17,5 +17,3 @@ const GetTeamDetailsQuery = gql`
     }
   }
 `;
-
-export default GetTeamDetailsQuery;

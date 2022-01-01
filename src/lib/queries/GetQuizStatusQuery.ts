@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GetQuizStatusQuery = gql`
+export const GetQuizStatus = gql`
   query GetQuizStatusQuery {
     getQuizDetails {
       quizStartTime
@@ -8,5 +8,3 @@ const GetQuizStatusQuery = gql`
     }
   }
 `;
-
-export default GetQuizStatusQuery;
