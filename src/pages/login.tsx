@@ -283,7 +283,7 @@ const Login: React.FC<ComponentProps> = ({
               </SigninButton>
             </Grid>
           </Box>
-          {/* <VectorImg classes={classes} /> */}
+          <VectorImg classes={classes} />
         </Grid>
         <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
           <div className={classes.paper}>
