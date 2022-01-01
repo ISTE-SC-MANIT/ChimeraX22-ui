@@ -25,6 +25,9 @@ import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import firebaseSDK from '../firebase';
+import { Status } from '../Utils/status';
+import { authPersist } from '../firebase/persistence';
 
 const SigninButton = withStyles((theme) => ({
   root: {
@@ -161,6 +164,10 @@ const Login: React.FC<ComponentProps> = ({
   const [openPass, setOpenPass] = React.useState(false);
   const [pending, setPending] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
+  const [status, setStatus] = React.useState<Status>(Status.IDLE);
+  const [user, setUser] = React.useState<firebase.default.User | null>(null);
+  const [remember, setRemember] = React.useState(true);
+  const persist = remember ? authPersist.local : authPersist.session;
   const router = useRouter();
 
   const handleShowPassword = () => {
@@ -199,50 +206,47 @@ const Login: React.FC<ComponentProps> = ({
     }
   };
 
-  // const sendGoogleToken = (tokenId) => {
-  //   axios
-  //     .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/googlelogin`, {
-  //       idToken: tokenId,
-  //     })
-  //     .then((response) => {
-  //       authenticate(response, () => {
-  //         router.push(getStep(response.data.user.step))
-  //       })
+  const handleLogin = (values: typeof initialValues) => {
+    if (!(values.email && values.password))
+      return setErrorMessage('Please enter valid email and password');
+    setStatus(Status.LOADING);
 
-  //     })
-  //     .catch((error) => {
-  //       // console.log(error)
-  //       setErrorMessage("You might have been singed up from email and password")
-  //       // return error;
-  //     });
-  // };
+    firebaseSDK
+      .auth()
+      .setPersistence(persist)
+      .then(() =>
+        firebaseSDK
+          .auth()
+          .signInWithEmailAndPassword(values.email, values.password)
+          .then((response) => {
+            setUser(response.user);
+            setStatus(Status.SUCCESS);
+            setSuccessMessage('Logged in successfully');
+            router.push('/dashboard/register');
+          })
+          .catch((e) => {
+            setStatus(Status.ERROR);
+            setErrorMessage(`Error while logging in ${e.message}`);
+          })
+      )
+      .catch((e) => {
+        setErrorMessage(`Error while logging in ${e.message}`);
+      });
+  };
 
-  // const responseGoogle = (response: GoogleLoginResponse) => {
-
-  //   if (Boolean(response.tokenId)){
-  //     sendGoogleToken(response.tokenId);
-  //   }
-
-  // }
-
-  const handleLocalLogin = (values: typeof initialValues) => {
-    setPending(true);
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/login`, { ...values })
-      .then((response) => {
-        console.log(response);
-
-        authenticate(response, () => {
-          router.push(getStep(response.data.user.step));
-        });
-        setSuccessMessage('Successfully logged in');
-        setPending(false);
+  const handleGoogleSignIn = () => {
+    const provider = new firebaseSDK.auth.GoogleAuthProvider();
+    firebaseSDK
+      .auth()
+      .signInWithPopup(provider)
+      .then(async (response) => {
+        setUser(response.user);
+        setStatus(Status.SUCCESS);
+        setSuccessMessage('Logged in successfully');
+        router.push('/dashboard/register');
       })
       .catch((error) => {
-        console.log(error.response.data);
-        setErrorMessage(error.response.data.errors);
-        setPending(false);
-        return error;
+        setErrorMessage(`Couldn't sign up with Google\n ${error.message}`);
       });
   };
 
@@ -291,7 +295,7 @@ const Login: React.FC<ComponentProps> = ({
             </Typography>
             {/* <form className={classes.form} noValidate> */}
             <Formik
-              onSubmit={(values) => handleLocalLogin(values)}
+              onSubmit={(values) => handleLogin(values)}
               validationSchema={validationSchema}
               initialValues={initialValues}
             >
@@ -359,7 +363,7 @@ const Login: React.FC<ComponentProps> = ({
                   className={classes.submit}
                   color='primary'
                 >
-                  Log In
+                  {status === Status.LOADING ? `Submitting...` : `Log In`}
                 </Button>
                 <Grid container>
                   <Grid item xs>
@@ -389,39 +393,22 @@ const Login: React.FC<ComponentProps> = ({
                 </Box>
                 <Box>
                   <Grid container justifyContent='center' alignItems='center'>
-                    <GoogleLogin
-                      clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
-                      // onSuccess={responseGoogle}
-                      // onFailure={responseGoogle}
-                      cookiePolicy={'single_host_origin'}
-                      render={(renderProps) => (
-                        <IconButton
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
-                        >
-                          <img
-                            src='/google-logo.png'
-                            alt='google'
-                            height={60}
-                            className={classes.logoIcon}
-                          />
-                        </IconButton>
-                      )}
-                    ></GoogleLogin>
-
-                    {/* <Grid item>
-                      
-                    </Grid> */}
-                    {/* <Grid item>
-                      <IconButton>
-                        <img src="/fb-logo.png" alt="fb" height={60} className={classes.logoIcon} />
-                      </IconButton>
-                    </Grid> */}
+                    <IconButton
+                      onClick={handleGoogleSignIn}
+                      // disabled={}
+                    >
+                      <Image
+                        src='/google-logo.png'
+                        alt='google'
+                        width={60}
+                        height={60}
+                        className={classes.logoIcon}
+                      />
+                    </IconButton>
                   </Grid>
                 </Box>
               </Form>
             </Formik>
-            {/* </form> */}
           </div>
         </Grid>
       </Grid>
