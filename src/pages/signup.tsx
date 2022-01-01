@@ -44,6 +44,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
     overflow: 'hidden',
+
+  },
+  Backcolor: {
+    backgroundColor:
+      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   image: {
     backgroundImage: `url('/Vector2.png')`,
@@ -279,7 +284,7 @@ const SignUp: NextPage<ComponentProps> = ({
 
   return (
     <Grid container component='main' className={classes.root}>
-      <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
+      <Grid item xs={12} sm={6} component={Paper} elevation={0} square className={classes.Backcolor}>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />

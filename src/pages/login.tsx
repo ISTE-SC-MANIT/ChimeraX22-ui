@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       minHeight: '100vh',
     },
   },
+  Backcolor: {
+    backgroundColor:
+      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+  },
   paper: {
     margin: theme.spacing(8, 4),
     display: 'flex',
@@ -285,7 +289,7 @@ const Login: React.FC<ComponentProps> = ({
           </Box>
           <VectorImg classes={classes} />
         </Grid>
-        <Grid item xs={12} sm={6} component={Paper} elevation={0} square>
+        <Grid item xs={12} sm={6} component={Paper} elevation={0} square className={classes.Backcolor}>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
