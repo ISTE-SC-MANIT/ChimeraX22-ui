@@ -223,10 +223,11 @@ const SignUp: NextPage<ComponentProps> = ({
             );
             return router.push('/dashboard/register');
           })
-          .catch((error) => {
+          .catch(async (error) => {
+            await response.user?.delete();
             setFormValues({ ...formValues });
             setStatus(Status.ERROR);
-            setErrorMessage(error.response.data.errors);
+            setErrorMessage(error.message);
             return error;
           });
         // await firebaseSDK.auth().signOut();

@@ -2,12 +2,15 @@ import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import { createContext, useContext, useEffect, useState } from 'react';
 import firebaseSDK from '../firebase';
-
+import * as React from 'react';
 const AuthContext = createContext<{ user: firebase.default.User | null }>({
   user: null,
 });
+interface authProps {
+  children: React.ReactNode;
+}
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = (props: authProps) => {
   const [user, setUser] = useState<firebase.default.User | null>(null);
   const router = useRouter();
 
@@ -25,7 +28,9 @@ export const AuthProvider = ({ children }) => {
   }, [router]);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>
+      {props.children}
+    </AuthContext.Provider>
   );
 };
 

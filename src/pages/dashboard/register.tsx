@@ -182,7 +182,7 @@ const Register: React.FC<ComponentProps> = ({
   }, [viewer.step]);
 
   const initialValues = {
-    name: '',
+    name: viewer.name,
     email: viewer.email,
     college: '',
     phone: '',
