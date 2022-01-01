@@ -395,7 +395,7 @@ const Login: React.FC<ComponentProps> = ({
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
                       onClick={handleGoogleLogin}
-                      // disabled={}
+                    // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
