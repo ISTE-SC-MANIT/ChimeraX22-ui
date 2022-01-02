@@ -232,7 +232,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setSuccessMessage(
               'Successfully created account. Please log in with your new account.'
             );
-            setloading(true);
+            setloading(false);
             return router.push('/dashboard/register');
           })
           .catch(async (error) => {

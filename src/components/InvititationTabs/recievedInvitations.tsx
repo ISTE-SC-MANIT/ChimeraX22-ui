@@ -39,10 +39,6 @@ const ReceivedInvitation: React.FC<Props> = ({
   const { data, error, loading, refetch } =
     useQuery<GetInvitationQuery>(GetInvitation);
 
-    
-    React.useEffect(() => {
-      refetch();
-  }, [refetch]);
   const [details, setDetails] = React.useState({
     userId: '',
     invitationId: '',
