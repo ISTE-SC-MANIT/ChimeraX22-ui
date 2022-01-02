@@ -109,12 +109,24 @@ function MyApp({ Component, pageProps }: AppProps) {
                     {viewerQuery.error?.message}
                   </>
                 )}
-                <Snackbar open={success} autoHideDuration={6000}>
+                <Snackbar
+                  open={success}
+                  onClose={() => {
+                    handleClose();
+                  }}
+                  autoHideDuration={3000}
+                >
                   <Alert onClose={handleClose} severity='success'>
                     {successMsg}
                   </Alert>
                 </Snackbar>
-                <Snackbar open={errors} autoHideDuration={6000}>
+                <Snackbar
+                  open={errors}
+                  onClose={() => {
+                    handleClose();
+                  }}
+                  autoHideDuration={3000}
+                >
                   <Alert onClose={handleClose} severity='error'>
                     {errorMsg}
                   </Alert>

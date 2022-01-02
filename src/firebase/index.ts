@@ -1,7 +1,9 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/auth';
-
+import nookies from 'nookies';
+import { useRouter } from 'next/router';
+import { client } from '../lib/apollo';
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -27,3 +29,14 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
 
 const firebaseSDK = firebase;
 export default firebaseSDK;
+
+export const logout = () => {
+  firebaseSDK
+    .auth()
+    .signOut()
+    .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+    .then(() => client.clearStore())
+    .catch(() => {
+      console.log('error deleting token');
+    });
+};
