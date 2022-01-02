@@ -394,7 +394,7 @@ const Login: React.FC<ComponentProps> = ({
                 </Field>
 
                 <FormControlLabel
-                  control={<Checkbox value='remember' color='primary' />}
+                  control={<Checkbox value='remember' onChange={() => setRemember(!remember)} color='primary' />}
                   label='Remember me'
                 />
                 <Button
