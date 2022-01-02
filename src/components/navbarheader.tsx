@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Drawer, Divider, Box, Button, Fade } from '@mui/material';
-import { makeStyles} from '@mui/styles';
-import {Theme} from '@mui/material/styles'
+import { makeStyles } from '@mui/styles';
+import { Theme } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -55,7 +55,7 @@ interface DrawerProps {
 }
 
 const NavbarHeader: React.FC<DrawerProps> = ({ open, setOpen }) => {
-  const classes = useStyles({open});
+  const classes = useStyles({ open });
   const router = useRouter();
 
   return (
@@ -84,7 +84,7 @@ const NavbarHeader: React.FC<DrawerProps> = ({ open, setOpen }) => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => router.push('/signin')}
+              onClick={() => router.push('/signup')}
               className={classes.button}
             >
               Sign up

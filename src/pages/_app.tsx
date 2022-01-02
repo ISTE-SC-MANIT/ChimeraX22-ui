@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
 import { ApolloProvider, useQuery } from '@apollo/client';
-import {CssBaseline} from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext, toggleMode } from '../components/theme';
 import { useRouter } from 'next/router';
@@ -76,12 +76,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ThemeContext.Provider
-            value={{
-              toggleMode: () => toggleMode(setMode),
-            }}
-          >
+            <CssBaseline />
+            <ThemeContext.Provider
+              value={{
+                toggleMode: () => toggleMode(setMode),
+              }}
+            >
               <>
                 {routeChange && <h1>loading</h1>}
                 {!isProtectedRoute ? (
@@ -109,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     {viewerQuery.error?.message}
                   </>
                 )}
-                <Snackbar open={true} autoHideDuration={6000}>
+                <Snackbar open={success} autoHideDuration={6000}>
                   <Alert onClose={handleClose} severity='success'>
                     {successMsg}
                   </Alert>
@@ -120,8 +120,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </Alert>
                 </Snackbar>
               </>
-          </ThemeContext.Provider>
-            </ThemeProvider>
+            </ThemeContext.Provider>
+          </ThemeProvider>
         </ApolloProvider>
       </AuthProvider>
     </>

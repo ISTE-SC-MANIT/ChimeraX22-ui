@@ -173,6 +173,7 @@ const Login: React.FC<ComponentProps> = ({
   const [remember, setRemember] = React.useState(true);
   const persist = remember ? authPersist.local : authPersist.session;
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
 
   const handleShowPassword = () => {
     setVisible(!visible);
@@ -214,7 +215,7 @@ const Login: React.FC<ComponentProps> = ({
     if (!(values.email && values.password))
       return setErrorMessage('Please enter valid email and password');
     setStatus(Status.LOADING);
-
+    setLoading(true);
     firebaseSDK
       .auth()
       .setPersistence(persist)
@@ -226,14 +227,17 @@ const Login: React.FC<ComponentProps> = ({
             setUser(response.user);
             setStatus(Status.SUCCESS);
             setSuccessMessage('Logged in successfully');
+            setLoading(false);
             router.push('/dashboard/register');
           })
           .catch((e) => {
             setStatus(Status.ERROR);
+            setLoading(false);
             setErrorMessage(`Error while logging in ${e.message}`);
           })
       )
       .catch((e) => {
+        setLoading(false);
         setErrorMessage(`Error while logging in ${e.message}`);
       });
   };
@@ -366,6 +370,7 @@ const Login: React.FC<ComponentProps> = ({
                   variant='contained'
                   className={classes.submit}
                   color='primary'
+                  disabled={loading}
                 >
                   {status === Status.LOADING ? `Submitting...` : `Log In`}
                 </Button>
@@ -381,7 +386,7 @@ const Login: React.FC<ComponentProps> = ({
                   </Grid>
                   <Grid item>
                     <Link
-                      onClick={() => router.push('/signin')}
+                      onClick={() => router.push('/signup')}
                       variant='body2'
                       className={classes.link}
                     >
