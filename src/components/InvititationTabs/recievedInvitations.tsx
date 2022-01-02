@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import AcceptInvitation from './acceptInvitations';
 import { useMutation, useQuery } from '@apollo/client';
 import { DeleteInvitationInput } from '../../__generated__/globalTypes';
@@ -30,11 +29,12 @@ interface Props {
   refetch: () => void;
 }
 
+
 const ReceivedInvitation: React.FC<Props> = ({
   refetchRef,
   setSuccessMessage,
   setErrorMessage,
-  //refetch,
+  // refetch,
 }) => {
   const { data, error, loading, refetch } =
     useQuery<GetInvitationQuery>(GetInvitation);
@@ -47,9 +47,10 @@ const ReceivedInvitation: React.FC<Props> = ({
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
+
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
-
+  
   if (loading) {
     return (
       <Box ml={32} mt={12}>
@@ -57,8 +58,10 @@ const ReceivedInvitation: React.FC<Props> = ({
       </Box>
     );
   }
-  
-
+  const myfun = () => {
+     refetch();
+  }
+  {setInterval(myfun , 3000)}
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
     deleteInvite({
@@ -70,12 +73,14 @@ const ReceivedInvitation: React.FC<Props> = ({
         setErrorMessage(err.message);
       },
     });
+     refetch();
   };
-
+   
   const receivedInvitation = data?.getInvitations?.receivedInvitations;
 
   return (
     <>
+     
       <AcceptInvitation
         name={details.name}
         invitationId={details.invitationId}

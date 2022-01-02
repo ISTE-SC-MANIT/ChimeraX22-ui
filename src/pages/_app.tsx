@@ -68,6 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     [mode]
   );
 
+
   const viewerQuery = useQuery<viewer>(User, { client: client });
 
   return (
