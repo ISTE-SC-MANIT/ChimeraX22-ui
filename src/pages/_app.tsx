@@ -77,14 +77,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   // const client = new ApolloClient({
   //   uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
 
-<<<<<<< HEAD
   //   headers: { authorization: `Bearer ${cookie.get('token2')}` },
   //   cache: new InMemoryCache(),
   // });
-=======
-
-  const viewerQuery = useQuery<viewer>(User, { client: client });
->>>>>>> 5f51b1d4486b085fea32b14ec8de5812aaf53874
 
   const [view, viewerQuery] = useLazyQuery<viewer>(User, { client: client });
   React.useEffect(() => {
