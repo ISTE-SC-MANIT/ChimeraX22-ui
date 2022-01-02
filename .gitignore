@@ -39,7 +39,3 @@ yarn-error.log*
 
 #Temp File
 commands.txt
-
-#Admin portal
-/src/pages/admin
-/src/components/admin
