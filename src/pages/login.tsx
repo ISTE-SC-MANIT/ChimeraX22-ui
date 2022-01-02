@@ -161,6 +161,7 @@ const VectorImg = (classes: any) => {
 };
 
 const Login: React.FC<ComponentProps> = ({
+  refetch,
   setErrorMessage,
   setSuccessMessage,
 }) => {
@@ -223,9 +224,19 @@ const Login: React.FC<ComponentProps> = ({
           .auth()
           .signInWithEmailAndPassword(values.email, values.password)
           .then((response) => {
+            //Not working Token is Not still in cookies
+            refetch();
             setUser(response.user);
             setStatus(Status.SUCCESS);
             setSuccessMessage('Logged in successfully');
+
+            //Fix this (This can be done if refetch is working perfectly, so step = viewer.step);
+            // But viewer is not passed in protect route
+
+            // best idea is to redirect all pages to /dashboard and implement useffect there
+            // router.push('/dashboard) then useffect will auto redirect
+
+            // or either fetch step from backend as done in google login (but it will create network traffic unnescary , leads to CRASHInG)
             router.push('/dashboard/register');
           })
           .catch((e) => {
@@ -244,10 +255,28 @@ const Login: React.FC<ComponentProps> = ({
       .auth()
       .signInWithPopup(provider)
       .then(async (response) => {
-        setUser(response.user);
-        setStatus(Status.SUCCESS);
-        setSuccessMessage('Logged in successfully');
-        router.push('/dashboard/register');
+        axios
+          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
+            name: response.user?.displayName,
+            uid: response.user?.uid,
+            email: response.user?.email,
+            strategy: response.user?.providerData[0]?.providerId,
+          })
+          .then((response) => {
+            // Not working Token is Still Not stored in Cokkies
+            refetch();
+            setStatus(Status.SUCCESS);
+            setSuccessMessage('Authenticated');
+            const step = getStep(response.data.user.step);
+            return router.push(step);
+          })
+          .catch((error) => {
+            setStatus(Status.ERROR);
+            setErrorMessage('Error');
+            return error;
+          });
+        // await firebaseSDK.auth().signOut();
+        return router.push('/login');
       })
       .catch((error) => {
         setErrorMessage(`Couldn't sign up with Google\n ${error.message}`);
@@ -289,7 +318,15 @@ const Login: React.FC<ComponentProps> = ({
           </Box>
           <VectorImg classes={classes} />
         </Grid>
-        <Grid item xs={12} sm={6} component={Paper} elevation={0} square className={classes.Backcolor}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          component={Paper}
+          elevation={0}
+          square
+          className={classes.Backcolor}
+        >
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -399,7 +436,7 @@ const Login: React.FC<ComponentProps> = ({
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
                       onClick={handleGoogleLogin}
-                    // disabled={}
+                      // disabled={}
                     >
                       <Image
                         src='/google-logo.png'

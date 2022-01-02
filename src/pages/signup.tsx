@@ -24,7 +24,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import { NextPage } from 'next';
-import { Status } from '../Utils/status';
+import { getStep, Status } from '../Utils/status';
 import firebaseSDK from '../firebase';
 import nookies from 'nookies';
 import { DisabledByDefault } from '@mui/icons-material';
@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
     overflow: 'hidden',
-
   },
   Backcolor: {
     backgroundColor:
@@ -175,7 +174,7 @@ const SignUp: NextPage<ComponentProps> = ({
 }) => {
   const classes = useStyles();
   const router = useRouter();
-  const [loading , setloading] =React.useState(false);
+  const [loading, setloading] = React.useState(false);
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
   const [visible, setVisible] = React.useState(false);
   const [formValues, setFormValues] = React.useState<FormValues>({
@@ -206,12 +205,11 @@ const SignUp: NextPage<ComponentProps> = ({
 
   const handleSignUp = (values: typeof initialValues) => {
     setStatus(Status.LOADING);
-    setloading(true); 
+    setloading(true);
     firebaseSDK
       .auth()
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(async (response) => {
-        // console.log(response.user);
         await response.user?.updateProfile({
           displayName: values.fullName,
         });
@@ -224,7 +222,6 @@ const SignUp: NextPage<ComponentProps> = ({
             uid: response.user?.uid,
             email: response.user?.email,
             strategy: response.user?.providerData[0]?.providerId,
-           
           })
           .then((response) => {
             // console.log(response.data);
@@ -233,6 +230,7 @@ const SignUp: NextPage<ComponentProps> = ({
               'Successfully created account. Please log in with your new account.'
             );
             setloading(false);
+            // step is by default register but same graphql error persisting here
             return router.push('/dashboard/register');
           })
           .catch(async (error) => {
@@ -269,12 +267,12 @@ const SignUp: NextPage<ComponentProps> = ({
             strategy: response.user?.providerData[0]?.providerId,
           })
           .then((response) => {
-            // console.log(response.data);
+            // Not working Token is Still Not stored in Cokkies
+            refetch();
             setStatus(Status.SUCCESS);
-            setSuccessMessage(
-              'Successfully created account. Please log in with your new account.'
-            );
-            return router.push('/dashboard/register');
+            setSuccessMessage('Authenticated');
+            const step = getStep(response.data.step);
+            return router.push(step);
           })
           .catch((error) => {
             setFormValues({ ...formValues });
@@ -292,7 +290,15 @@ const SignUp: NextPage<ComponentProps> = ({
 
   return (
     <Grid container component='main' className={classes.root}>
-      <Grid item xs={12} sm={6} component={Paper} elevation={0} square className={classes.Backcolor}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        component={Paper}
+        elevation={0}
+        square
+        className={classes.Backcolor}
+      >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -322,7 +328,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -342,7 +348,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -406,7 +412,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
                     onClick={handleGoogleSignIn}
-                  // disabled={}
+                    // disabled={}
                   >
                     <Image
                       src='/google-logo.png'

@@ -38,6 +38,7 @@ import CustomDrawer from '../../components/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
 import { useMutation } from '@apollo/client';
+import { logout } from '../../firebase/index';
 const validationSchema = yup.object({
   name: yup
     .string()
@@ -165,8 +166,6 @@ const Register: React.FC<ComponentProps> = ({
   const [terms, setTerms] = React.useState<boolean>(false);
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
   React.useEffect(() => {
-    console.log(viewer);
-
     if (viewer.step === 'REGISTER') {
       router.push('/dashboard/register');
     }
@@ -197,7 +196,7 @@ const Register: React.FC<ComponentProps> = ({
       college: values.college,
       city: values.city.name,
     };
-    console.log(userInput);
+
     mutateFunction({
       variables: { input: userInput },
       onCompleted: () => {
@@ -223,6 +222,16 @@ const Register: React.FC<ComponentProps> = ({
     <div className={classes.root} id='reg'>
       {/* <CustomDrawer name={'Devansh'} username={'Devansh'} open={open} setOpen={setOpen} /> */}
       <Box>
+        <Button
+          variant='outlined'
+          onClick={() => {
+            logout();
+            router.push('/');
+          }}
+        >
+          {' '}
+          Logout
+        </Button>
         <ListItem className={classes.heading}>
           <ListItemText
             primary={' Step-1 Registration'}
