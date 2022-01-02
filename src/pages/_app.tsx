@@ -1,6 +1,12 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import { ApolloProvider, useQuery } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  useLazyQuery,
+  useQuery,
+} from '@apollo/client';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext, toggleMode } from '../components/theme';
@@ -12,6 +18,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import SEO from '../components/SEO';
 import { AuthProvider } from '../Auth/AuthContext';
+import cookie from 'js-cookie';
 export interface ComponentProps {
   viewer: viewer_viewer;
   refetch: () => void;
@@ -67,10 +74,25 @@ function MyApp({ Component, pageProps }: AppProps) {
       }),
     [mode]
   );
+  // const client = new ApolloClient({
+  //   uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
 
+  //   headers: { authorization: `Bearer ${cookie.get('token2')}` },
+  //   cache: new InMemoryCache(),
+  // });
 
-  const viewerQuery = useQuery<viewer>(User, { client: client });
-
+  const [view, viewerQuery] = useLazyQuery<viewer>(User, { client: client });
+  React.useEffect(() => {
+    if (isProtectedRoute) {
+      view()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+    }
+  }, [isProtectedRoute]);
   return (
     <>
       <SEO />
