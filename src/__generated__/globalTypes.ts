@@ -90,6 +90,18 @@ export interface CreateOrderInput {
   referralCode?: string | null;
 }
 
+export interface CreateQuestionInput {
+  question: string;
+  questionType: string;
+  questionAnswerType: string;
+  answer: string;
+  answer2?: string | null;
+  questionNumber: number;
+  questionAssets?: string | null;
+  firstAnswerLabel: string;
+  secondAnswerLabel?: string | null;
+}
+
 export interface DeleteInvitationInput {
   invitationId: string;
 }
