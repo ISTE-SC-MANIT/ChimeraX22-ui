@@ -215,39 +215,27 @@ const SignUp: NextPage<ComponentProps> = ({
         });
         return response;
       })
-      .then(async (response) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-            name: response.user?.displayName,
-            uid: response.user?.uid,
-            email: response.user?.email,
-            strategy: response.user?.providerData[0]?.providerId,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setStatus(Status.SUCCESS);
+      .then((response) => {
+        firebaseSDK
+          .auth()
+          .signOut()
+          .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+          .then(() => {
             setSuccessMessage(
-              'Successfully created account. Please log in with your new account.'
+              'Account created successfully. Please log in to continue.'
             );
-            setloading(false);
-            // step is by default register but same graphql error persisting here
-            return router.push('/dashboard/register');
+            router.push('/login');
           })
-          .catch(async (error) => {
-            await response.user?.delete();
-            setFormValues({ ...formValues });
-            setStatus(Status.ERROR);
-            setErrorMessage(error.message);
-            setloading(false);
-            return error;
+          .catch((e) => {
+            setErrorMessage('Network Error. Please log in again.');
+            console.log(e.message);
           });
-        // await firebaseSDK.auth().signOut();
-        return router.push('/login');
       })
       .catch((error) => {
         setFormValues({ ...formValues });
         setStatus(Status.ERROR);
-        setErrorMessage(error.message);
+        setErrorMessage("Couldn't create account. Try again");
+        console.log(error.message);
         setloading(false);
         return error;
       });
@@ -258,7 +246,7 @@ const SignUp: NextPage<ComponentProps> = ({
     firebaseSDK
       .auth()
       .signInWithPopup(provider)
-      .then(async (response) => {
+      .then((response) => {
         axios
           .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
             name: response.user?.displayName,
@@ -267,24 +255,33 @@ const SignUp: NextPage<ComponentProps> = ({
             strategy: response.user?.providerData[0]?.providerId,
           })
           .then((response) => {
-            // Not working Token is Still Not stored in Cokkies
-            refetch();
+            // console.log(response.data);
             setStatus(Status.SUCCESS);
-            setSuccessMessage('Authenticated');
-            const step = getStep(response.data.step);
-            return router.push(step);
+            setSuccessMessage('Logged in successfully');
+            const step = getStep(response.data.user.step);
+            router.push(step);
           })
           .catch((error) => {
-            setFormValues({ ...formValues });
-            setStatus(Status.ERROR);
-            setErrorMessage(error.response.data.errors);
-            return error;
+            firebaseSDK
+              .auth()
+              .signOut()
+              .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+              .then(() => {
+                setErrorMessage('Network Error. Please log in again.');
+                router.push('/login');
+              })
+              .catch((e) => {
+                setErrorMessage('Network Error. Please log in again.');
+                console.log(e.message);
+              });
           });
-        // await firebaseSDK.auth().signOut();
-        return router.push('/login');
       })
-      .catch((error) => {
-        setErrorMessage(`Couldn't sign up with Google\n ${error.message}`);
+      .catch((e) => {
+        setStatus(Status.ERROR);
+        setErrorMessage(
+          "Couldn't sign in with Google. Please try again later."
+        );
+        console.log(`Error while logging in ${e.message}`);
       });
   };
 

@@ -28,6 +28,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import firebaseSDK from '../firebase';
 import { Status } from '../Utils/status';
 import { authPersist } from '../firebase/persistence';
+import nookies from 'nookies';
 
 const SigninButton = withStyles((theme) => ({
   root: {
@@ -170,7 +171,6 @@ const Login: React.FC<ComponentProps> = ({
   const [pending, setPending] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
-  const [user, setUser] = React.useState<firebase.default.User | null>(null);
   const [remember, setRemember] = React.useState(true);
   const persist = remember ? authPersist.local : authPersist.session;
   const router = useRouter();
@@ -216,6 +216,7 @@ const Login: React.FC<ComponentProps> = ({
     if (!(values.email && values.password))
       return setErrorMessage('Please enter valid email and password');
     setStatus(Status.LOADING);
+
     setLoading(true);
     firebaseSDK
       .auth()
@@ -225,40 +226,66 @@ const Login: React.FC<ComponentProps> = ({
           .auth()
           .signInWithEmailAndPassword(values.email, values.password)
           .then((response) => {
-            //Not working Token is Not still in cookies
-            refetch();
-            setUser(response.user);
-            setStatus(Status.SUCCESS);
-            setSuccessMessage('Logged in successfully');
-            setLoading(false);
-
-            //Fix this (This can be done if refetch is working perfectly, so step = viewer.step);
-            // But viewer is not passed in protect route
-
-            // best idea is to redirect all pages to /dashboard and implement useffect there
-            // router.push('/dashboard) then useffect will auto redirect
-
-            // or either fetch step from backend as done in google login (but it will create network traffic unnescary , leads to CRASHInG)
-            router.push('/dashboard/register');
+            axios
+              .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
+                name: response.user?.displayName,
+                uid: response.user?.uid,
+                email: response.user?.email,
+                strategy: response.user?.providerData[0]?.providerId,
+              })
+              .then((response) => {
+                // console.log(response.data);
+                setStatus(Status.SUCCESS);
+                setSuccessMessage('Logged in successfully');
+                setLoading(false);
+                const step = getStep(response.data.user.step);
+                router.push(step);
+              })
+              .catch((error) => {
+                firebaseSDK
+                  .auth()
+                  .signOut()
+                  .then(() =>
+                    nookies.destroy(undefined, 'token', { path: '/' })
+                  )
+                  .then(() => {
+                    setErrorMessage('Network Error. Please log in again.');
+                    router.push('/login');
+                  })
+                  .catch((e) => {
+                    setErrorMessage('Network Error. Please log in again.');
+                    console.log(e.message);
+                  });
+              });
           })
           .catch((e) => {
             setStatus(Status.ERROR);
             setLoading(false);
-            setErrorMessage(`Error while logging in ${e.message}`);
+            setErrorMessage('Network Error. Please log in again.');
+            console.log(`Error while logging in ${e.message}`);
           })
       )
       .catch((e) => {
         setLoading(false);
-        setErrorMessage(`Error while logging in ${e.message}`);
+        setErrorMessage('Network Error. Please log in again.');
+        console.log(`Error while logging in ${e.message}`);
       });
   };
+  //Not working Token is Not still in cookies
 
+  //Fix this (This can be done if refetch is working perfectly, so step = viewer.step);
+  // But viewer is not passed in protect route
+
+  // best idea is to redirect all pages to /dashboard and implement useffect there
+  // router.push('/dashboard) then useffect will auto redirect
+
+  // or either fetch step from backend as done in google login (but it will create network traffic unnescary , leads to CRASHInG)
   const handleGoogleLogin = () => {
     const provider = new firebaseSDK.auth.GoogleAuthProvider();
     firebaseSDK
       .auth()
       .signInWithPopup(provider)
-      .then(async (response) => {
+      .then((response) => {
         axios
           .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
             name: response.user?.displayName,
@@ -267,23 +294,33 @@ const Login: React.FC<ComponentProps> = ({
             strategy: response.user?.providerData[0]?.providerId,
           })
           .then((response) => {
-            // Not working Token is Still Not stored in Cokkies
-            refetch();
+            // console.log(response.data);
             setStatus(Status.SUCCESS);
-            setSuccessMessage('Authenticated');
+            setSuccessMessage('Logged in successfully');
+            setLoading(false);
             const step = getStep(response.data.user.step);
-            return router.push(step);
+            router.push(step);
           })
           .catch((error) => {
-            setStatus(Status.ERROR);
-            setErrorMessage('Error');
-            return error;
+            firebaseSDK
+              .auth()
+              .signOut()
+              .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+              .then(() => {
+                setErrorMessage('Network Error. Please log in again.');
+                router.push('/login');
+              })
+              .catch((e) => {
+                setErrorMessage('Network Error. Please log in again.');
+                console.log(e.message);
+              });
           });
-        // await firebaseSDK.auth().signOut();
-        return router.push('/login');
       })
-      .catch((error) => {
-        setErrorMessage(`Couldn't sign up with Google\n ${error.message}`);
+      .catch((e) => {
+        setStatus(Status.ERROR);
+        setLoading(false);
+        setErrorMessage("Couldn't sign in with Google");
+        console.log(`Error while logging in ${e.message}`);
       });
   };
 
@@ -398,7 +435,13 @@ const Login: React.FC<ComponentProps> = ({
                 </Field>
 
                 <FormControlLabel
-                  control={<Checkbox value='remember' onChange={() => setRemember(!remember)} color='primary' />}
+                  control={
+                    <Checkbox
+                      value='remember'
+                      onChange={() => setRemember(!remember)}
+                      color='primary'
+                    />
+                  }
                   label='Remember me'
                 />
                 <Button
@@ -441,7 +484,7 @@ const Login: React.FC<ComponentProps> = ({
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
                       onClick={handleGoogleLogin}
-                    // disabled={}
+                      // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
