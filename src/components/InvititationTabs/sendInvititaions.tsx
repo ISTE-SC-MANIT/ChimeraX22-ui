@@ -40,9 +40,9 @@ const SendInvitation: React.FC<Props> = ({
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
 
-  // React.useEffect(() => {
-   
-  // }, [send]);
+  React.useEffect(() => {
+      refetch();
+  }, [send]);
 
   if (loading) {
     return (

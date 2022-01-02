@@ -28,6 +28,7 @@ import { Status } from '../Utils/status';
 import firebaseSDK from '../firebase';
 import nookies from 'nookies';
 import { DisabledByDefault } from '@mui/icons-material';
+import LinearLoading from '../components/Utils/LoadingScreen';
 const LoginButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#3997F5'),
@@ -174,7 +175,7 @@ const SignUp: NextPage<ComponentProps> = ({
 }) => {
   const classes = useStyles();
   const router = useRouter();
-  const [disabled ,setdisabled]=React.useState(false);
+  const [loading , setloading] =React.useState(false);
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
   const [visible, setVisible] = React.useState(false);
   const [formValues, setFormValues] = React.useState<FormValues>({
@@ -205,8 +206,7 @@ const SignUp: NextPage<ComponentProps> = ({
 
   const handleSignUp = (values: typeof initialValues) => {
     setStatus(Status.LOADING);
-   
-      setdisabled(!disabled);
+    setloading(true); 
     firebaseSDK
       .auth()
       .createUserWithEmailAndPassword(values.email, values.password)
@@ -224,6 +224,7 @@ const SignUp: NextPage<ComponentProps> = ({
             uid: response.user?.uid,
             email: response.user?.email,
             strategy: response.user?.providerData[0]?.providerId,
+           
           })
           .then((response) => {
             // console.log(response.data);
@@ -231,6 +232,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setSuccessMessage(
               'Successfully created account. Please log in with your new account.'
             );
+            setloading(false);
             return router.push('/dashboard/register');
           })
           .catch(async (error) => {
@@ -238,6 +240,7 @@ const SignUp: NextPage<ComponentProps> = ({
             setFormValues({ ...formValues });
             setStatus(Status.ERROR);
             setErrorMessage(error.message);
+            setloading(false);
             return error;
           });
         // await firebaseSDK.auth().signOut();
@@ -247,6 +250,7 @@ const SignUp: NextPage<ComponentProps> = ({
         setFormValues({ ...formValues });
         setStatus(Status.ERROR);
         setErrorMessage(error.message);
+        setloading(false);
         return error;
       });
   };
@@ -386,7 +390,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 variant='contained'
                 className={classes.submit}
                 color='primary'
-              disabled={disabled}
+                disabled={loading}
               >
                 {status === Status.LOADING
                   ? `Submitting...`
