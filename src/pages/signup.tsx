@@ -322,7 +322,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -342,7 +342,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -390,7 +390,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 variant='contained'
                 className={classes.submit}
                 color='primary'
-                disabled={loading}
+                disabled={!(status)}
               >
                 {status === Status.LOADING
                   ? `Submitting...`
@@ -406,7 +406,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
                     onClick={handleGoogleSignIn}
-                    // disabled={}
+                  // disabled={}
                   >
                     <Image
                       src='/google-logo.png'

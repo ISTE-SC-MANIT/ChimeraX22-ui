@@ -107,7 +107,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               }}
             >
               <>
-                {routeChange && <h1>loading</h1>}
+                {routeChange && <LoadingScreen loading={true} />}
                 {!isProtectedRoute ? (
                   <Component
                     {...pageProps}

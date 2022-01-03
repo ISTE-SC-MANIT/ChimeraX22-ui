@@ -408,7 +408,7 @@ const Login: React.FC<ComponentProps> = ({
                   variant='contained'
                   className={classes.submit}
                   color='primary'
-                  disabled={loading}
+                  disabled={!(status)}
                 >
                   {status === Status.LOADING ? `Submitting...` : `Log In`}
                 </Button>
@@ -442,7 +442,7 @@ const Login: React.FC<ComponentProps> = ({
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
                       onClick={handleGoogleLogin}
-                      // disabled={}
+                    // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
