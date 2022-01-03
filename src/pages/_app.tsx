@@ -16,7 +16,7 @@ import { viewer, viewer_viewer } from '../__generated__/viewer';
 import { User } from '../lib/queries/user';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import SEO from '../components/SEO';
+import SEO from '../SEO';
 import { AuthProvider } from '../Auth/AuthContext';
 import cookie from 'js-cookie';
 import LoadingScreen from '../components/loadingScreen';
