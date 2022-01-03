@@ -45,8 +45,9 @@ const AcceptInvitationPage: React.FC<Props> = ({
       variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Teammate Selected');
-        router.push('/dashboard/payment');
         refetch();
+        router.push('/dashboard/payment');
+
       },
       onError: (err) => {
         setErrorMessage(err.message);

@@ -34,9 +34,9 @@ const ReceivedInvitation: React.FC<Props> = ({
   refetchRef,
   setSuccessMessage,
   setErrorMessage,
-  // refetch,
+  refetch,
 }) => {
-  const { data, error, loading, refetch } =
+  const invitationResponse =
     useQuery<GetInvitationQuery>(GetInvitation);
 
   const [details, setDetails] = React.useState({
@@ -50,18 +50,24 @@ const ReceivedInvitation: React.FC<Props> = ({
 
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
-  
-  if (loading) {
+
+  if (invitationResponse.loading) {
     return (
       <Box ml={32} mt={12}>
         <CircularProgress disableShrink size={60} />
       </Box>
     );
   }
-  const myfun = () => {
-     refetch();
-  }
-  {setInterval(myfun , 3000)}
+  // to receive invitation without Reloading 
+
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => { invitationResponse.refetch() }, 3000)
+  //   return () => {
+  //     clearInterval(interval);
+  //   }
+  // })
+
+
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
     deleteInvite({
@@ -73,14 +79,14 @@ const ReceivedInvitation: React.FC<Props> = ({
         setErrorMessage(err.message);
       },
     });
-     refetch();
+    invitationResponse.refetch();
   };
-   
-  const receivedInvitation = data?.getInvitations?.receivedInvitations;
+
+  const receivedInvitation = invitationResponse.data?.getInvitations?.receivedInvitations;
 
   return (
     <>
-     
+
       <AcceptInvitation
         name={details.name}
         invitationId={details.invitationId}

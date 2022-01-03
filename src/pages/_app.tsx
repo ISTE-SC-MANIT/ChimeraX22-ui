@@ -19,6 +19,7 @@ import Alert from '@mui/material/Alert';
 import SEO from '../components/SEO';
 import { AuthProvider } from '../Auth/AuthContext';
 import cookie from 'js-cookie';
+import LoadingScreen from '../components/loadingScreen';
 export interface ComponentProps {
   viewer: viewer_viewer;
   refetch: () => void;
@@ -116,7 +117,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   />
                 ) : viewerQuery.loading ? (
                   <>
-                    <h1>Loading</h1>
+                    <LoadingScreen loading={viewerQuery.loading} />
                   </>
                 ) : viewerQuery.data ? (
                   <Component

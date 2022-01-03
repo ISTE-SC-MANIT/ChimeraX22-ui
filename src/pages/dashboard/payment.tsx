@@ -333,7 +333,6 @@ const Payment: React.FC<ComponentProps> = ({
                 size='small'
                 id='password-input'
                 label='Enter Referral Code'
-                required
                 variant='outlined'
                 margin='normal'
                 disabled={teamHelperDisable}

@@ -41,7 +41,7 @@ const SendInvitation: React.FC<Props> = ({
     useMutation(DeleteInvititation);
 
   React.useEffect(() => {
-      refetch();
+    refetch();
   }, [send]);
 
   if (loading) {
@@ -65,6 +65,7 @@ const SendInvitation: React.FC<Props> = ({
         setErrorMessage(err.message);
       },
     });
+    refetch();
   };
 
   const sentInvitations = data?.getInvitations?.sentInvitations;
