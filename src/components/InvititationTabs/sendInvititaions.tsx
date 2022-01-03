@@ -59,6 +59,7 @@ const SendInvitation: React.FC<Props> = ({
       variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Deleted');
+        refetchRef();
         refetch();
       },
       onError: (err) => {

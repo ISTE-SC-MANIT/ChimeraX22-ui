@@ -198,6 +198,7 @@ const Team: React.FC<ComponentProps> = ({
         setSuccessMessage('Invitation Sent');
         setReceiver(null);
         setSend(!send);
+        SingleUserResponse.refetch();
       },
       onError: (err) => {
         setErrorMessage('Something went wrong Please try again later!');
@@ -348,7 +349,7 @@ const Team: React.FC<ComponentProps> = ({
                   <Autocomplete
                     id='country-select-demo'
                     sx={{ width: 300 }}
-                    options={EligibleUsers ? EligibleUsers : []}
+                    options={SingleUserResponse.data?.getSingleUsers ? SingleUserResponse.data?.getSingleUsers : []}
                     onChange={(event: any, newValue: any) => {
                       setReceiver(newValue);
                     }}
@@ -425,7 +426,7 @@ const Team: React.FC<ComponentProps> = ({
               <Divider />
               {tab === 0 ? (
                 <SendInvitation
-                  refetchRef={refetchRef}
+                  refetchRef={SingleUserResponse.refetch}
                   send={send}
                   setSuccessMessage={setSuccessMessage}
                   setErrorMessage={setErrorMessage}
