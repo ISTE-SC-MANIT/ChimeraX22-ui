@@ -29,14 +29,3 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
 
 const firebaseSDK = firebase;
 export default firebaseSDK;
-
-export const logout = () => {
-  firebaseSDK
-    .auth()
-    .signOut()
-    .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-    .then(() => client.clearStore())
-    .catch(() => {
-      console.log('error deleting token');
-    });
-};

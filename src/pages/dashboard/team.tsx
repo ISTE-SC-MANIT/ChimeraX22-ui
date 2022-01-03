@@ -224,16 +224,6 @@ const Team: React.FC<ComponentProps> = ({
     setTab(newValue);
   };
 
-  const logoutHandle = () => {
-    firebaseSDK
-      .auth()
-      .signOut()
-      .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-      .then(() => router.push('/'))
-      .catch(() => {
-        console.log('error deleting token');
-      });
-  };
   const handleClose = () => setOpenDialog(false);
 
   return (
@@ -408,7 +398,7 @@ const Team: React.FC<ComponentProps> = ({
             item
             xs={12}
             md={4}
-          //   component={Paper} elevation={6} square
+            //   component={Paper} elevation={6} square
           >
             <Paper elevation={6} className={classes.container}>
               <Tabs

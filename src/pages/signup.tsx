@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import { withStyles, makeStyles } from '@mui/styles';
 import * as yup from 'yup';
 import axios from 'axios';
-import { authenticate } from '../components/utils';
 import { useRouter } from 'next/router';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { InputAdornment, IconButton } from '@mui/material';
@@ -29,6 +28,8 @@ import firebaseSDK from '../firebase';
 import nookies from 'nookies';
 import { DisabledByDefault } from '@mui/icons-material';
 import LinearLoading from '../components/Utils/LoadingScreen';
+import { emailPasswordSignUp } from '../Auth/emailPasswordSignup';
+import { googleLogin } from '../Auth/googleLogin';
 const LoginButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#3997F5'),
@@ -203,85 +204,6 @@ const SignUp: NextPage<ComponentProps> = ({
     setVisible(!visible);
   };
 
-  const handleSignUp = (values: typeof initialValues) => {
-    setStatus(Status.LOADING);
-    firebaseSDK
-      .auth()
-      .createUserWithEmailAndPassword(values.email, values.password)
-      .then(async (response) => {
-        await response.user?.updateProfile({
-          displayName: values.fullName,
-        });
-        return response;
-      })
-      .then((response) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-            name: response.user?.displayName,
-            uid: response.user?.uid,
-            email: response.user?.email,
-            strategy: response.user?.providerData[0]?.providerId,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setStatus(Status.SUCCESS);
-            setSuccessMessage('Successfully created account.');
-            const step = getStep(response.data.user.step);
-            router.push(step);
-          })
-          .catch((error) => {
-            setStatus(Status.ERROR);
-            response.user
-              ?.delete()
-              .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-              .catch((e) => console.log(e.message))
-              .finally(() => {
-                setFormValues({ ...formValues });
-                setErrorMessage(error.message);
-                router.push('/signup');
-              });
-          });
-      })
-      .catch((error) => {
-        setStatus(Status.ERROR);
-        setFormValues({ ...formValues });
-        setErrorMessage(error.message);
-      });
-  };
-
-  const handleGoogleSignIn = () => {
-    const provider = new firebaseSDK.auth.GoogleAuthProvider();
-    firebaseSDK
-      .auth()
-      .signInWithPopup(provider)
-      .then((response) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-            name: response.user?.displayName,
-            uid: response.user?.uid,
-            email: response.user?.email,
-            strategy: response.user?.providerData[0]?.providerId,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setSuccessMessage('Logged in successfully');
-            const step = getStep(response.data.user.step);
-            router.push(step);
-          })
-          .catch((error) => {
-            firebaseSDK
-              .auth()
-              .signOut()
-              .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-              .catch((e) => console.log(e.message))
-              .finally(() => setErrorMessage(error.message));
-          });
-      })
-      .catch((e) => {
-        setErrorMessage(e.message);
-      });
-  };
-
   return (
     <Grid container component='main' className={classes.root}>
       <Grid
@@ -301,7 +223,17 @@ const SignUp: NextPage<ComponentProps> = ({
             Sign Up
           </Typography>
           <Formik
-            onSubmit={(values) => handleSignUp(values)}
+            onSubmit={(values) =>
+              emailPasswordSignUp(
+                values,
+                setStatus,
+                formValues,
+                setFormValues,
+                router,
+                setErrorMessage,
+                setSuccessMessage
+              )
+            }
             validationSchema={validationSchema}
             initialValues={initialValues}
           >
@@ -322,7 +254,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -342,7 +274,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -390,7 +322,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 variant='contained'
                 className={classes.submit}
                 color='primary'
-                disabled={!(status)}
+                disabled={!status}
               >
                 {status === Status.LOADING
                   ? `Submitting...`
@@ -405,8 +337,10 @@ const SignUp: NextPage<ComponentProps> = ({
               <Box>
                 <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
-                    onClick={handleGoogleSignIn}
-                  // disabled={}
+                    onClick={() =>
+                      googleLogin(router, setErrorMessage, setSuccessMessage)
+                    }
+                    // disabled={}
                   >
                     <Image
                       src='/google-logo.png'

@@ -9,25 +9,7 @@ import {
   ListItemText,
   TextField,
   Paper,
-  Divider,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  RadioGroup,
-  Radio,
-  Checkbox,
   Button,
-  ListItemIcon,
-  Link,
-  useMediaQuery,
-  useTheme,
-  ListItemSecondaryAction,
-  List,
-  Snackbar,
-  Grid,
 } from '@mui/material';
 import { Form, FormikFormProps, Formik, Field, FieldProps } from 'formik';
 import { useRouter } from 'next/dist/client/router';
@@ -38,7 +20,8 @@ import CustomDrawer from '../../components/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
 import { useMutation } from '@apollo/client';
-import { logout } from '../../firebase/index';
+import { logout } from '../../Auth/logout';
+
 const validationSchema = yup.object({
   name: yup
     .string()

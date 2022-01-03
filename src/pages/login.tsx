@@ -19,7 +19,6 @@ import { useTheme } from '@mui/material/styles';
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
-import { authenticate } from '../components/utils';
 import { InputAdornment, IconButton, Theme } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
@@ -29,6 +28,8 @@ import firebaseSDK from '../firebase';
 import { Status } from '../Utils/status';
 import { authPersist } from '../firebase/persistence';
 import nookies from 'nookies';
+import { googleLogin } from '../Auth/googleLogin';
+import { emailPasswordLogin } from '../Auth/emailpasswordLogin';
 
 const SigninButton = withStyles((theme) => ({
   root: {
@@ -195,93 +196,6 @@ const Login: React.FC<ComponentProps> = ({
       .required('Password cannot be empty'),
   });
 
-  const getStep = (step: 'REGISTER' | 'CHOOSE_TEAM' | 'PAYMENT' | 'TEST') => {
-    switch (step) {
-      case 'REGISTER':
-        return '/dashboard/register';
-        break;
-      case 'CHOOSE_TEAM':
-        return '/dashboard/team';
-        break;
-      case 'PAYMENT':
-        return '/dashboard/payment';
-        break;
-      case 'TEST':
-        return '/dashboard/test';
-        break;
-    }
-  };
-
-  const handleLogin = (values: typeof initialValues) => {
-    if (!(values.email && values.password))
-      return setErrorMessage('Please enter valid email and password');
-    setStatus(Status.LOADING);
-
-    firebaseSDK
-      .auth()
-      .setPersistence(persist)
-      .then(() =>
-        firebaseSDK
-          .auth()
-          .signInWithEmailAndPassword(values.email, values.password)
-          .then((response) => {
-            // console.log(response.data);
-            setStatus(Status.SUCCESS);
-            setSuccessMessage('Logged in successfully');
-            router.push('/dashboard');
-          })
-          .catch((e) => {
-            setStatus(Status.ERROR);
-            setErrorMessage(e.message);
-          })
-      )
-      .catch((e) => {
-        setStatus(Status.ERROR);
-        setErrorMessage(e.message);
-      });
-  };
-  //Not working Token is Not still in cookies
-
-  //Fix this (This can be done if refetch is working perfectly, so step = viewer.step);
-  // But viewer is not passed in protect route
-
-  // best idea is to redirect all pages to /dashboard and implement useffect there
-  // router.push('/dashboard) then useffect will auto redirect
-
-  // or either fetch step from backend as done in google login (but it will create network traffic unnescary , leads to CRASHInG)
-  const handleGoogleLogin = () => {
-    const provider = new firebaseSDK.auth.GoogleAuthProvider();
-    firebaseSDK
-      .auth()
-      .signInWithPopup(provider)
-      .then((response) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-            name: response.user?.displayName,
-            uid: response.user?.uid,
-            email: response.user?.email,
-            strategy: response.user?.providerData[0]?.providerId,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setSuccessMessage('Logged in successfully');
-            const step = getStep(response.data.user.step);
-            router.push(step);
-          })
-          .catch((error) => {
-            firebaseSDK
-              .auth()
-              .signOut()
-              .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-              .catch((e) => console.log(e.message))
-              .finally(() => setErrorMessage(error.message));
-          });
-      })
-      .catch((e) => {
-        setErrorMessage(e.message);
-      });
-  };
-
   return (
     <>
       {openPass && (
@@ -335,7 +249,16 @@ const Login: React.FC<ComponentProps> = ({
             </Typography>
             {/* <form className={classes.form} noValidate> */}
             <Formik
-              onSubmit={(values) => handleLogin(values)}
+              onSubmit={(values) =>
+                emailPasswordLogin(
+                  values,
+                  setStatus,
+                  router,
+                  persist,
+                  setErrorMessage,
+                  setSuccessMessage
+                )
+              }
               validationSchema={validationSchema}
               initialValues={initialValues}
             >
@@ -408,7 +331,7 @@ const Login: React.FC<ComponentProps> = ({
                   variant='contained'
                   className={classes.submit}
                   color='primary'
-                  disabled={!(status)}
+                  disabled={!status}
                 >
                   {status === Status.LOADING ? `Submitting...` : `Log In`}
                 </Button>
@@ -441,8 +364,10 @@ const Login: React.FC<ComponentProps> = ({
                 <Box>
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
-                      onClick={handleGoogleLogin}
-                    // disabled={}
+                      onClick={() =>
+                        googleLogin(router, setErrorMessage, setSuccessMessage)
+                      }
+                      // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
