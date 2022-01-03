@@ -387,8 +387,8 @@ const Payment: React.FC<ComponentProps> = ({
                 </Typography>
                 <Typography>
                   {' '}
-                  {teamDetailResponse.data.getTeamDetails.teamHelper.name} (
-                  {teamDetailResponse.data.getTeamDetails.teamHelper.email})
+                  {teamDetailResponse.data?.getTeamDetails.teamHelper?.name} (
+                  {teamDetailResponse.data?.getTeamDetails.teamHelper?.email})
                 </Typography>
               </Box>
             )}

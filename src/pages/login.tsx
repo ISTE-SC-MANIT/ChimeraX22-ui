@@ -19,7 +19,6 @@ import { useTheme } from '@mui/material/styles';
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
-import { authenticate } from '../components/utils';
 import { InputAdornment, IconButton, Theme } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
