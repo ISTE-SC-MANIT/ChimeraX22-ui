@@ -25,7 +25,7 @@ const DialogBox: React.FC<Props> = ({
   refetch,
 }) => {
   const router = useRouter();
-  const [Play,playAsIndividualResponse] = useMutation(PlayAsIndividual);
+  const [Play, playAsIndividualResponse] = useMutation(PlayAsIndividual);
 
   const handlePlayAsIndividual = () => {
     Play({
@@ -51,8 +51,8 @@ const DialogBox: React.FC<Props> = ({
         <DialogTitle id='alert-dialog-title'>{`Play as an Individual`}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-          Please Note: If you select to play as an individual you'll no longer
-          able to send or receive invitation. Proceed with caution.
+            Please Note: If you select to play as an individual you&apos;ll no longer
+            able to send or receive invitation. Proceed with caution.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -68,7 +68,7 @@ const AcceptInvitationPage: React.FC<Props> = ({
           <DialogContentText id='alert-dialog-description'>
             Please Note: Accepting this invitation is irreversible. You will not
             be able to send or receive invitations after accepting and your team
-            will be confirmed. You'll be your Team Helper.
+            will be confirmed. You&apos;ll be your Team Helper.
             <br />
             Proceed with caution.
           </DialogContentText>

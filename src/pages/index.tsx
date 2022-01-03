@@ -211,7 +211,7 @@ const Landing: React.FC = () => {
           >
             <Box className={classes.margin}>
               <Typography variant='h4' align='center' className={classes.typo}>
-                <b>Central India's largest Quizzing Contest</b>
+                <b>Central India&apos;s largest Quizzing Contest</b>
               </Typography>
             </Box>
             <Box className={classes.margin}>
@@ -219,7 +219,7 @@ const Landing: React.FC = () => {
                 <Typography variant='h5' align='center'>
                   Prelims
                   <br />
-                  30th Jan' 2022
+                  30th Jan&apos; 2022
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
