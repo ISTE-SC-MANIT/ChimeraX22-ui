@@ -9,7 +9,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import { authenticate } from '../components/utils';
 import { useRouter } from 'next/router';
 
 interface Props {
