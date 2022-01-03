@@ -217,7 +217,6 @@ const Login: React.FC<ComponentProps> = ({
       return setErrorMessage('Please enter valid email and password');
     setStatus(Status.LOADING);
 
-    setLoading(true);
     firebaseSDK
       .auth()
       .setPersistence(persist)
@@ -226,49 +225,19 @@ const Login: React.FC<ComponentProps> = ({
           .auth()
           .signInWithEmailAndPassword(values.email, values.password)
           .then((response) => {
-            axios
-              .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-                name: response.user?.displayName,
-                uid: response.user?.uid,
-                email: response.user?.email,
-                strategy: response.user?.providerData[0]?.providerId,
-              })
-              .then((response) => {
-                // console.log(response.data);
-                setStatus(Status.SUCCESS);
-                setSuccessMessage('Logged in successfully');
-                setLoading(false);
-                const step = getStep(response.data.user.step);
-                router.push(step);
-              })
-              .catch((error) => {
-                firebaseSDK
-                  .auth()
-                  .signOut()
-                  .then(() =>
-                    nookies.destroy(undefined, 'token', { path: '/' })
-                  )
-                  .then(() => {
-                    setErrorMessage('Network Error. Please log in again.');
-                    router.push('/login');
-                  })
-                  .catch((e) => {
-                    setErrorMessage('Network Error. Please log in again.');
-                    console.log(e.message);
-                  });
-              });
+            // console.log(response.data);
+            setStatus(Status.SUCCESS);
+            setSuccessMessage('Logged in successfully');
+            router.push('/dashboard');
           })
           .catch((e) => {
             setStatus(Status.ERROR);
-            setLoading(false);
-            setErrorMessage('Network Error. Please log in again.');
-            console.log(`Error while logging in ${e.message}`);
+            setErrorMessage(e.message);
           })
       )
       .catch((e) => {
-        setLoading(false);
-        setErrorMessage('Network Error. Please log in again.');
-        console.log(`Error while logging in ${e.message}`);
+        setStatus(Status.ERROR);
+        setErrorMessage(e.message);
       });
   };
   //Not working Token is Not still in cookies
@@ -295,9 +264,7 @@ const Login: React.FC<ComponentProps> = ({
           })
           .then((response) => {
             // console.log(response.data);
-            setStatus(Status.SUCCESS);
             setSuccessMessage('Logged in successfully');
-            setLoading(false);
             const step = getStep(response.data.user.step);
             router.push(step);
           })
@@ -306,21 +273,12 @@ const Login: React.FC<ComponentProps> = ({
               .auth()
               .signOut()
               .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-              .then(() => {
-                setErrorMessage('Network Error. Please log in again.');
-                router.push('/login');
-              })
-              .catch((e) => {
-                setErrorMessage('Network Error. Please log in again.');
-                console.log(e.message);
-              });
+              .catch((e) => console.log(e.message))
+              .finally(() => setErrorMessage(error.message));
           });
       })
       .catch((e) => {
-        setStatus(Status.ERROR);
-        setLoading(false);
-        setErrorMessage("Couldn't sign in with Google");
-        console.log(`Error while logging in ${e.message}`);
+        setErrorMessage(e.message);
       });
   };
 

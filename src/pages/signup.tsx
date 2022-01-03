@@ -205,7 +205,6 @@ const SignUp: NextPage<ComponentProps> = ({
 
   const handleSignUp = (values: typeof initialValues) => {
     setStatus(Status.LOADING);
-    setloading(true);
     firebaseSDK
       .auth()
       .createUserWithEmailAndPassword(values.email, values.password)
@@ -216,28 +215,37 @@ const SignUp: NextPage<ComponentProps> = ({
         return response;
       })
       .then((response) => {
-        firebaseSDK
-          .auth()
-          .signOut()
-          .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-          .then(() => {
-            setSuccessMessage(
-              'Account created successfully. Please log in to continue.'
-            );
-            router.push('/login');
+        axios
+          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
+            name: response.user?.displayName,
+            uid: response.user?.uid,
+            email: response.user?.email,
+            strategy: response.user?.providerData[0]?.providerId,
           })
-          .catch((e) => {
-            setErrorMessage('Network Error. Please log in again.');
-            console.log(e.message);
+          .then((response) => {
+            // console.log(response.data);
+            setStatus(Status.SUCCESS);
+            setSuccessMessage('Successfully created account.');
+            const step = getStep(response.data.user.step);
+            router.push(step);
+          })
+          .catch((error) => {
+            setStatus(Status.ERROR);
+            response.user
+              ?.delete()
+              .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
+              .catch((e) => console.log(e.message))
+              .finally(() => {
+                setFormValues({ ...formValues });
+                setErrorMessage(error.message);
+                router.push('/signup');
+              });
           });
       })
       .catch((error) => {
-        setFormValues({ ...formValues });
         setStatus(Status.ERROR);
-        setErrorMessage("Couldn't create account. Try again");
-        console.log(error.message);
-        setloading(false);
-        return error;
+        setFormValues({ ...formValues });
+        setErrorMessage(error.message);
       });
   };
 
@@ -256,7 +264,6 @@ const SignUp: NextPage<ComponentProps> = ({
           })
           .then((response) => {
             // console.log(response.data);
-            setStatus(Status.SUCCESS);
             setSuccessMessage('Logged in successfully');
             const step = getStep(response.data.user.step);
             router.push(step);
@@ -266,22 +273,12 @@ const SignUp: NextPage<ComponentProps> = ({
               .auth()
               .signOut()
               .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-              .then(() => {
-                setErrorMessage('Network Error. Please log in again.');
-                router.push('/login');
-              })
-              .catch((e) => {
-                setErrorMessage('Network Error. Please log in again.');
-                console.log(e.message);
-              });
+              .catch((e) => console.log(e.message))
+              .finally(() => setErrorMessage(error.message));
           });
       })
       .catch((e) => {
-        setStatus(Status.ERROR);
-        setErrorMessage(
-          "Couldn't sign in with Google. Please try again later."
-        );
-        console.log(`Error while logging in ${e.message}`);
+        setErrorMessage(e.message);
       });
   };
 
