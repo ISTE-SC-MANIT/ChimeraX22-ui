@@ -41,7 +41,6 @@ const validationSchema = yup.object({
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
     .min(10)
-    .max(10)
     .required('A phone number is required'),
 });
 
