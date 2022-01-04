@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       padding: 0,
       boxSizing: 'border-box',
-      height: '100vh',
+      minheight: '100vh',
     },
     leftGrid: {
       [theme.breakpoints.up('sm')]: {

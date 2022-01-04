@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { withStyles, makeStyles, createStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Box, Fade, Link, Grid, useMediaQuery } from '@mui/material';
+import { Box, Fade, Link, Grid, useMediaQuery, CssBaseline } from '@mui/material';
 import Image from 'next/image';
 import NavbarHeader from '../components/navbar/navbarheader';
 import ThemeToggleButton from '../components/theme/modeToggle';
@@ -146,6 +146,7 @@ const Landing: React.FC = () => {
   };
   return (
     <>
+      
       <NavbarHeader open={open} setOpen={setOpen} />
       <div className={classes.root} onClick={() => setOpen(false)}>
         <Box padding={2} className={classes.header}>

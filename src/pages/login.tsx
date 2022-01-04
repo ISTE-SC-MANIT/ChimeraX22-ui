@@ -29,6 +29,7 @@ import { Status } from '../Utils/status';
 import { authPersist } from '../firebase/persistence';
 import nookies from 'nookies';
 import { googleLogin } from '../Auth/googleLogin';
+import { facebookLogin } from '../Auth/facebookLogin';
 import { emailPasswordLogin } from '../Auth/emailpasswordLogin';
 
 const SigninButton = withStyles((theme) => ({
@@ -371,6 +372,20 @@ const Login: React.FC<ComponentProps> = ({
                     >
                       <Image
                         src='/google-logo.png'
+                        alt='google'
+                        width={60}
+                        height={60}
+                        className={classes.logoIcon}
+                      />
+                    </IconButton>
+                    <IconButton
+                      onClick={() =>
+                        facebookLogin(router, setErrorMessage, setSuccessMessage)
+                      }
+                      // disabled={}
+                    >
+                      <Image
+                        src='/facebook-logo.png'
                         alt='google'
                         width={60}
                         height={60}
