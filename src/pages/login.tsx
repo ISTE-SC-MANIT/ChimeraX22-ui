@@ -368,7 +368,7 @@ const Login: React.FC<ComponentProps> = ({
                       onClick={() =>
                         googleLogin(router, setErrorMessage, setSuccessMessage)
                       }
-                      // disabled={}
+                    // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
@@ -382,10 +382,10 @@ const Login: React.FC<ComponentProps> = ({
                       onClick={() =>
                         facebookLogin(router, setErrorMessage, setSuccessMessage)
                       }
-                      // disabled={}
+                    // disabled={}
                     >
                       <Image
-                        src='/facebook-logo.png'
+                        src='/fb-logo.png'
                         alt='google'
                         width={60}
                         height={60}
