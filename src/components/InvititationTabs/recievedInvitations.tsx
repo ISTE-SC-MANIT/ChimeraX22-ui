@@ -29,15 +29,13 @@ interface Props {
   refetch: () => void;
 }
 
-
 const ReceivedInvitation: React.FC<Props> = ({
   refetchRef,
   setSuccessMessage,
   setErrorMessage,
   refetch,
 }) => {
-  const invitationResponse =
-    useQuery<GetInvitationQuery>(GetInvitation);
+  const invitationResponse = useQuery<GetInvitationQuery>(GetInvitation);
 
   const [details, setDetails] = React.useState({
     userId: '',
@@ -46,7 +44,6 @@ const ReceivedInvitation: React.FC<Props> = ({
   });
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-
 
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
@@ -58,7 +55,7 @@ const ReceivedInvitation: React.FC<Props> = ({
       </Box>
     );
   }
-  // to receive invitation without Reloading 
+  // to receive invitation without Reloading
 
   // React.useEffect(() => {
   //   const interval = setInterval(() => { invitationResponse.refetch() }, 3000)
@@ -66,7 +63,6 @@ const ReceivedInvitation: React.FC<Props> = ({
   //     clearInterval(interval);
   //   }
   // })
-
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
@@ -82,11 +78,11 @@ const ReceivedInvitation: React.FC<Props> = ({
     invitationResponse.refetch();
   };
 
-  const receivedInvitation = invitationResponse.data?.getInvitations?.receivedInvitations;
+  const receivedInvitation =
+    invitationResponse.data?.getInvitations?.receivedInvitations;
 
   return (
     <>
-
       <AcceptInvitation
         name={details.name}
         invitationId={details.invitationId}
@@ -102,7 +98,7 @@ const ReceivedInvitation: React.FC<Props> = ({
           receivedInvitation.map((invitation) => {
             if (Boolean(invitation))
               return (
-                <ListItem>
+                <ListItem key={invitation._id}>
                   <ListItemAvatar>
                     <Avatar alt='Remy Sharp' src='/dummy.png' />
                   </ListItemAvatar>

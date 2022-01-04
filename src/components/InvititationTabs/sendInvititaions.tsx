@@ -77,7 +77,7 @@ const SendInvitation: React.FC<Props> = ({
           sentInvitations.map((invitation) => {
             if (Boolean(invitation))
               return (
-                <ListItem>
+                <ListItem key={invitation._id}>
                   <ListItemAvatar>
                     <Avatar alt='Remy Sharp' src='/dummy.png' />
                   </ListItemAvatar>
