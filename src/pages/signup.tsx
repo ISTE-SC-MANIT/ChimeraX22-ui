@@ -30,6 +30,7 @@ import { DisabledByDefault } from '@mui/icons-material';
 import LinearLoading from '../components/linearLoading';
 import { emailPasswordSignUp } from '../Auth/emailPasswordSignup';
 import { googleLogin } from '../Auth/googleLogin';
+import { facebookLogin } from '../Auth/facebookLogin';
 const LoginButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#3997F5'),
