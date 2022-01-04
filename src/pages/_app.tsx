@@ -97,6 +97,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <SEO />
+      <CssBaseline />
       <AuthProvider>
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme}>

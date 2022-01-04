@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles(() => ({
   button: {
-    overflow: 'hidden',
+    // overflow: 'hidden',
     all: 'unset',
     display: 'flex',
     borderRadius: 50,

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     body: {
       minHeight: '80vh',
-      overflow: 'hidden',
+      // overflow: 'hidden',
     },
     typo: {
       color: theme.palette.mode === 'light' ? '#1976D2' : 'white',

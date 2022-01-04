@@ -46,7 +46,7 @@ const LoginButton = withStyles((theme) => ({
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
-    overflow: 'hidden',
+    // overflow: 'hidden',
   },
   Backcolor: {
     backgroundColor:
@@ -254,7 +254,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -274,7 +274,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -340,7 +340,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     onClick={() =>
                       googleLogin(router, setErrorMessage, setSuccessMessage)
                     }
-                  // disabled={}
+                    // disabled={}
                   >
                     <Image
                       src='/google-logo.png'

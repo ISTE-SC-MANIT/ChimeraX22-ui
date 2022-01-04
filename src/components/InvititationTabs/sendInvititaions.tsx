@@ -66,7 +66,6 @@ const SendInvitation: React.FC<Props> = ({
         setErrorMessage(err.message);
       },
     });
-    refetch();
   };
 
   const sentInvitations = data?.getInvitations?.sentInvitations;
