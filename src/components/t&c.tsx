@@ -13,7 +13,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   body: {
-    height: '100vh',
+    minheight: '100vh',
     textAlign: 'justify',
   },
 
