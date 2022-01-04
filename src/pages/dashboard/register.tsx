@@ -36,10 +36,13 @@ const validationSchema = yup.object({
     .string()
     .email('Provide a valid Email ID')
     .required('Email cannot be empty'),
-  phone: yup
-    .string()
-
-    .required('Phone cannot be empty'),
+  phone: yup.number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .min(10)
+    .max(10)
+    .required('A phone number is required'),
 });
 
 const useStyles = makeStyles((theme: Theme) =>

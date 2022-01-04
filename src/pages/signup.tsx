@@ -254,7 +254,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -274,7 +274,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -340,10 +340,24 @@ const SignUp: NextPage<ComponentProps> = ({
                     onClick={() =>
                       googleLogin(router, setErrorMessage, setSuccessMessage)
                     }
-                    // disabled={}
+                  // disabled={}
                   >
                     <Image
                       src='/google-logo.png'
+                      alt='google'
+                      width={60}
+                      height={60}
+                      className={classes.logoIcon}
+                    />
+                  </IconButton>
+                  <IconButton
+                    onClick={() =>
+                      facebookLogin(router, setErrorMessage, setSuccessMessage)
+                    }
+                  // disabled={}
+                  >
+                    <Image
+                      src='/fb-logo.png'
                       alt='google'
                       width={60}
                       height={60}
