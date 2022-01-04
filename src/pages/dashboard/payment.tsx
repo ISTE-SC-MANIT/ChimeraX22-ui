@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor:
       theme.palette.mode === 'light'
         ? theme.palette.grey[50]
-        : theme.palette.grey[500],
+        : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor:
         theme.palette.mode === 'light'
           ? theme.palette.grey[50]
-          : theme.palette.grey[500],
+          : theme.palette.grey[800],
     },
   },
   paper: {
@@ -101,6 +101,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 'auto',
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
+  },
+  Backcolor: {
+    backgroundColor:
+      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   input: {
     width: '50%',
@@ -280,7 +284,7 @@ const Payment: React.FC<ComponentProps> = ({
           setSuccessMessage={setSuccessMessage}
           setErrorMessage={setErrorMessage}
         />
-        <Grid container component='main' onClick={() => setOpen(false)}>
+        <Grid container component='main' onClick={() => setOpen(false)} className={classes.Backcolor}>
           <Grid item xs={12} sm={8} md={6} className={classes.leftGrid}>
             <Box className={classes.heading}>
               <Typography variant='h4'>
