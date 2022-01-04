@@ -8,7 +8,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { PlayAsIndividual } from '../lib/mutations/PlayAsIndividualMutation';
-// import PlayAsIndividualMutation from './relay/mutations/PlayAsIndividualMutation';
 
 interface Props {
   openDialog: boolean;
@@ -31,8 +30,8 @@ const DialogBox: React.FC<Props> = ({
     Play({
       onCompleted: () => {
         setSuccessMessage('Redirecting ....');
-        router.push('/dashboard/payment');
         refetch();
+        router.push('/dashboard/payment');
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');
@@ -51,8 +50,8 @@ const DialogBox: React.FC<Props> = ({
         <DialogTitle id='alert-dialog-title'>{`Play as an Individual`}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Please Note: If you select to play as an individual you&apos;ll no longer
-            able to send or receive invitation. Proceed with caution.
+            Please Note: If you select to play as an individual you&apos;ll no
+            longer able to send or receive invitation. Proceed with caution.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -10,7 +10,7 @@ import {
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext, toggleMode } from '../components/theme';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { client } from '../lib/apollo';
 import { viewer, viewer_viewer } from '../__generated__/viewer';
 import { User } from '../lib/queries/user';
@@ -59,11 +59,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     return first === 'dashboard';
   }, [first]);
 
-  // Router.events.on('routeChangeStart', () => {
-  //   setRouteChange(true);
-  // });
-  // Router.events.on('routeChangeComplete', () => setRouteChange(false));
-  // Router.events.on('routeChangeError', () => setRouteChange(false));
+  Router.events.on('routeChangeStart', () => {
+    setRouteChange(true);
+  });
+  Router.events.on('routeChangeComplete', () => setRouteChange(false));
+  Router.events.on('routeChangeError', () => setRouteChange(false));
 
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const theme = React.useMemo(
@@ -75,12 +75,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       }),
     [mode]
   );
-  // const client = new ApolloClient({
-  //   uri: `${process.env.NEXT_PUBLIC_BACKEND}/graphql`,
-
-  //   headers: { authorization: `Bearer ${cookie.get('token2')}` },
-  //   cache: new InMemoryCache(),
-  // });
 
   const [view, viewerQuery] = useLazyQuery<viewer>(User, { client: client });
   React.useEffect(() => {
@@ -118,7 +112,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   />
                 ) : viewerQuery.loading ? (
                   <>
-                    <LoadingScreen loading={viewerQuery.loading} />
+                    <LoadingScreen loading={true} />
                   </>
                 ) : viewerQuery.data ? (
                   <Component
@@ -128,10 +122,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                     setSuccessMessage={setSuccessMessage}
                     setErrorMessage={setErrorMessage}
                   />
+                ) : viewerQuery.error ? (
+                  <>
+                    {setErrorMessage('Error:You Must Login to Continue')}
+                    {router.push('/login')}
+                  </>
                 ) : (
                   <>
-                    <h1>Error</h1>
-                    {viewerQuery.error?.message}
+                    <LoadingScreen loading={true} />
                   </>
                 )}
                 <Snackbar

@@ -40,6 +40,7 @@ import { InvitationInput } from '../../__generated__/globalTypes';
 import { PlayAsIndividual } from '../../lib/mutations/PlayAsIndividualMutation';
 import SendInvitation from '../../components/InvititationTabs/sendInvititaions';
 import ReceivedInvitation from '../../components/InvititationTabs/recievedInvitations';
+import { getStep } from '../../Utils/status';
 
 class Amount extends Component {
   render() {
@@ -214,7 +215,7 @@ const Team: React.FC<ComponentProps> = ({
       onCompleted: () => {
         setSuccessMessage('Redirecting ....');
         refetch();
-        router.push('/dashboard/payment');
+        router.push(getStep(viewer.step));
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');

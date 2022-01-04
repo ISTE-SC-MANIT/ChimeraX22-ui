@@ -193,8 +193,8 @@ const Payment: React.FC<ComponentProps> = ({
   const [PayOrderFunction, payOrderResponse] = useMutation(PayOrder);
   const loading = teamDetailResponse.loading;
 
-  if (loading) {
-    return <LoadingScreen loading />;
+  if (teamDetailResponse.loading) {
+    return <LoadingScreen loading={true} />;
   }
 
   const handleSuccess = (res: CreateOrderMutation) => {
@@ -284,7 +284,12 @@ const Payment: React.FC<ComponentProps> = ({
           setSuccessMessage={setSuccessMessage}
           setErrorMessage={setErrorMessage}
         />
-        <Grid container component='main' onClick={() => setOpen(false)} className={classes.Backcolor}>
+        <Grid
+          container
+          component='main'
+          onClick={() => setOpen(false)}
+          className={classes.Backcolor}
+        >
           <Grid item xs={12} sm={8} md={6} className={classes.leftGrid}>
             <Box className={classes.heading}>
               <Typography variant='h4'>
