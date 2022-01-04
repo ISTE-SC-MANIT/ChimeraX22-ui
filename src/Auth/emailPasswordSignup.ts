@@ -41,8 +41,7 @@ export const emailPasswordSignUp = (
           // console.log(response.data);
           setStatus(Status.SUCCESS);
           setSuccessMessage('Successfully created account.');
-          const step = getStep(response.data.user.step);
-          router.push(step);
+          router.push('/dashboard');
         })
         .catch((error) => {
           setStatus(Status.ERROR);

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import firebaseSDK from '../firebase';
 import nookies from 'nookies';
-import { getStep } from '../Utils/status';
 import { NextRouter } from 'next/router';
 
 export const facebookLogin = (
@@ -26,8 +25,8 @@ export const facebookLogin = (
           .then((response) => {
             // console.log(response.data);
             setSuccessMessage('Logged in successfully');
-            const step = getStep(response.data.user.step);
-            router.push(step);
+
+            router.push('/dashboard');
           })
           .catch((error) => {
             firebaseSDK
