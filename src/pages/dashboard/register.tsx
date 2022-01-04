@@ -15,12 +15,13 @@ import { Form, FormikFormProps, Formik, Field, FieldProps } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import Autocomplete from '@mui/material/Autocomplete';
 import * as yup from 'yup';
-import { cities } from '../../components/cities';
-import CustomDrawer from '../../components/customDrawer';
+import { cities } from '../../SEO/cities';
+import CustomDrawer from '../../components/navbar/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
 import { useMutation } from '@apollo/client';
 import { logout } from '../../Auth/logout';
+import Navbar from '../../components/navbar/Navbar';
 
 const validationSchema = yup.object({
   name: yup
@@ -147,6 +148,7 @@ const Register: React.FC<ComponentProps> = ({
   const classes = useStyles();
   const router = useRouter();
   const [terms, setTerms] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState(false);
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
@@ -204,8 +206,21 @@ const Register: React.FC<ComponentProps> = ({
   return (
     <div className={classes.root} id='reg'>
       {/* <CustomDrawer name={'Devansh'} username={'Devansh'} open={open} setOpen={setOpen} /> */}
+      <CustomDrawer
+        name={viewer.name}
+        username={viewer.email}
+        open={open}
+        setOpen={setOpen}
+        setSuccessMessage={setSuccessMessage}
+        setErrorMessage={setErrorMessage}
+      />
+      <Navbar
+        setOpen={setOpen}
+        setSuccessMessage={setSuccessMessage}
+        setErrorMessage={setErrorMessage}
+      />
       <Box>
-        <Button
+        {/* <Button
           variant='outlined'
           onClick={() => {
             logout();
@@ -214,7 +229,7 @@ const Register: React.FC<ComponentProps> = ({
         >
           {' '}
           Logout
-        </Button>
+        </Button> */}
         <ListItem className={classes.heading}>
           <ListItemText
             primary={' Step-1 Registration'}
@@ -379,7 +394,7 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                      // disabled
+                    // disabled
                     >
                       Proceed
                     </Button>

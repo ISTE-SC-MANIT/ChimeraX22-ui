@@ -9,9 +9,9 @@ import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
-import firebaseSDK from '../firebase';
+import firebaseSDK from '../../firebase';
 import nookies from 'nookies';
-import { logout } from '../Auth/logout';
+import { logout } from '../../Auth/logout';
 
 const useStyles = makeStyles((theme) => ({
   title: {

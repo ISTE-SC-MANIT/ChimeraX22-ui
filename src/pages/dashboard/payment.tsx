@@ -25,11 +25,11 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { ComponentProps } from '../_app';
-import { loadScript } from '../../components/utils';
+import { loadScript } from '../../Utils/loadScript';
 // import { CreateOrderMutationResponse } from '../../__generated__/CreateOrderMutation.graphql';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CustomDrawer from '../../components/customDrawer';
-import Navbar from '../../components/Navbar';
+import CustomDrawer from '../../components/navbar/customDrawer';
+import Navbar from '../../components/navbar/Navbar';
 import { GetTeamDetails } from '../../lib/queries/GetTeamDetailsQuery';
 import LoadingScreen from '../../components/loadingScreen';
 import { useRouter } from 'next/router';

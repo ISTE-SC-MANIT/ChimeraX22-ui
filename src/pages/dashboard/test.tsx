@@ -1,5 +1,5 @@
 import React from 'react'
-import Instructions from "../../components/instructions"
+import Instructions from "../../components/test/instructions"
 import { ComponentProps } from "../_app"
 import { Button, Grid, Box } from "@mui/material"
 import { useRouter } from 'next/router'

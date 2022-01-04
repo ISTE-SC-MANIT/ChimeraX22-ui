@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Fade, Link, Grid, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
-import NavbarHeader from '../components/navbarheader';
+import NavbarHeader from '../components/navbar/navbarheader';
 import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import { url } from 'inspector';

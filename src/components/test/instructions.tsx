@@ -17,9 +17,9 @@ import {
 } from '@mui/material';
 
 import { useRouter } from 'next/dist/client/router';
-import Navbar from '../components/Navbar';
-import CustomDrawer from '../components/customDrawer';
-import { ComponentProps } from '../pages/_app';
+import Navbar from '../navbar/Navbar';
+import CustomDrawer from '../navbar/customDrawer';
+import { ComponentProps } from '../../pages/_app';
 
 
 

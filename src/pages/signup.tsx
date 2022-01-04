@@ -27,7 +27,7 @@ import { getStep, Status } from '../Utils/status';
 import firebaseSDK from '../firebase';
 import nookies from 'nookies';
 import { DisabledByDefault } from '@mui/icons-material';
-import LinearLoading from '../components/Utils/LoadingScreen';
+import LinearLoading from '../components/linearLoading';
 import { emailPasswordSignUp } from '../Auth/emailPasswordSignup';
 import { googleLogin } from '../Auth/googleLogin';
 const LoginButton = withStyles((theme) => ({
@@ -254,7 +254,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -274,7 +274,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                    // disabled
+                  // disabled
                   />
                 )}
               </Field>
@@ -340,7 +340,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     onClick={() =>
                       googleLogin(router, setErrorMessage, setSuccessMessage)
                     }
-                    // disabled={}
+                  // disabled={}
                   >
                     <Image
                       src='/google-logo.png'
