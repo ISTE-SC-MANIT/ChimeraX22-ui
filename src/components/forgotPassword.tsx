@@ -10,7 +10,7 @@ import { Formik, Form, Field, FieldProps } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-
+import firebase from 'firebase';
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -29,20 +29,20 @@ const FormDialog: React.FC<Props> = ({ open, onClose, setErrorMessage, setSucces
   const handleChange = (field: string) => (e: any) => {
     setFormData({ ...formData, [field]: e.target.value });
   };
-
+   
   const handleSubmit = (values: typeof initialValues) => {
-    setFormData({ ...formData });
-    onClose();
-
-    axios
-      .put(`${process.env.NEXT_PUBLIC_BACKEND}/api/forgotpassword`, { ...values })
-      .then((response) => {
+   
+    
+    firebase.auth().sendPasswordResetEmail(values.email)
+      .then(() => {
         setSuccessMessage('Reset Link has been sent to your mail');
+        onClose();
       })
       .catch((error) => {
         setErrorMessage(error.response.data.errors);
         return error;
       });
+   
   };
   const handleClickOpen = () => {
     onClose();
