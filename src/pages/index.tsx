@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
-      background: `url('/bg.svg')`,
+      // background: `url('/bg.svg')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
