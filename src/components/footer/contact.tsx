@@ -108,7 +108,7 @@ const Footer: React.FC = () => {
 
 
     return (
-        <footer className={classes.footer}>
+        <footer >
             <ScrollDialog
                 openDialog={openDialog}
                 onClose={() => setOpenDialog(false)}
