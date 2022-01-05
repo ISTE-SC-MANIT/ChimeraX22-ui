@@ -1,221 +1,144 @@
 export const cities = [
   {
-    name: "Vadodara",
-    state: "Gujarat",
+    name: 'Vadodara',
+    state: 'Gujarat',
   },
 
   {
-    name: "Guwahati",
-    state: "Assam",
+    name: 'Kottayam',
+    state: 'Kerala',
   },
 
   {
-    name: "Kolkata",
-    state: "West Bengal",
+    name: 'Kolkata',
+    state: 'West Bengal',
   },
 
   {
-    name: "Lucknow",
-    state: "Uttar Pradesh",
+    name: 'Lucknow',
+    state: 'Uttar Pradesh',
   },
 
   {
-    name: "Noida",
-    state: "Uttar Pradesh",
+    name: 'Noida',
+    state: 'Uttar Pradesh',
   },
 
   {
-    name: "Coimbatore",
-    state: "Tamil Nadu",
+    name: 'Jammu',
+    state: 'Jammu and Kashmir',
   },
 
   {
-    name: "Jammu",
-    state: "Jammu and Kashmir",
+    name: 'Delhi',
+    state: 'Delhi',
   },
 
   {
-    name: "Delhi",
-    state: "Delhi",
+    name: 'Bangalore',
+    state: 'Karnataka',
   },
 
   {
-    name: "Bangalore",
-    state: "Karnataka",
+    name: 'Ahmedabad',
+    state: 'Gujarat',
   },
 
   {
-    name: "Ahmedabad",
-    state: "Gujarat",
+    name: 'Dehradun',
+    state: 'Uttarakhand',
   },
 
   {
-    name: "Dehradun",
-    state: "Uttarakhand",
+    name: 'Jabalpur',
+    state: 'Madhya Pradesh',
   },
 
   {
-    name: "Jabalpur",
-    state: "Madhya Pradesh",
+    name: 'Bhopal',
+    state: 'Madhya Pradesh',
   },
 
   {
-    name: "Bhopal",
-    state: "Madhya Pradesh",
+    name: 'Kanpur',
+    state: 'Uttar Pradesh',
   },
 
   {
-    name: "Sagar",
-    state: "Madhya Pradesh",
+    name: 'Nagpur',
+    state: 'Maharashtra',
   },
 
   {
-    name: "Indore",
-    state: "Madhya Pradesh",
+    name: 'Jaipur',
+    state: 'Rajasthan',
   },
 
   {
-    name: "Gwalior",
-    state: "Madhya Pradesh",
+    name: 'Chandigarh',
+    state: 'Punjab',
+  },
+  {
+    name: 'Chandigarh',
+    state: 'Haryana',
+  },
+  {
+    name: 'Chennai',
+    state: 'Tamil Nadu',
   },
 
   {
-    name: "Kanpur",
-    state: "Uttar Pradesh",
+    name: 'Kochi',
+    state: 'Kerala',
   },
 
   {
-    name: "Nasik",
-    state: "Maharashtra",
+    name: 'Ranchi',
+    state: 'Jharkhand',
   },
 
   {
-    name: "Manglore",
-    state: "Karnataka",
-  },
-  
-  {
-    name: "Nagpur",
-    state: "Maharashtra",
+    name: 'Thiruvananthapuram',
+    state: 'Kerala',
   },
 
   {
-    name: "Jaipur",
-    state: "Rajasthan",
+    name: 'Bhubaneswar',
+    state: 'Odisha',
   },
 
   {
-    name: "Udaipur",
-    state: "Rajasthan",
+    name: 'Goa',
+    state: 'Goa',
   },
 
   {
-    name: "Chandigarh",
-    state: "Punjab",
+    name: 'Hyderabad',
+    state: 'Telangana',
   },
 
   {
-    name: "Ujjain",
-    state: "Madhya Pradesh",
+    name: 'Pune',
+    state: 'Maharashtra',
   },
 
   {
-    name: "Jhansi",
-    state: "Uttar Pradesh",
+    name: 'Vellore',
+    state: 'Tamil Nadu',
   },
 
   {
-    name: "Chennai",
-    state: "Tamil Nadu",
+    name: 'Patiala',
+    state: 'Punjab',
   },
 
   {
-    name: "Raipur",
-    state: "Chhattisgarh",
+    name: 'Jodhpur',
+    state: 'Rajasthan',
   },
 
   {
-    name: "Mumbai",
-    state: "Maharashtra",
+    name: 'Others',
+    state: 'India',
   },
-
-  {
-    name: "Kochi",
-    state: "Kerala",
-  },
-
-  {
-    name: "Allahabad",
-    state: "Uttar Pradesh",
-  },
-
-  {
-    name: "Varanasi",
-    state: "Uttar Pradesh",
-  },
-
-  {
-    name: "Bhubaneswar",
-    state: "Odisha",
-  },
-
-  {
-    name: "Goa",
-    state: "Goa",
-  },
-
-  {
-    name: "Visakhapatnam",
-    state: "Andhra Pradesh",
-  },
-
-  {
-    name: "Hyderabad",
-    state: "Telangana",
-  },
-
-  {
-    name: "Pune",
-    state: "Maharashtra",
-  },
-
-  {
-    name: "Ghaziabad",
-    state: "Uttar Pradesh",
-  },
-
-  {
-    name: "Vellore",
-    state: "Tamil Nadu",
-  },
-
-  {
-    name: "Patiala",
-    state: "Punjab",
-  },
-
-  {
-    name: "Amritsar",
-    state: "Punjab",
-  },
-
-  {
-    name: "Jodhpur",
-    state: "Rajasthan",
-  },
-
-  {
-    name : "Abu Dhabi",
-    state : "UAE"
-  },
-
-  {
-    name : "Jalandhar",
-    state : "Punjab"
-  },
-
-  {
-    name : "Others",
-    state : "India"
-  }
 ];
