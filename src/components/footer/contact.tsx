@@ -101,13 +101,13 @@ const Footer: React.FC = () => {
                 >
                     <Grid item xs={12} sm={6} md={4} >
                         <div className={classes.logo}>
-                            <a href='https://istemanit.in/' target='_blank'>
+                            <a href='https://istemanit.in/' >
                                 <img src='./iste.svg' alt='iste-logo' />
                             </a>
                         </div>
                         <div className={classes.socialIcon}>
                             <div className={classes.icon}>
-                                <a href='https://www.instagram.com/istemanit' target='_blank'>
+                                <a href='https://www.instagram.com/istemanit' >
                                     <FontAwesomeIcon
                                         icon={faInstagram}
                                         className='social-media fa-2x'
@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
                                 </a>
                             </div>
                             <div className={classes.icon}>
-                                <a href='https://www.facebook.com/ISTESCMANIT' target='_blank'>
+                                <a href='https://www.facebook.com/ISTESCMANIT' >
                                     <FontAwesomeIcon
                                         icon={faFacebook}
                                         className='social-media fa-2x'
@@ -125,7 +125,7 @@ const Footer: React.FC = () => {
                             <div className={classes.icon}>
                                 <a
                                     href='https://www.linkedin.com/company/iste-sc-manit'
-                                    target='_blank'
+
                                 >
                                     <FontAwesomeIcon
                                         icon={faLinkedin}
@@ -134,7 +134,7 @@ const Footer: React.FC = () => {
                                 </a>
                             </div>
                             <div className={classes.icon}>
-                                <a href='https://mobile.twitter.com/iste_manit' target='_blank'>
+                                <a href='https://mobile.twitter.com/iste_manit' >
                                     <FontAwesomeIcon
                                         icon={faTwitter}
                                         className='social-media fa-2x'
@@ -157,7 +157,7 @@ const Footer: React.FC = () => {
                                 <a
                                     className='link'
                                     href='https://goo.gl/maps/nTNnuX6w5YbGKTic7'
-                                    target='blank'
+
                                 >
                                     Maulana Azad National
                                     <br />

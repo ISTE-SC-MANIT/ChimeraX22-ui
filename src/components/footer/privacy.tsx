@@ -84,7 +84,7 @@ const PrivacyDialog: React.FC<Props> = ({ openDialog, onClose }) => {
                         information included in your message <br />
                         (1) To respond to you. <br />
                         (2) To solicit your feedback. <br />
-                        (3) To optimize the users' experience by customizing our web page.
+                        (3) To optimize the users&apos; experience by customizing our web page.
                         <br />
                         (4) To notify you about updates, services, special events, or
                         activities conducted by ISTE SC NIT BHOPAL
@@ -94,15 +94,15 @@ const PrivacyDialog: React.FC<Props> = ({ openDialog, onClose }) => {
                         </Typography>
                         <br /> ISTE exposes personally identifiable information only to
                         those of its members and associated organizations that require that
-                        information to process on ISTE's behalf or to provide services
-                        accessible on VERSION BETA's website.
+                        information to process on ISTE&apos;s behalf or to provide services
+                        accessible on ChimeraX&apos;s website.
                         <br />{' '}
                         <Typography className={classes.title} variant='h6'>
                             External sites can access the following information
                         </Typography>
                         <br />
                         Our website contains connections to third-party websites, such as
-                        payment gateways, as well as links to our various sponsors'
+                        payment gateways, as well as links to our various sponsors&apos;
                         websites. While we have no control over their practices, we only
                         collaborate with firms that follow a comparable privacy policy.
                         <br />{' '}
