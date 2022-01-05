@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import { url } from 'inspector';
 import { useContext } from 'react';
 import Footer from '../components/footer/contact';
-
+import { About } from '../components/about';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -329,6 +329,7 @@ const Landing: React.FC = () => {
             <VectorImg />
           </Grid>
         </Grid>
+        <About/>
         <Footer />
       </div>
 
