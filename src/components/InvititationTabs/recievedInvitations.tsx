@@ -47,7 +47,16 @@ const ReceivedInvitation: React.FC<Props> = ({
 
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
+  // to receive invitation without Reloading
 
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      invitationResponse.refetch();
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
   if (invitationResponse.loading) {
     return (
       <Box ml={32} mt={12}>
@@ -55,14 +64,6 @@ const ReceivedInvitation: React.FC<Props> = ({
       </Box>
     );
   }
-  // to receive invitation without Reloading
-
-  // React.useEffect(() => {
-  //   const interval = setInterval(() => { invitationResponse.refetch() }, 3000)
-  //   return () => {
-  //     clearInterval(interval);
-  //   }
-  // })
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };

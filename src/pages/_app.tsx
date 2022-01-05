@@ -76,7 +76,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     [mode]
   );
 
-  const [view, viewerQuery] = useLazyQuery<viewer>(User, { client: client });
+  const [view, viewerQuery] = useLazyQuery<viewer>(User, {
+    client: client,
+    fetchPolicy: 'network-only',
+  });
   React.useEffect(() => {
     if (isProtectedRoute) {
       view()
