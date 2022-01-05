@@ -12,6 +12,7 @@ import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import { url } from 'inspector';
 import { useContext } from 'react';
+import Footer from '../components/footer/contact';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -146,7 +147,7 @@ const Landing: React.FC = () => {
   };
   return (
     <>
-      
+
       <NavbarHeader open={open} setOpen={setOpen} />
       <div className={classes.root} onClick={() => setOpen(false)}>
         <Box padding={2} className={classes.header}>
@@ -328,7 +329,9 @@ const Landing: React.FC = () => {
             <VectorImg />
           </Grid>
         </Grid>
+        <Footer />
       </div>
+
     </>
   );
 };
