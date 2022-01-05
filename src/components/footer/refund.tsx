@@ -83,7 +83,7 @@ const RefundDialog: React.FC<Props> = ({ openDialog, onClose }) => {
                         </Typography>
                         <br />
                         If in case you have purchased a particular workshop twice, due to
-                        any reason, you'll get 100% refund. You can reach out to us at
+                        any reason, you&apos;ll get 100% refund. You can reach out to us at
                         istescmanit@gmail.com <br /> We keep our pricing very transparent
                         and honest.
                     </DialogContentText>
