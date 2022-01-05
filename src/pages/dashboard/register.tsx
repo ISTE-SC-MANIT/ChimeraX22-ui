@@ -40,7 +40,7 @@ const validationSchema = yup.object({
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
-    .min(10)
+    .test('len', 'A phone number needs to be excatly 10 digits', val => val?.toString().length === 10)
     .required('A phone number is required'),
 });
 

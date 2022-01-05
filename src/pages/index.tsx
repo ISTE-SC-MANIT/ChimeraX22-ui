@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import { url } from 'inspector';
 import { useContext } from 'react';
 import Footer from '../components/footer/contact';
-
+import { About } from '../components/about';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
-      background: `url('/bg.svg')`,
+      // background: `url('/bg.svg')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
@@ -329,6 +329,7 @@ const Landing: React.FC = () => {
             <VectorImg />
           </Grid>
         </Grid>
+        <About/>
         <Footer />
       </div>
 
