@@ -84,7 +84,7 @@ const NavbarHeader: React.FC<DrawerProps> = ({ open, setOpen }) => {
             </Button>
             <Button
               variant='contained'
-              onClick={() => router.push('/signin')}
+              onClick={() => router.push('/signup')}
               className={classes.button}
             >
               Sign up
