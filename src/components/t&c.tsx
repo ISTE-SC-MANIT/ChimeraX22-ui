@@ -5,9 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Link, Typography } from '@mui/material';
-
 import Button from '@mui/material/Button';
-
 import { withStyles, makeStyles } from '@mui/styles';
 import { Theme, useTheme } from '@mui/material/styles';
 
@@ -44,7 +42,6 @@ const ScrollDialog: React.FC<Props> = ({ openDialog, onClose }) => {
     onClose()
   };
 
-  //const descriptionElementRef = React.useRef<HTMLElement>(null);
 
   return (
     <div>

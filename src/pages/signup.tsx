@@ -47,7 +47,6 @@ const LoginButton = withStyles((theme) => ({
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
-    // overflow: 'hidden',
   },
   Backcolor: {
     backgroundColor:
@@ -86,7 +85,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   logo: {
-    // backgroundImage: `url('/chimerax.png')`,
     width: 'fit-content',
     height: '100px',
     marginLeft: 'auto',
@@ -253,9 +251,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
                     variant='outlined'
-                    // className={classes.field}
                     margin='normal'
-                  // disabled
                   />
                 )}
               </Field>
@@ -272,10 +268,8 @@ const SignUp: NextPage<ComponentProps> = ({
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
-                    variant='outlined'
-                    // className={classes.field}
+                    variant='outlined'             
                     margin='normal'
-                  // disabled
                   />
                 )}
               </Field>
@@ -289,12 +283,10 @@ const SignUp: NextPage<ComponentProps> = ({
                     id='password-input'
                     label='Password'
                     required
-                    // disabled
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
                     variant='outlined'
-                    // className={classes.field}
                     margin='normal'
                     type={visible ? 'text' : 'password'}
                     InputProps={{
@@ -341,7 +333,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     onClick={() =>
                       googleLogin(router, setErrorMessage, setSuccessMessage)
                     }
-                  // disabled={}
+                 
                   >
                     <Image
                       src='/google-logo.png'
@@ -355,7 +347,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     onClick={() =>
                       facebookLogin(router, setErrorMessage, setSuccessMessage)
                     }
-                  // disabled={}
+                  
                   >
                     <Image
                       src='/fb-logo.png'

@@ -44,7 +44,6 @@ const PrivacyDialog: React.FC<Props> = ({ openDialog, onClose }) => {
         onClose();
     };
 
-    //const descriptionElementRef = React.useRef<HTMLElement>(null);
 
     return (
         <div>
@@ -55,7 +54,7 @@ const PrivacyDialog: React.FC<Props> = ({ openDialog, onClose }) => {
                 aria-labelledby='scroll-dialog-title'
                 aria-describedby='scroll-dialog-description'
             >
-                {/* <DialogTitle id='scroll-dialog-title'>PRIVACY POLICY</DialogTitle> */}
+            
                 <DialogContent dividers={scroll === 'paper'}>
                     <DialogContentText className={classes.body}>
                         <Typography variant='h6' className={classes.title}>

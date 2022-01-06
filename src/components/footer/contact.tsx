@@ -13,7 +13,7 @@ import {
     faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import { Grid, Box, Container, CssBaseline } from '@mui/material';
+import { Grid, Box, Container } from '@mui/material';
 import ScrollDialog from './terms';
 import PrivacyDialog from './privacy';
 import RefundDialog from './refund';
@@ -136,7 +136,6 @@ const Footer: React.FC = () => {
                             <a href='https://istemanit.in/' className={classes.ankerTag}>
 
                                 <Image
-                                    // style={{ cursor: 'pointer' }}
                                     src={
                                         theme.palette.mode === 'light'
                                             ? '/iste.svg'

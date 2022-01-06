@@ -54,7 +54,7 @@ const SendInvitation: React.FC<Props> = ({
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
-    console.log(id);
+    // console.log(id);
     deleteInvite({
       variables: { input: input },
       onCompleted: () => {
@@ -86,7 +86,7 @@ const SendInvitation: React.FC<Props> = ({
                     secondary={invitation.receiversEmail}
                   />
                   <ListItemSecondaryAction>
-                    {/* <Button variant="contained" color="primary">Confirm</Button>&nbsp;&nbsp; */}
+                   
                     <Tooltip title='Delete Invitation'>
                       <IconButton
                         color='secondary'

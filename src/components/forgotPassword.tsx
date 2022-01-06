@@ -8,7 +8,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import firebase from 'firebase';
 interface Props {
@@ -24,7 +23,6 @@ const FormDialog: React.FC<Props> = ({
   setErrorMessage,
   setSuccessMessage,
 }) => {
-  // const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({ email: '' });
   const router = useRouter();
 
@@ -95,7 +93,6 @@ const FormDialog: React.FC<Props> = ({
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
                     variant='outlined'
-                    // className={classes.field}
                     margin='normal'
                     type='email'
                   />

@@ -84,8 +84,6 @@ export default function VerticalStepper() {
           <Step key={index}>
             <StepLabel>{label}</StepLabel>
             <StepContent>
-              {/* <Typography>{getStepContent(index)}</Typography> */}
-
             </StepContent>
           </Step>
         ))}

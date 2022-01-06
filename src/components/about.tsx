@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '93%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        // marginBottom: theme.spacing(4),
         padding: theme.spacing(5),
         [theme.breakpoints.down('md')]: {
             width: '96%',
@@ -34,10 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: "justify",
         fontSize: '20px',
         fontWeight: '300',
-        // marginLeft: 'auto',
-        // marginRight: 'auto',
         width: '80%',
-        // margin: '5%',
         letterSpacing: '1px',
         padding: '0 60px',
         [theme.breakpoints.down('md')]: {
