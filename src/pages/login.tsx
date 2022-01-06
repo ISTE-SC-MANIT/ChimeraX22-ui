@@ -48,7 +48,7 @@ const SigninButton = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    minheight: '100vh',
+    height: '100vh',
   },
   image: {
     backgroundImage: `url('/vector.png')`,

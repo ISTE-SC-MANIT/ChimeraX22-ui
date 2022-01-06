@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Image from 'next/image';
 import {
   Avatar,
   Box,
@@ -256,10 +257,10 @@ const Team: React.FC<ComponentProps> = ({
             <Box mt={5} mb={5} className={classes.header}>
               <Grid container justifyContent='flex-start' alignItems='center'>
                 <Grid item sm={4} alignItems='center'>
-                  <img
+                  <Image
                     src='/dashboard.png'
                     className={classes.dashboardImg}
-                  ></img>
+                  />
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>

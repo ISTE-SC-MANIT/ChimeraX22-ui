@@ -156,7 +156,7 @@ const RazorpayImg = () => {
   const theme = useTheme();
   const source =
     theme.palette.mode === 'light' ? '/razorpay.png' : '/razorpay-dark.png';
-  return <img src={source} width='180px' className={classes.box} />;
+  return <Image src={source} width='180px' className={classes.box} />;
 };
 const Payment: React.FC<ComponentProps> = ({
   viewer,
