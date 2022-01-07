@@ -279,6 +279,7 @@ const Register: React.FC<ComponentProps> = ({
                           variant='outlined'
                           size='small'
                           className={classes.textField}
+                          disabled
                         />
                       )}
                     </Field>
