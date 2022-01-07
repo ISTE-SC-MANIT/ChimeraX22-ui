@@ -17,7 +17,8 @@ export const emailPasswordSignUp = (
   setFormValues: React.Dispatch<React.SetStateAction<FormValues>>,
   router: NextRouter,
   setErrorMessage: (message: string) => void,
-  setSuccessMessage: (message: string) => void
+  setSuccessMessage: (message: string) => void,
+  refetch: () => void
 ) => {
   setStatus(Status.LOADING);
   firebaseSDK
@@ -41,6 +42,7 @@ export const emailPasswordSignUp = (
           // console.log(response.data);
           setStatus(Status.SUCCESS);
           setSuccessMessage('Successfully created account.');
+          refetch();
           router.push('/dashboard');
         })
         .catch((error) => {

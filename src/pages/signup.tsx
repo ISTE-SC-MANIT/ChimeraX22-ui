@@ -232,7 +232,8 @@ const SignUp: NextPage<ComponentProps> = ({
                 setFormValues,
                 router,
                 setErrorMessage,
-                setSuccessMessage
+                setSuccessMessage,
+                refetch
               )
             }
             validationSchema={validationSchema}
@@ -255,7 +256,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -275,7 +276,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     variant='outlined'
                     // className={classes.field}
                     margin='normal'
-                  // disabled
+                    // disabled
                   />
                 )}
               </Field>
@@ -339,9 +340,14 @@ const SignUp: NextPage<ComponentProps> = ({
                 <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
                     onClick={() =>
-                      googleLogin(router, setErrorMessage, setSuccessMessage)
+                      googleLogin(
+                        router,
+                        setErrorMessage,
+                        setSuccessMessage,
+                        refetch
+                      )
                     }
-                  // disabled={}
+                    // disabled={}
                   >
                     <Image
                       src='/google-logo.png'
@@ -353,9 +359,14 @@ const SignUp: NextPage<ComponentProps> = ({
                   </IconButton>
                   <IconButton
                     onClick={() =>
-                      facebookLogin(router, setErrorMessage, setSuccessMessage)
+                      facebookLogin(
+                        router,
+                        setErrorMessage,
+                        setSuccessMessage,
+                        refetch
+                      )
                     }
-                  // disabled={}
+                    // disabled={}
                   >
                     <Image
                       src='/fb-logo.png'

@@ -7,7 +7,8 @@ import { NextRouter } from 'next/router';
 export const googleLogin = (
   router: NextRouter,
   setErrorMessage: (message: string) => void,
-  setSuccessMessage: (message: string) => void
+  setSuccessMessage: (message: string) => void,
+  refetch: () => void
 ) => {
   const provider = new firebaseSDK.auth.GoogleAuthProvider();
   firebaseSDK
@@ -26,6 +27,7 @@ export const googleLogin = (
           .then((response) => {
             // console.log(response.data);
             setSuccessMessage('Logged in successfully');
+            refetch();
             router.push('/dashboard');
           })
           .catch((error) => {
@@ -38,6 +40,7 @@ export const googleLogin = (
           });
       } else {
         setSuccessMessage('Logged in successfully');
+        refetch();
         router.push('/dashboard');
       }
     })

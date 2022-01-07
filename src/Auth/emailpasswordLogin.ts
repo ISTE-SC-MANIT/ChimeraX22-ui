@@ -13,7 +13,8 @@ export const emailPasswordLogin = (
   router: NextRouter,
   persist: string,
   setErrorMessage: (message: string) => void,
-  setSuccessMessage: (message: string) => void
+  setSuccessMessage: (message: string) => void,
+  refetch: () => void
 ) => {
   if (!(values.email && values.password))
     return setErrorMessage('Please enter valid email and password');
@@ -30,6 +31,7 @@ export const emailPasswordLogin = (
           // console.log(response.data);
           setStatus(Status.SUCCESS);
           setSuccessMessage('Logged in successfully');
+          refetch();
           router.push('/dashboard');
         })
         .catch((e) => {

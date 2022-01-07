@@ -11,6 +11,7 @@ import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
 import firebaseSDK from '../../firebase';
 import nookies from 'nookies';
+import Link from 'next/link';
 import { logout } from '../../Auth/logout';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,15 +51,17 @@ const Navbar: React.FC<NavbarProps> = ({
         <Typography variant='h6' className={classes.title}>
           Chimera-X
         </Typography>
-        <Button
-          color='inherit'
-          onClick={() => {
-            logout();
-            router.push('/');
-          }}
-        >
-          Log out
-        </Button>
+        <Link href='/login'>
+          <Button
+            color='inherit'
+            onClick={async () => {
+              await logout();
+              router.reload();
+            }}
+          >
+            Log out
+          </Button>
+        </Link>
       </Toolbar>
     </AppBar>
   );

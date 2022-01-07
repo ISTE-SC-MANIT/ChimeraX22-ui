@@ -19,7 +19,14 @@ import { useTheme } from '@mui/material/styles';
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
-import { InputAdornment, IconButton, Theme, List, ListItem, ListItemText, } from '@mui/material';
+import {
+  InputAdornment,
+  IconButton,
+  Theme,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
@@ -134,9 +141,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   link: {
     cursor: 'pointer',
   },
-
- 
-
 }));
 const VectorImg = (classes: any) => {
   const theme = useTheme();
@@ -181,8 +185,6 @@ const Login: React.FC<ComponentProps> = ({
   const persist = remember ? authPersist.local : authPersist.session;
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
-
- 
 
   const handleShowPassword = () => {
     setVisible(!visible);
@@ -263,7 +265,8 @@ const Login: React.FC<ComponentProps> = ({
                   router,
                   persist,
                   setErrorMessage,
-                  setSuccessMessage
+                  setSuccessMessage,
+                  refetch
                 )
               }
               validationSchema={validationSchema}
@@ -372,9 +375,14 @@ const Login: React.FC<ComponentProps> = ({
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
                       onClick={() =>
-                        googleLogin(router, setErrorMessage, setSuccessMessage)
+                        googleLogin(
+                          router,
+                          setErrorMessage,
+                          setSuccessMessage,
+                          refetch
+                        )
                       }
-                    // disabled={}
+                      // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
@@ -386,9 +394,14 @@ const Login: React.FC<ComponentProps> = ({
                     </IconButton>
                     <IconButton
                       onClick={() =>
-                        facebookLogin(router, setErrorMessage, setSuccessMessage)
+                        facebookLogin(
+                          router,
+                          setErrorMessage,
+                          setSuccessMessage,
+                          refetch
+                        )
                       }
-                    // disabled={}
+                      // disabled={}
                     >
                       <Image
                         src='/fb-logo.png'
@@ -405,9 +418,6 @@ const Login: React.FC<ComponentProps> = ({
           </div>
         </Grid>
       </Grid>
-
-     
-
     </>
   );
 };

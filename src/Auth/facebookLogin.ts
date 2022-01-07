@@ -6,7 +6,8 @@ import { NextRouter } from 'next/router';
 export const facebookLogin = (
   router: NextRouter,
   setErrorMessage: (message: string) => void,
-  setSuccessMessage: (message: string) => void
+  setSuccessMessage: (message: string) => void,
+  refetch: () => void
 ) => {
   const provider = new firebaseSDK.auth.FacebookAuthProvider();
   firebaseSDK
@@ -25,7 +26,7 @@ export const facebookLogin = (
           .then((response) => {
             // console.log(response.data);
             setSuccessMessage('Logged in successfully');
-
+            refetch();
             router.push('/dashboard');
           })
           .catch((error) => {
@@ -38,6 +39,7 @@ export const facebookLogin = (
           });
       } else {
         setSuccessMessage('Logged in successfully');
+        refetch();
         router.push('/dashboard');
       }
     })
