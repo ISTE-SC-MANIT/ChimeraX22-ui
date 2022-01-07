@@ -6,7 +6,19 @@ import { makeStyles, createStyles } from '@mui/styles';
 import { Theme, useTheme } from '@mui/material/styles';
 import { Link } from '@mui/material';
 import Image from 'next/image';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/router';
+const theme = createTheme();
+theme.typography.h5 = {
+
+  fontSize: '1.2rem',
+  '@media (min-width:600px)': {
+    fontSize: '1.5rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '2rem',
+  },
+};
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -14,8 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100vh',
       padding: '5%',
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-around',
+      justifyContent: 'center',
       alignItems: 'center',
     },
   })
@@ -32,21 +43,22 @@ export default function ErrorPage400() {
   return (
     <>
       <div className={classes.root}>
-        <Typography variant='h4' align='center'>
-          Oops!! Something Went Wrong.
-        </Typography>
-        <Typography variant='h6' align='center'>
-          {' '}
-          Please Click here Login Again
-        </Typography>
+        <ThemeProvider theme={theme}>
 
-        <Button
-          onClick={() => {
-            router.push('/login');
-          }}
-        >
-          Login Page
-        </Button>
+          <Typography variant='h5' align='center'>
+            Oops!! Something Went Wrong.<br /><br />
+            Please Click here for login Again.<br /><br />
+            <Button
+              variant="contained"
+              onClick={() => {
+                router.push('/login');
+              }}
+            >
+              Login Page
+            </Button>
+          </Typography>
+        </ThemeProvider>
+
       </div>
     </>
   );
