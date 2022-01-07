@@ -31,6 +31,7 @@ const DialogBox: React.FC<Props> = ({
       onCompleted: () => {
         setSuccessMessage('Redirecting ....');
         refetch();
+        router.reload();
         router.push('/dashboard/payment');
       },
       onError: () => {
