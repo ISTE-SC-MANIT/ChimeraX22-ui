@@ -83,7 +83,6 @@ const CustomDrawer: React.FC<DrawerProps> = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
-  // const [open, setOpen] = React.useState(false);
   const classes = useStyles({ open });
   const router = useRouter();
   const icons = [

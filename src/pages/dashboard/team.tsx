@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Image from 'next/image';
 import {
   Avatar,
   Box,
@@ -178,14 +179,6 @@ const Team: React.FC<ComponentProps> = ({
   const [playIndividual, playIndividualResponse] =
     useMutation(PlayAsIndividual);
   const SingleUserResponse = useQuery<GetSingleUserQuery>(GetSingleUser);
-  //if (SendInvititation.loading && !rendered) return <h1>Loading</h1>;
-  // const EligibleUsers = SingleUserResponse.data?.getSingleUsers.map((u) => {
-  //   const name = u.name;
-  //   const email = u.email;
-  //   const _id = u._id ? u._id : '';
-
-  //   return { _id, name, email };
-  // });
   const handleSendInvitation = () => {
     console.log(receiver);
     const receiverInput: InvitationInput = {
@@ -256,10 +249,8 @@ const Team: React.FC<ComponentProps> = ({
             <Box mt={5} mb={5} className={classes.header}>
               <Grid container justifyContent='flex-start' alignItems='center'>
                 <Grid item sm={4} alignItems='center'>
-                  <img
-                    src='/dashboard.png'
-                    className={classes.dashboardImg}
-                  ></img>
+                  <img src='/dashboard.png'
+                    className={classes.dashboardImg}></img>
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>
@@ -404,7 +395,7 @@ const Team: React.FC<ComponentProps> = ({
             item
             xs={12}
             md={4}
-            //   component={Paper} elevation={6} square
+          //   component={Paper} elevation={6} square
           >
             <Paper elevation={6} className={classes.container}>
               <Tabs

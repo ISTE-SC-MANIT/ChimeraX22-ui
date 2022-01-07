@@ -133,8 +133,13 @@ export const cities = [
   },
 
   {
-    name: 'Jodhpur',
-    state: 'Rajasthan',
+    name: 'Jalandhar',
+    state: 'Punjab',
+  },
+
+  {
+    name: 'Gurugram',
+    state: 'Haryana',
   },
 
   {

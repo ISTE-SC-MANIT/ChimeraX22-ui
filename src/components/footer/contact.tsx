@@ -12,7 +12,8 @@ import {
     faMobile,
     faPhone,
 } from '@fortawesome/free-solid-svg-icons';
-import { Grid, Box, Container, CssBaseline } from '@mui/material';
+import Image from 'next/image';
+import { Grid, Box, Container } from '@mui/material';
 import ScrollDialog from './terms';
 import PrivacyDialog from './privacy';
 import RefundDialog from './refund';
@@ -104,7 +105,7 @@ const Footer: React.FC = () => {
     const [openPrivacy, setOpenPrivacy] = React.useState(false);
     const [openRefund, setOpenRefund] = React.useState(false);
     const classes = useStyles();
-
+    const theme=useTheme();
 
 
     return (
@@ -133,7 +134,17 @@ const Footer: React.FC = () => {
                         justifyContent='center' className={classes.footerLeft}>
                         <div className={classes.logo}>
                             <a href='https://istemanit.in/' className={classes.ankerTag}>
-                                <img src='./iste.svg' alt='iste-logo' />
+
+                                <Image
+                                    src={
+                                        theme.palette.mode === 'light'
+                                            ? '/iste.svg'
+                                            : '/iste-white.svg'
+                                    }
+                                    width='236px'
+                                    height='100%'
+                                    alt='logo'
+                                />
                             </a>
                         </div>
                         <div className={classes.socialIcon}>

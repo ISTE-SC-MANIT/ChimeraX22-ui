@@ -1,11 +1,8 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
 import {
-  ApolloClient,
   ApolloProvider,
-  InMemoryCache,
   useLazyQuery,
-  useQuery,
 } from '@apollo/client';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';

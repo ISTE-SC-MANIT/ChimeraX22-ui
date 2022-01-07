@@ -55,7 +55,7 @@ const SigninButton = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    minheight: '100vh',
+    height: '100vh',
   },
   image: {
     backgroundImage: `url('/vector.png')`,
@@ -93,7 +93,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   logo: {
-    // backgroundImage: `url('/chimerax.png')`,
     width: '80%',
     height: '200px',
     marginLeft: 'auto',
@@ -256,7 +255,6 @@ const Login: React.FC<ComponentProps> = ({
             <Typography component='h1' variant='h2'>
               Log In
             </Typography>
-            {/* <form className={classes.form} noValidate> */}
             <Formik
               onSubmit={(values) =>
                 emailPasswordLogin(
@@ -287,7 +285,6 @@ const Login: React.FC<ComponentProps> = ({
                       error={!!(meta.touched && meta.error)}
                       helperText={meta.touched ? meta.error : ''}
                       variant='outlined'
-                      // className={classes.field}
                       margin='normal'
                     />
                   )}
@@ -382,7 +379,6 @@ const Login: React.FC<ComponentProps> = ({
                           refetch
                         )
                       }
-                      // disabled={}
                     >
                       <Image
                         src='/google-logo.png'
@@ -401,7 +397,6 @@ const Login: React.FC<ComponentProps> = ({
                           refetch
                         )
                       }
-                      // disabled={}
                     >
                       <Image
                         src='/fb-logo.png'

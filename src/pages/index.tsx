@@ -10,8 +10,6 @@ import Image from 'next/image';
 import NavbarHeader from '../components/navbar/navbarheader';
 import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
-import { url } from 'inspector';
-import { useContext } from 'react';
 import Footer from '../components/footer/contact';
 import { About } from '../components/about';
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
-      // background: `url('/bg.svg')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
@@ -153,7 +150,6 @@ const Landing: React.FC = () => {
         <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
-              // style={{ cursor: 'pointer' }}
               src={
                 theme.palette.mode === 'light'
                   ? '/ChimeraX-logo-blue.svg'

@@ -7,8 +7,8 @@ import { Link, Typography } from '@mui/material';
 
 import Button from '@mui/material/Button';
 
-import { Theme, useTheme } from '@mui/material/styles';
-import { withStyles, makeStyles } from '@mui/styles';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
     body: {
@@ -44,7 +44,6 @@ const RefundDialog: React.FC<Props> = ({ openDialog, onClose }) => {
         onClose();
     };
 
-    //const descriptionElementRef = React.useRef<HTMLElement>(null);
 
     return (
         <div>

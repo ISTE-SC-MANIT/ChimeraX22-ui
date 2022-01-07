@@ -6,7 +6,6 @@ import { Grid, Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    // background: fade(theme.palette.common.black, 0.5),
     minHeight: '100vh',
     zIndex: theme.zIndex.modal,
     display: 'flex',
