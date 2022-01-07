@@ -1,13 +1,12 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography } from '@mui/material';
-import { Box, useMediaQuery } from '@mui/material'
+import { Box, useMediaQuery } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';
 import { Theme, useTheme } from '@mui/material/styles';
 import { Link } from '@mui/material';
-import Image from 'next/image'
+import Image from 'next/image';
 const useStyles = makeStyles((theme: Theme) =>
-
   createStyles({
     root: {
       backgroundColor: '#ececec',
@@ -18,10 +17,8 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
     },
   })
-
 );
-export default function ErrorPage400() {
-
+export default function ErrorPage404() {
   const ErrorImg404 = () => {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -47,14 +44,16 @@ export default function ErrorPage400() {
   const classes = useStyles();
   return (
     <>
-      <div className={classes.root} >
+      <div className={classes.root}>
         <CssBaseline />
 
         <Typography variant='subtitle1' align='center'>
-          <ErrorImg404 /><br />
-          We&apos;re sorry , The page you requested could not be found<br />
-          if you&apos;re experiencing a critical issue, please	&nbsp;
-          <Link href="mailto:istescmanit@gmail.com" >email support.</Link>
+          <ErrorImg404 />
+          <br />
+          We&apos;re sorry , The page you requested could not be found
+          <br />
+          if you&apos;re experiencing a critical issue, please &nbsp;
+          <Link href='mailto:istescmanit@gmail.com'>email support.</Link>
         </Typography>
       </div>
     </>

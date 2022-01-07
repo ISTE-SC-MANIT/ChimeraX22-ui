@@ -36,11 +36,16 @@ const validationSchema = yup.object({
     .string()
     .email('Provide a valid Email ID')
     .required('Email cannot be empty'),
-  phone: yup.number()
+  phone: yup
+    .number()
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
-    .test('len', 'A phone number needs to be excatly 10 digits', val => val?.toString().length === 10)
+    .test(
+      'len',
+      'A phone number needs to be excatly 10 digits',
+      (val) => val?.toString().length === 10
+    )
     .required('A phone number is required'),
 });
 
@@ -154,7 +159,6 @@ const Register: React.FC<ComponentProps> = ({
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
-      router.push('/dashboard/register');
     }
     if (viewer.step === 'CHOOSE_TEAM') {
       router.push('/dashboard/team');
@@ -397,7 +401,7 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                    // disabled
+                      // disabled
                     >
                       Proceed
                     </Button>

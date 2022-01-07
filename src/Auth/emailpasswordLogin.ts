@@ -31,7 +31,7 @@ export const emailPasswordLogin = (
           // console.log(response.data);
           setStatus(Status.SUCCESS);
           setSuccessMessage('Logged in successfully');
-          refetch();
+          // refetch();
           router.push('/dashboard');
         })
         .catch((e) => {

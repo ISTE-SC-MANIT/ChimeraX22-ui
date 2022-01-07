@@ -174,9 +174,9 @@ const Payment: React.FC<ComponentProps> = ({
 
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
+      router.push('/dashboard/register');
     }
     if (viewer.step === 'PAYMENT') {
-      router.push('/dashboard/payment');
     }
     if (viewer.step === 'TEST') {
       router.push('/dashboard/test');

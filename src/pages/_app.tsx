@@ -1,9 +1,6 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import {
-  ApolloProvider,
-  useLazyQuery,
-} from '@apollo/client';
+import { ApolloProvider, useLazyQuery } from '@apollo/client';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext, toggleMode } from '../components/theme';
@@ -17,6 +14,7 @@ import SEO from '../SEO';
 import { AuthProvider } from '../Auth/AuthContext';
 import cookie from 'js-cookie';
 import LoadingScreen from '../components/loadingScreen';
+import ErrorPage400 from './400';
 export interface ComponentProps {
   viewer: viewer_viewer;
   refetch: () => void;
@@ -124,8 +122,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   />
                 ) : viewerQuery.error ? (
                   <>
-                    {setErrorMessage('Error:You Must Login to Continue')}
-                    {router.push('/login')}
+                    <ErrorPage400 />
                   </>
                 ) : (
                   <>

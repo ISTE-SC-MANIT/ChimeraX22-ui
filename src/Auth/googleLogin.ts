@@ -27,7 +27,7 @@ export const googleLogin = (
           .then((response) => {
             // console.log(response.data);
             setSuccessMessage('Logged in successfully');
-            refetch();
+            //refetch();
             router.push('/dashboard');
           })
           .catch((error) => {
@@ -40,7 +40,7 @@ export const googleLogin = (
           });
       } else {
         setSuccessMessage('Logged in successfully');
-        refetch();
+        // refetch();
         router.push('/dashboard');
       }
     })

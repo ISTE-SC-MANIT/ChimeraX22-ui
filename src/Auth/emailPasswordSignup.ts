@@ -42,7 +42,7 @@ export const emailPasswordSignUp = (
           // console.log(response.data);
           setStatus(Status.SUCCESS);
           setSuccessMessage('Successfully created account.');
-          refetch();
+          // refetch();
           router.push('/dashboard');
         })
         .catch((error) => {

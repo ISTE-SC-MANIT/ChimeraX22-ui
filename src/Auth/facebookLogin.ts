@@ -26,7 +26,7 @@ export const facebookLogin = (
           .then((response) => {
             // console.log(response.data);
             setSuccessMessage('Logged in successfully');
-            refetch();
+            //refetch();
             router.push('/dashboard');
           })
           .catch((error) => {
@@ -39,7 +39,7 @@ export const facebookLogin = (
           });
       } else {
         setSuccessMessage('Logged in successfully');
-        refetch();
+        // refetch();
         router.push('/dashboard');
       }
     })
