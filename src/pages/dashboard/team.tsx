@@ -22,7 +22,6 @@ import { ComponentProps } from '../_app';
 import CustomDrawer from '../../components/navbar/customDrawer';
 import VerticalStepper from '../../components/VerticalStepper';
 import { ThemeContext } from '../../components/theme';
-// import PlayAsIndividualMutation from "../../components/relay/mutations/PlayAsIndividualMutation"
 import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
 import Navbar from '../../components/navbar/Navbar';
@@ -122,7 +121,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 'fit-content',
       margin: 'auto',
       marginTop: theme.spacing(4),
-      // marginLeft: '50%',
       marginBottom: theme.spacing(2),
     },
     tab: {
@@ -293,7 +291,6 @@ const Team: React.FC<ComponentProps> = ({
                         <Button
                           variant='contained'
                           color='primary'
-                          // onClick={handlePlayAsIndividual}
                           onClick={() => {
                             setOpenDialog(true);
                           }}
@@ -395,14 +392,13 @@ const Team: React.FC<ComponentProps> = ({
             item
             xs={12}
             md={4}
-          //   component={Paper} elevation={6} square
+         
           >
             <Paper elevation={6} className={classes.container}>
               <Tabs
                 value={tab}
                 onChange={handleChange}
                 indicatorColor='primary'
-                // textColor="primary"
                 variant='fullWidth'
               >
                 <Tab label='Sent Invitations' />

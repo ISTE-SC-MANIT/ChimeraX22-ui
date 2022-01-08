@@ -23,9 +23,6 @@ import {
   InputAdornment,
   IconButton,
   Theme,
-  List,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';

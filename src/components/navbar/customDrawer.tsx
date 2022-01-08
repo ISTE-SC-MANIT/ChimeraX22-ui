@@ -2,11 +2,6 @@ import React, { Dispatch, SetStateAction } from "react";
 import {
   Drawer,
   Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Hidden,
   Avatar,
   Box,
   Typography,
@@ -15,8 +10,6 @@ import {
 import { Theme } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles'
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import clsx from "clsx";
