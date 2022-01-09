@@ -1,9 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/auth';
-import nookies from 'nookies';
-import { useRouter } from 'next/router';
-import { client } from '../lib/apollo';
+import { authPersist } from './persistence';
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -17,6 +16,7 @@ const firebaseConfig = {
 if (typeof window !== 'undefined' && !firebase.apps.length) {
   try {
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().setPersistence(authPersist.none);
     if ('measurementId' in firebaseConfig) {
       firebase.analytics();
     }

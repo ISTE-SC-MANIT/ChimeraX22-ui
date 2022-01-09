@@ -12,25 +12,19 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import axios from 'axios';
 import { withStyles, makeStyles } from '@mui/styles';
 import { useTheme } from '@mui/material/styles';
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
-import {
-  InputAdornment,
-  IconButton,
-  Theme,
-} from '@mui/material';
+import { InputAdornment, IconButton, Theme } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import firebaseSDK from '../firebase';
 import { Status } from '../Utils/status';
-import { authPersist } from '../firebase/persistence';
 import nookies from 'nookies';
 import { googleLogin } from '../Auth/googleLogin';
 import { facebookLogin } from '../Auth/facebookLogin';
@@ -178,7 +172,6 @@ const Login: React.FC<ComponentProps> = ({
   const [visible, setVisible] = React.useState(false);
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
   const [remember, setRemember] = React.useState(true);
-  const persist = remember ? authPersist.local : authPersist.session;
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
 
@@ -258,7 +251,6 @@ const Login: React.FC<ComponentProps> = ({
                   values,
                   setStatus,
                   router,
-                  persist,
                   setErrorMessage,
                   setSuccessMessage,
                   refetch

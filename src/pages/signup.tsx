@@ -21,7 +21,6 @@ import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import { NextPage } from 'next';
 import { getStep, Status } from '../Utils/status';
 import firebaseSDK from '../firebase';
