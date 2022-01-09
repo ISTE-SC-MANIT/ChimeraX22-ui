@@ -104,10 +104,8 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
     },
     buttonGroup: {
-      // float: "right",
       width: 'fit-content',
       margin: 'auto',
-      //marginTop: theme.spacing(4)
     },
     heading: {
       color: 'white',
@@ -211,7 +209,6 @@ const Register: React.FC<ComponentProps> = ({
 
   return (
     <div className={classes.root} id='reg'>
-      {/* <CustomDrawer name={'Devansh'} username={'Devansh'} open={open} setOpen={setOpen} /> */}
       <CustomDrawer
         name={viewer.name}
         username={viewer.email}
@@ -226,16 +223,6 @@ const Register: React.FC<ComponentProps> = ({
         setErrorMessage={setErrorMessage}
       />
       <Box>
-        {/* <Button
-          variant='outlined'
-          onClick={() => {
-            logout();
-            router.push('/');
-          }}
-        >
-          {' '}
-          Logout
-        </Button> */}
         <ListItem className={classes.heading}>
           <ListItemText
             primary={' Step-1 Registration'}
@@ -383,7 +370,7 @@ const Register: React.FC<ComponentProps> = ({
                                 className={classes.textField}
                               />
                             )
-                            // <TextField {...params} label="Combo box" variant="outlined" />
+                           
                           }
                         />
                       )}
@@ -401,7 +388,7 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                      // disabled
+                     
                     >
                       Proceed
                     </Button>

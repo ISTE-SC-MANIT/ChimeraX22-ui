@@ -1,11 +1,8 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-// import teamQuery from "../../components/relay/queries/GetTeamDetailsQuery"
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-// import CreateOrder from "../../components/relay/mutations/CreateOrderMutation"
-// import PayOrder  from "../../lib/mutations/PayOrderMutation";
 import Typography from '@mui/material/Typography';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import { useTheme, Theme } from '@mui/material/styles';
@@ -26,7 +23,6 @@ import {
 import Image from 'next/image';
 import { ComponentProps } from '../_app';
 import { loadScript } from '../../Utils/loadScript';
-// import { CreateOrderMutationResponse } from '../../__generated__/CreateOrderMutation.graphql';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CustomDrawer from '../../components/navbar/customDrawer';
 import Navbar from '../../components/navbar/Navbar';
@@ -314,11 +310,11 @@ const Payment: React.FC<ComponentProps> = ({
                   />
                 </ListItem>
               </List>
-              {/* <Divider variant="inset" component="li" /> */}
+              
             </Box>
             <Box>
               <TextField
-                // fullWidth
+                
                 value={teamName}
                 onChange={(e) => {
                   setTeamName(e.target.value);

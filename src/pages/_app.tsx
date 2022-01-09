@@ -140,8 +140,10 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <LoadingScreen loading={true} />
                   </>
                 )}
+
                 <Snackbar
                   open={success}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   onClose={() => {
                     handleClose();
                   }}
@@ -153,6 +155,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </Snackbar>
                 <Snackbar
                   open={errors}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   onClose={() => {
                     handleClose();
                   }}

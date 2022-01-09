@@ -54,11 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     body: {
       minHeight: '80vh',
-      // overflow: 'hidden',
     },
     typo: {
       color: theme.palette.mode === 'light' ? '#1976D2' : 'white',
-      // color: '#221C64',
       [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(5),
       },
