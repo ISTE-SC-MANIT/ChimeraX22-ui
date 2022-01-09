@@ -8,13 +8,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { PlayAsIndividual } from '../lib/mutations/PlayAsIndividualMutation';
+import { getStep } from '../Utils/status';
+import { ComponentProps } from '../pages/_app';
 
-interface Props {
+interface Props extends ComponentProps {
   openDialog: boolean;
   handleClose: () => void;
-  setSuccessMessage: (message: string) => void;
-  setErrorMessage: (message: string) => void;
-  refetch: () => void;
 }
 const DialogBox: React.FC<Props> = ({
   openDialog,
@@ -30,9 +29,9 @@ const DialogBox: React.FC<Props> = ({
     Play({
       onCompleted: () => {
         setSuccessMessage('Redirecting ....');
-        refetch();
-        router.reload();
-        router.push('/dashboard/payment');
+        refetch().then((response) => {
+          router.push(getStep(response.data.viewer.step));
+        });
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');

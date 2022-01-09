@@ -182,9 +182,9 @@ const SignUp: NextPage<ComponentProps> = ({
     password: '',
   });
   const initialValues = {
-    fullName: '',
-    email: '',
-    password: '',
+    fullName: 'Ayush TEst',
+    email: 'ar1@gmail.com',
+    password: '123456',
   };
   const validationSchema = yup.object({
     fullName: yup.string().required(),

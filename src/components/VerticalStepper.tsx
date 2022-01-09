@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
+      marginLeft: '22px'
     },
     button: {
       marginTop: theme.spacing(1),
