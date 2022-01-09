@@ -211,8 +211,9 @@ const Payment: React.FC<ComponentProps> = ({
         await PayOrderFunction({
           variables: { input: payOrderInput },
           onCompleted: () => {
-            setSuccessMessage('Payment Successful'), refetch();
-            router.push('/dashboard/test');
+            setSuccessMessage('Payment Successful');
+             refetch().then(() => router.push('/dashboard/test'));
+            
           },
           onError: () => setErrorMessage('Payment Failed'),
         });

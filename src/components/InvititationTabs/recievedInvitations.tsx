@@ -21,12 +21,9 @@ import { DeleteInvitationMutation } from '../../__generated__/DeleteInvitationMu
 import { DeleteInvititation } from '../../lib/mutations/DeleteInvitationMutation';
 import { GetInvitationQuery } from '../../__generated__/GetInvitationQuery';
 import { GetInvitation } from '../../lib/queries/GetInvitationQuery';
-interface Props {
+import { ComponentProps } from '../../pages/_app';
+interface Props extends ComponentProps {
   refetchRef: any;
-
-  setSuccessMessage: (message: string) => void;
-  setErrorMessage: (message: string) => void;
-  refetch: () => void;
 }
 
 const ReceivedInvitation: React.FC<Props> = ({
@@ -34,6 +31,7 @@ const ReceivedInvitation: React.FC<Props> = ({
   setSuccessMessage,
   setErrorMessage,
   refetch,
+  viewer
 }) => {
   const invitationResponse = useQuery<GetInvitationQuery>(GetInvitation);
 
@@ -93,6 +91,7 @@ const ReceivedInvitation: React.FC<Props> = ({
         setSuccessMessage={setSuccessMessage}
         setErrorMessage={setErrorMessage}
         refetch={refetch}
+        viewer={viewer}
       />
       <List>
         {receivedInvitation &&

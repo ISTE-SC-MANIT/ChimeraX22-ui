@@ -8,6 +8,7 @@ import { Link } from '@mui/material';
 import Image from 'next/image';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useRouter } from 'next/router';
+import { logout } from '../Auth/logout';
 const theme = createTheme();
 theme.typography.h5 = {
 
@@ -36,8 +37,8 @@ export default function ErrorPage400() {
   const theme = useTheme();
 
   React.useEffect(() => {
-    // router.push('/login');
-  });
+    logout().then(()=>router.push('/login'));
+  },[]);
 
   const classes = useStyles();
   return (

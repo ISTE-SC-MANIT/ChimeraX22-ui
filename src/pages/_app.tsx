@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   React.useEffect(() => {
-    if (first == 'dashboard')
+    if (first == 'dashboard') {
       view()
         .then(() => {
           console.log(123, viewerQuery);
@@ -95,6 +95,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         .catch((e) => {
           console.log(321, e.message);
         });
+    }
   }, [first]);
 
   return (
@@ -143,7 +144,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
                 <Snackbar
                   open={success}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                   onClose={() => {
                     handleClose();
                   }}
@@ -155,7 +156,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </Snackbar>
                 <Snackbar
                   open={errors}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                   onClose={() => {
                     handleClose();
                   }}

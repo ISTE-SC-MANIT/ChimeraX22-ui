@@ -190,8 +190,8 @@ const Register: React.FC<ComponentProps> = ({
       variables: { input: userInput },
       onCompleted: () => {
         setSuccessMessage('Registered Successfully');
-        refetch();
-        router.push('/dashboard/team');
+        refetch().then(()=>router.push('/dashboard/team'));
+        
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');

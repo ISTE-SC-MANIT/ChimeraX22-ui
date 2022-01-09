@@ -4,8 +4,7 @@ import { client } from '../lib/apollo';
 
 export const logout = async () => {
   await firebaseSDK.auth().signOut();
-
   await client.cache.reset();
-  await nookies.destroy(undefined, 'token', { path: '/' });
+  nookies.destroy(undefined, 'token', { path: '/' });
   return null;
 };

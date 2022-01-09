@@ -201,22 +201,9 @@ const Team: React.FC<ComponentProps> = ({
     //retry()
     //refetchRef.current && refetchRef.current.retry();
   };
-  const handlePlayAsIndividual = () => {
-    playIndividual({
-      onCompleted: () => {
-        setSuccessMessage('Redirecting ....');
-        refetch();
-        router.push(getStep(viewer.step));
-      },
-      onError: () => {
-        setErrorMessage('Something went wrong Please try again later!');
-      },
-    });
-  };
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue);
   };
-
   const handleClose = () => setOpenDialog(false);
 
   return (
@@ -227,6 +214,7 @@ const Team: React.FC<ComponentProps> = ({
         setSuccessMessage={setSuccessMessage}
         setErrorMessage={setErrorMessage}
         refetch={refetch}
+        viewer={viewer}
       />
       <div className={classes.root}>
         <CustomDrawer
@@ -247,8 +235,10 @@ const Team: React.FC<ComponentProps> = ({
             <Box mt={5} mb={5} className={classes.header}>
               <Grid container justifyContent='flex-start' alignItems='center'>
                 <Grid item sm={4} alignItems='center'>
-                  <img src='/dashboard.png'
-                    className={classes.dashboardImg}></img>
+                  <img
+                    src='/dashboard.png'
+                    className={classes.dashboardImg}
+                  ></img>
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>
@@ -388,12 +378,7 @@ const Team: React.FC<ComponentProps> = ({
               </Typography>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-         
-          >
+          <Grid item xs={12} md={4}>
             <Paper elevation={6} className={classes.container}>
               <Tabs
                 value={tab}
@@ -415,6 +400,7 @@ const Team: React.FC<ComponentProps> = ({
                 />
               ) : (
                 <ReceivedInvitation
+                  viewer={viewer}
                   refetchRef={refetchRef}
                   setSuccessMessage={setSuccessMessage}
                   setErrorMessage={setErrorMessage}

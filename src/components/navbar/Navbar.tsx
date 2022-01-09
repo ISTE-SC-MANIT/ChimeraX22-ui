@@ -55,8 +55,9 @@ const Navbar: React.FC<NavbarProps> = ({
         <Button
           color='inherit'
           onClick={async () => {
-            await logout();
-            router.push('/signup');
+            // await logout();
+            router.push('/400');
+
           }}
         >
           Log out
