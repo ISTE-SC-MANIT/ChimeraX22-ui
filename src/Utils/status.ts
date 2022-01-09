@@ -6,7 +6,7 @@ export enum Status {
 }
 
 export const getStep = (
-  step: 'REGISTER' | 'CHOOSE_TEAM' | 'PAYMENT' | 'TEST'
+  step: 'REGISTER' | 'CHOOSE_TEAM' | 'PAYMENT' | 'TEST' | undefined
 ) => {
   switch (step) {
     case 'REGISTER':
@@ -21,5 +21,7 @@ export const getStep = (
     case 'TEST':
       return '/dashboard/test';
       break;
+    default:
+      return '/login';
   }
 };

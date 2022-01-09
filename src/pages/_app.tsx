@@ -1,6 +1,10 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import { ApolloProvider, useLazyQuery } from '@apollo/client';
+import {
+  ApolloProvider,
+  ApolloQueryResult,
+  useLazyQuery,
+} from '@apollo/client';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext, toggleMode } from '../components/theme';
@@ -15,9 +19,11 @@ import { AuthProvider } from '../Auth/AuthContext';
 import cookie from 'js-cookie';
 import LoadingScreen from '../components/loadingScreen';
 import ErrorPage400 from './400';
+import { getStep } from '../Utils/status';
 export interface ComponentProps {
   viewer: viewer_viewer;
-  refetch: () => void;
+  refetch: () => Promise<ApolloQueryResult<viewer>>;
+
   setSuccessMessage: (message: string) => void;
   setErrorMessage: (message: string) => void;
 }
@@ -47,8 +53,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
   /* Page loading animation */
   const [routeChange, setRouteChange] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [viewerData, setViewerData] = React.useState<viewer_viewer | null>();
 
   const isProtectedRoute = React.useMemo(() => {
     return first === 'dashboard';
@@ -73,19 +77,26 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [view, viewerQuery] = useLazyQuery<viewer>(User, {
     client: client,
-    fetchPolicy: 'network-only',
+    // onCompleted: () => {
+    //   console.log('completed', viewerQuery);
+    //   router.push(getStep(viewerQuery.data?.viewer.step));
+    // },
+    onError: () => {
+      router.push('/login');
+    },
   });
+
   React.useEffect(() => {
-    if (isProtectedRoute) {
+    if (first == 'dashboard')
       view()
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          console.log(123, viewerQuery);
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(321, e.message);
         });
-    }
-  }, [isProtectedRoute]);
+  }, [first]);
+
   return (
     <>
       <SEO />

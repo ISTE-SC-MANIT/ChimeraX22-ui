@@ -189,8 +189,8 @@ const Login: React.FC<ComponentProps> = ({
     setVisible(!visible);
   };
   const initialValues = {
-    password: '',
-    email: '',
+    password: '123456',
+    email: 'ar1@gmail.com',
   };
 
   const validationSchema = yup.object({

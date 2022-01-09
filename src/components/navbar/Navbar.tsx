@@ -51,17 +51,16 @@ const Navbar: React.FC<NavbarProps> = ({
         <Typography variant='h6' className={classes.title}>
           Chimera-X
         </Typography>
-        <Link href='/login'>
-          <Button
-            color='inherit'
-            onClick={async () => {
-              await logout();
-              router.reload();
-            }}
-          >
-            Log out
-          </Button>
-        </Link>
+
+        <Button
+          color='inherit'
+          onClick={async () => {
+            await logout();
+            router.push('/signup');
+          }}
+        >
+          Log out
+        </Button>
       </Toolbar>
     </AppBar>
   );
