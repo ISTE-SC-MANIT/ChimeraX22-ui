@@ -16,7 +16,7 @@ const firebaseConfig = {
 if (typeof window !== 'undefined' && !firebase.apps.length) {
   try {
     firebase.initializeApp(firebaseConfig);
-    firebase.auth().setPersistence(authPersist.none);
+    firebase.auth().setPersistence(authPersist.local);
     if ('measurementId' in firebaseConfig) {
       firebase.analytics();
     }
