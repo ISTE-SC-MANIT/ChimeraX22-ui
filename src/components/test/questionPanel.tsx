@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@mui/styles';
-import { Theme} from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Box, Typography, ListItem, ListItemText } from '@mui/material';
@@ -80,8 +80,8 @@ const QuestionPanel: React.FC<Props> = ({ questions,
       <Box mb={2}>
         <ListItemText primary={"Questions"} secondary={"Click on question number to view the question"} primaryTypographyProps={{ variant: "h6" }} />
       </Box>
-      <Grid container spacing={1}>
-        {/* <Grid container item spacing={2}>
+      {/* <Grid container spacing={1}> */}
+      {/* <Grid container item spacing={2}>
           {questions.map((question) => {
             return (
               <Grid item>
@@ -94,7 +94,7 @@ const QuestionPanel: React.FC<Props> = ({ questions,
             )
           })}
         </Grid> */}
-        {/* <Grid container item xs={12} spacing={2}>
+      {/* <Grid container item xs={12} spacing={2}>
           <FormRow />
         </Grid>
         <Grid container item xs={12} spacing={2}>
