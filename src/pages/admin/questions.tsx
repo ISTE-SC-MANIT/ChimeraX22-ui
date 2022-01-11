@@ -140,11 +140,11 @@ const Register: React.FC<ComponentProps> = ({
   const [questionType, setQuestionType] = React.useState('TEXT');
   const [questionAnswerType, setQuestionAnswerType] = React.useState('SINGLE');
 
-  const handleRadio1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadio2 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuestionType((event.target as HTMLInputElement).value);
   };
 
-  const handleRadio2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadio1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuestionAnswerType((event.target as HTMLInputElement).value);
   };
   const initialValues: CreateQuestionInput = {
@@ -173,17 +173,17 @@ const Register: React.FC<ComponentProps> = ({
       secondAnswerLabel: questionAnswerType === 'DOUBLE' ? 'Answer 2' : '',
     };
     console.log(userInput);
-    // mutateFunction({
-    //   variables: { input: userInput },
-    //   onCompleted: () => {
-    //     setSuccessMessage('Created Successfully');
-    //     refetch();
-    //
-    //   },
-    //   onError: () => {
-    //     setErrorMessage('Something went wrong Please try again later!');
-    //   },
-    //});
+    mutateFunction({
+      variables: { input: userInput },
+      onCompleted: () => {
+        setSuccessMessage('Created Successfully');
+        refetch();
+
+      },
+      onError: () => {
+        setErrorMessage('Something went wrong Please try again later!');
+      },
+    });
   };
 
   return (
@@ -411,9 +411,10 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                      // onClick={() => {
-                      //   handleSubmit(values);
-                      // }}
+                      onClick={() => {
+                        handleSubmit(values);
+                        setValues(initialValues);
+                      }}
                     >
                       Create Question
                     </Button>
