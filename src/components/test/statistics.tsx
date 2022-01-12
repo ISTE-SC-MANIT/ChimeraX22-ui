@@ -4,6 +4,7 @@ import {makeStyles, createStyles} from '@mui/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Box, Typography, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
+import { QuestionAnswer } from '../../__generated__/globalTypes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

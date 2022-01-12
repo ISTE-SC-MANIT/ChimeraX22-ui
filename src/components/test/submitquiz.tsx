@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useRouter } from 'next/router';
 import { ComponentProps } from '../../pages/_app';
+import { QuestionAnswer } from '../../__generated__/globalTypes';
 // import SubmitQuizMutation from './relay/mutations/SubmitQuizMutation';
 // import { QuestionAnswer, SubmitQuizInput } from '../__generated__/SubmitQuizMutation.graphql';
 
@@ -20,7 +21,6 @@ interface SubmitQuizProps extends ComponentProps {
 
 const SubmitQuizBox: React.FC<SubmitQuizProps> = ({
   submit,
-  environment,
   handleClose,
   setSuccessMessage,
   setErrorMessage,

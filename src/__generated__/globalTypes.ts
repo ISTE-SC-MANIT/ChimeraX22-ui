@@ -104,6 +104,17 @@ export interface PayOrderInput {
   paymentId: string;
 }
 
+export interface QuestionAnswer {
+  questionId: string;
+  answer: string;
+  questionNumber: number;
+  answer2?: string | null;
+}
+
+export interface SubmitQuizInput {
+  responses: QuestionAnswer[];
+}
+
 export interface UserInput {
   name?: string | null;
   phone?: string | null;

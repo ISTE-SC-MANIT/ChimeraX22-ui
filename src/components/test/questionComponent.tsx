@@ -5,16 +5,29 @@ import Button from '@mui/material/Button';
 import MuiDialogTitle from '@mui/material/DialogTitle';
 import MuiDialogContent from '@mui/material/DialogContent';
 import MuiDialogActions from '@mui/material/DialogActions';
-import Image from 'next/image'
-import Audio from "./audioPlayer"
+import Image from 'next/image';
+import Audio from './audioPlayer';
 import Typography from '@mui/material/Typography';
-import { Box, Grid, TextField, Tooltip, Paper, Card, CardActionArea, CardMedia } from '@mui/material';
-// import { GetQuestionsQueryResponse } from '../__generated__/GetQuestionsQuery.graphql';
-import { GetQuestionsQuery } from '../../__generated__/GetQuestionsQuery';
-import { QuestionAnswerType } from '../../__generated__/globalTypes';
+import {
+  Box,
+  Grid,
+  TextField,
+  Tooltip,
+  Paper,
+  Card,
+  CardActionArea,
+  CardMedia,
+} from '@mui/material';
+
+import {
+  GetQuestionsQuery,
+  GetQuestionsQuery_getQuestions,
+} from '../../__generated__/GetQuestionsQuery';
+import {
+  QuestionAnswer,
+  QuestionAnswerType,
+} from '../../__generated__/globalTypes';
 import { Role } from '../../__generated__/globalTypes';
-// import { QuestionAnswer } from '../__generated__/SubmitQuizMutation.graphql';
-// import { Role } from '../__generated__/AppViewerQuery.graphql';
 import VideoPlayer from './videoPlayer';
 
 const styles = (theme: Theme) =>
@@ -30,7 +43,6 @@ const styles = (theme: Theme) =>
       color: theme.palette.grey[500],
     },
   });
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -82,7 +94,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-
 export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
   children: React.ReactNode;
@@ -93,8 +104,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle /*disableTypography*/ className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-
+      <Typography variant='h6'>{children}</Typography>
     </MuiDialogTitle>
   );
 });
@@ -113,18 +123,17 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 interface Props {
-  question: GetQuestionsQueryResponse["getQuestions"][0],
-  answer: QuestionAnswer[],
-  setAnswers: React.Dispatch<React.SetStateAction<QuestionAnswer[] | []>>
-  reviewedAnswers: string[] | [],
-  visitedAnswers: string[] | [],
-  setReviewedAnswers: React.Dispatch<React.SetStateAction<string[] | []>>
-  setVisitedAnswers: React.Dispatch<React.SetStateAction<[] | string[]>>
-  currentQuestion: GetQuestionsQueryResponse["getQuestions"][0]
-  setCurrentQuestion: any
-  questions: GetQuestionsQueryResponse["getQuestions"]
-  role: Role
-
+  question: GetQuestionsQuery_getQuestions;
+  answer: QuestionAnswer[];
+  setAnswers: React.Dispatch<React.SetStateAction<QuestionAnswer[]>>;
+  reviewedAnswers: string[];
+  visitedAnswers: string[];
+  setReviewedAnswers: React.Dispatch<React.SetStateAction<string[]>>;
+  setVisitedAnswers: React.Dispatch<React.SetStateAction<string[]>>;
+  currentQuestion: GetQuestionsQuery_getQuestions;
+  setCurrentQuestion: any;
+  questions: GetQuestionsQuery_getQuestions[];
+  role: Role;
 }
 
 const QuestionComponent: React.FC<Props> = ({
@@ -137,89 +146,100 @@ const QuestionComponent: React.FC<Props> = ({
   setReviewedAnswers,
   currentQuestion,
   setCurrentQuestion,
-  questions, role
+  questions,
+  role,
 }) => {
+  const getQuestionAnswer = (questionNo: number, answerNo: 'ans1' | 'ans2') => {
 
-  const getQuestionAnswer = (questionNo: number, answerNo: "ans1" | "ans2") => {
-    console.log(answer)
-    return answerNo === "ans1" ? answer.find((a) => a.questionNumber === questionNo).answer : answer.find((a) => a.questionNumber === questionNo).answer2
-  }
-  const [localState, setLocalState] = React.useState("")
-  const [localState2, setLocalState2] = React.useState("")
-
-  React.useEffect(() => {
-    setLocalState(getQuestionAnswer(question.questionNo, "ans1"))
-    setLocalState2(getQuestionAnswer(question.questionNo, "ans2"))
-    const exists = visitedAnswers.find((answer) => answer === question.id)
-    if (!Boolean(exists)) {
-      setVisitedAnswers([...visitedAnswers, question.id])
+    if (answerNo === 'ans1') {
+      const ans = answer.find((a) => a.questionNumber === questionNo)?.answer;
+      return ans ? ans : '';
+    } else {
+      const ans = answer.find((a) => a.questionNumber === questionNo)?.answer2;
+      return ans ? ans : '';
     }
-
-  }, [question])
-
-  const classes = useStyles()
-  const handleClose = () => {
-
   };
 
+  const [localState, setLocalState] = React.useState<string>('');
+  const [localState2, setLocalState2] = React.useState<string>('');
+
+  React.useEffect(() => {
+    setLocalState(getQuestionAnswer(question.questionNo, 'ans1'));
+    setLocalState2(getQuestionAnswer(question.questionNo, 'ans2'));
+
+    const exists = visitedAnswers.find((answer) => answer === question.id);
+
+    if (!exists) {
+      if (question.id) setVisitedAnswers([...visitedAnswers, question.id]);
+    }
+  }, [question]);
+
+  const classes = useStyles();
+  const handleClose = () => {};
+
   const handleNext = () => {
-    const index = questions.findIndex((question) => question.id === currentQuestion.id)
-    setCurrentQuestion(questions[index + 1])
-  }
+    const index = questions.findIndex(
+      (question) => question.id === currentQuestion.id
+    );
+    setCurrentQuestion(questions[index + 1]);
+  };
 
   const handlePrevious = () => {
-    const index = questions.findIndex((question) => question.id === currentQuestion.id)
-    setCurrentQuestion(questions[index - 1])
-  }
-
-
+    const index = questions.findIndex(
+      (question) => question.id === currentQuestion.id
+    );
+    setCurrentQuestion(questions[index - 1]);
+  };
 
   const saveAnswer = () => {
-    const index = answer.findIndex((answer) => answer.questionNumber === question.questionNo)
-    let answerCopy = [...answer]
-    answerCopy[index].answer = localState
-    answerCopy[index].answer2 = localState2
-    setAnswers(answerCopy)
-
-  }
+    const index = answer.findIndex(
+      (answer) => answer.questionNumber === question.questionNo
+    );
+    let answerCopy = [...answer];
+    answerCopy[index].answer = localState;
+    answerCopy[index].answer2 = localState2;
+    setAnswers(answerCopy);
+  };
 
   const resetAnswer = () => {
-    const index = answer.findIndex((answer) => answer.questionNumber === question.questionNo)
-    let answerCopy = [...answer]
-    answerCopy[index].answer = ""
-    answerCopy[index].answer2 = ""
-    setAnswers(answerCopy)
-    setLocalState("")
-    setLocalState2("")
-  }
+    const index = answer.findIndex(
+      (answer) => answer.questionNumber === question.questionNo
+    );
+    let answerCopy = [...answer];
+    answerCopy[index].answer = '';
+    answerCopy[index].answer2 = '';
+    setAnswers(answerCopy);
+    setLocalState('');
+    setLocalState2('');
+  };
 
   const handleReview = () => {
-    const exists = reviewedAnswers.find((answer) => answer === question.id)
-    if (!Boolean(exists)) {
-      setReviewedAnswers([...reviewedAnswers, question.id])
+    const exists = reviewedAnswers.find((answer) => answer === question.id);
+    if (!exists) {
+      if (question.id) setReviewedAnswers([...reviewedAnswers, question.id]);
     } else {
-      let answerCopy = [...reviewedAnswers]
-      const i = reviewedAnswers.findIndex((answer) => answer === question.id)
-      answerCopy.splice(i, 1)
-      setReviewedAnswers(answerCopy)
-
+      let answerCopy = [...reviewedAnswers];
+      const i = reviewedAnswers.findIndex((answer) => answer === question.id);
+      answerCopy.splice(i, 1);
+      setReviewedAnswers(answerCopy);
     }
-  }
-
+  };
 
   const isMarkedForReview = () => {
-    const exists = reviewedAnswers.find((answer) => answer === question.id)
-    return Boolean(exists)
-  }
-
-
-
+    const exists = reviewedAnswers.find((answer) => answer === question.id);
+    return Boolean(exists);
+  };
 
   return (
     <div>
-      <Grid container justifyContent="center" alignItems="center" className={classes.root}>
+      <Grid
+        container
+        justifyContent='center'
+        alignItems='center'
+        className={classes.root}
+      >
         <Box className={classes.box}>
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          <DialogTitle id='customized-dialog-title' onClose={handleClose}>
             Question {question.questionNo}
           </DialogTitle>
           <DialogContent dividers>
@@ -234,8 +254,10 @@ const QuestionComponent: React.FC<Props> = ({
                       layout={'responsive'}
                       height={100}
                       width={300}
-                      src={question.questionAssets}
-                      alt="logo"
+                      src={
+                        question.questionAssets ? question.questionAssets : ''
+                      }
+                      alt='logo'
                     />
                   </Box>
                 </Paper>
@@ -243,12 +265,16 @@ const QuestionComponent: React.FC<Props> = ({
             )}
             {question.questionType === 'AUDIO' && (
               <Box m={4}>
-                <Audio src={question.questionAssets} />
+                <Audio
+                  src={question.questionAssets ? question.questionAssets : ''}
+                />
               </Box>
             )}
             {question.questionType === 'VIDEO' && (
               <Box className={classes.videoBox}>
-                <VideoPlayer src={question.questionAssets} />
+                <VideoPlayer
+                  src={question.questionAssets ? question.questionAssets : ''}
+                />
               </Box>
             )}
             <Box>
@@ -283,8 +309,8 @@ const QuestionComponent: React.FC<Props> = ({
               <Box>
                 <Button
                   onClick={handlePrevious}
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   disabled={currentQuestion.questionNo === 1}
                 >
                   Previous
@@ -292,8 +318,8 @@ const QuestionComponent: React.FC<Props> = ({
                 &nbsp;&nbsp;&nbsp;
                 <Button
                   onClick={handleNext}
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   disabled={currentQuestion.questionNo === 30}
                 >
                   Next
@@ -302,11 +328,13 @@ const QuestionComponent: React.FC<Props> = ({
                 {role === 'TEAM_LEADER' && (
                   <Button
                     onClick={handleReview}
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     className={classes.reviewBtn}
                   >
-                    {isMarkedForReview() ? 'Un-mark for review' : 'mark for review'}
+                    {isMarkedForReview()
+                      ? 'Un-mark for review'
+                      : 'mark for review'}
                   </Button>
                 )}
               </Box>
@@ -318,12 +346,12 @@ const QuestionComponent: React.FC<Props> = ({
                   !Boolean(
                     Boolean(
                       getQuestionAnswer(question.questionNo, 'ans1') ||
-                      Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
+                        Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
                     )
                   )
                 }
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
               >
                 Reset
               </Button>
@@ -331,12 +359,12 @@ const QuestionComponent: React.FC<Props> = ({
             {role === 'TEAM_LEADER' && (
               <Button
                 onClick={saveAnswer}
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 disabled={Boolean(
                   Boolean(
                     getQuestionAnswer(question.questionNo, 'ans1') ||
-                    Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
+                      Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
                   )
                 )}
               >
@@ -348,7 +376,6 @@ const QuestionComponent: React.FC<Props> = ({
       </Grid>
     </div>
   );
-}
+};
 
-
-export default QuestionComponent
+export default QuestionComponent;

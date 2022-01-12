@@ -2,35 +2,37 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-// import { useQuery } from "relay-hooks"
-// import query from "../components/relay/queries/GetQuestionsQuery"
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import AccessAlarmOutlinedIcon from '@material-ui/icons/AccessAlarmOutlined';
-// import SubmitQuizMutation from "../components/relay/mutations/SubmitQuizMutation"
 import { makeStyles } from '@mui/styles';
 import Timer from './timer';
 import { Divider, ListItemText } from '@mui/material';
 import QuestionPanel from './questionPanel';
 import Stats from './statistics';
 import QuestionComponent from './questionComponent';
-// import { GetQuestionsQuery, GetQuestionsQueryResponse } from "../__generated__/GetQuestionsQuery.graphql"
-// import { QuestionAnswer, SubmitQuizInput } from '../__generated__/SubmitQuizMutation.graphql';
 import { ComponentProps } from '../../pages/_app';
 import LoadingScreen from '../loadingScreen';
-// import timeQuery from "../components/relay/queries/GetQuizStartTimeQuery"
-// import { GetQuizStartTimeQuery } from '../__generated__/GetQuizStartTimeQuery.graphql';
 import { useRouter } from 'next/router';
-import SubmitQuizBox from './submitquiz'
+import SubmitQuizBox from './submitquiz';
 import CustomDrawer from '../navbar/customDrawer';
 import Navbar from '../navbar/Navbar';
 import InstructionsDialog from './InstructionsDialog';
-import { Theme } from '@mui/material/styles'
-import { GetQuestionsQuery } from '../../__generated__/GetQuestionsQuery';
+import { Theme } from '@mui/material/styles';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  GetQuestionsQuery,
+  GetQuestionsQuery_getQuestions,
+} from '../../__generated__/GetQuestionsQuery';
+import { GetQuestions } from '../../lib/queries/GetQuestionsQuery';
 import { GetQuizStartTimeQuery } from '../../__generated__/GetQuizStartTimeQuery';
-
-
+import { GetQuizStartTime } from '../../lib/queries/GetQuizStartTimeQuery';
+import {
+  QuestionAnswer,
+  SubmitQuizInput,
+} from '../../__generated__/globalTypes';
+import { SubmitQuiz } from '../../lib/mutations/SubmitQuizMutation';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -54,20 +56,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   divider: {
-    width: "100%",
-    margin: theme.spacing(2, 0)
+    width: '100%',
+    margin: theme.spacing(2, 0),
   },
   insBtn: {
-    marginBottom: theme.spacing(1)
-  }
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 interface QuizPageProps extends ComponentProps {
-  setQuizStatus: () => void
+  setQuizStatus: () => void;
 }
-
-
-
 
 const QuizPage: React.FC<QuizPageProps> = ({
   viewer,
@@ -77,19 +76,18 @@ const QuizPage: React.FC<QuizPageProps> = ({
   refetch,
 }) => {
   const classes = useStyles();
-  const { data, error, retry, isLoading } = useQuery<GetQuestionsQuery>(query);
-  const {
-    data: startTimeData,
-    error: startTimeError,
-    retry: startTimeRetry,
-    isLoading: startTimeIsLoading,
-  } = useQuery<GetQuizStartTimeQuery>(timeQuery);
-  const [currentQuestion, setCurrentQuestion] = React.useState<
-    GetQuestionsQueryResponse['getQuestions'][0] | null
-  >(null);
-  const [answer, setAnswer] = React.useState<QuestionAnswer[] | []>([]);
-  const [reviewedAnswers, setReviewedAnswers] = React.useState<string[] | []>([]);
-  const [visitedAnswers, setVisitedAnswers] = React.useState<string[] | []>([]);
+  const questionsResponse = useQuery<GetQuestionsQuery>(GetQuestions);
+  const quizStartTimeResponse =
+    useQuery<GetQuizStartTimeQuery>(GetQuizStartTime);
+
+  const [currentQuestion, setCurrentQuestion] =
+    React.useState<GetQuestionsQuery_getQuestions | null>(null);
+
+  const [SubmitQuizFunction, submitQuizResponse] = useMutation(SubmitQuiz);
+
+  const [answer, setAnswer] = React.useState<QuestionAnswer[]>([]);
+  const [reviewedAnswers, setReviewedAnswers] = React.useState<string[]>([]);
+  const [visitedAnswers, setVisitedAnswers] = React.useState<string[]>([]);
   const [submit, setSubmit] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -98,32 +96,41 @@ const QuizPage: React.FC<QuizPageProps> = ({
   const handleClose = () => setSubmit(false);
 
   React.useEffect(() => {
-    setCurrentQuestion(data?.getQuestions[0]);
-    if (Boolean(data)) {
-      const answerMap: QuestionAnswer[] = data.getQuestions.map((question) => {
+    if (questionsResponse.data) {
+      const questions = questionsResponse.data.getQuestions;
+      setCurrentQuestion(questions[0]);
+      const answerMap: QuestionAnswer[] = questions.map((question) => {
         return {
           answer: '',
           answer2: '',
-          questionId: question.id,
+          questionId: question.id ? question.id : '',
           questionNumber: question.questionNo,
         };
       });
       setAnswer(answerMap);
     }
-  }, [data]);
+  }, [questionsResponse.data]);
 
-  if (isLoading || startTimeIsLoading) {
+  if (questionsResponse.loading || quizStartTimeResponse.loading) {
     return <LoadingScreen loading />;
   }
 
   const handleQuestionClick = (questionNo: number) => {
-    const clickedQuestion = data.getQuestions.find((ques) => ques.questionNo === questionNo);
-    setCurrentQuestion(clickedQuestion);
+    if (questionsResponse.data) {
+      const clickedQuestion = questionsResponse.data.getQuestions.find(
+        (ques) => ques.questionNo === questionNo
+      );
+      if (clickedQuestion) setCurrentQuestion(clickedQuestion);
+    }
   };
 
   const handleSubmitQuizMutation = () => {
     const input: SubmitQuizInput = { responses: answer };
-    SubmitQuizMutation(input, {
+
+    SubmitQuizFunction({
+      variables: {
+        input,
+      },
       onCompleted: () => {
         setSuccessMessage('Quiz was successfully Submitted');
         setQuizStatus();
@@ -169,7 +176,7 @@ const QuizPage: React.FC<QuizPageProps> = ({
         answer={answer}
       />
       <div className={classes.root} onClick={() => setOpen(false)}>
-        <Grid container component="main" className={classes.root}>
+        <Grid container component='main' className={classes.root}>
           <CssBaseline />
           <Grid item xs={12} md={6} lg={8} style={{ position: 'relative' }}>
             {currentQuestion ? (
@@ -183,7 +190,11 @@ const QuizPage: React.FC<QuizPageProps> = ({
                 setVisitedAnswers={setVisitedAnswers}
                 currentQuestion={currentQuestion}
                 setCurrentQuestion={setCurrentQuestion}
-                questions={data.getQuestions}
+                questions={
+                  questionsResponse.data
+                    ? questionsResponse.data.getQuestions
+                    : []
+                }
                 role={viewer.role}
               />
             ) : (
@@ -193,35 +204,54 @@ const QuizPage: React.FC<QuizPageProps> = ({
               container
               item
               xs={12}
-              justifyContent="center"
-              alignItems="center"
+              justifyContent='center'
+              alignItems='center'
               className={classes.insBtn}
             >
-              <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)}>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={() => setOpenDialog(true)}
+              >
                 Instructions
               </Button>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} component={Paper} elevation={6} square>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            lg={4}
+            component={Paper}
+            elevation={6}
+            square
+          >
             <div className={classes.paper}>
-              <Box display="flex">
+              <Box display='flex'>
                 <Avatar className={classes.avatar}>
-                  <AccessAlarmOutlinedIcon />
+                  <AccessAlarmIcon />
                 </Avatar>
                 <Box mt={1}>
-                  <Timer startTime={startTimeData} onTimeUp={handleSubmitQuizMutation} />
+                  <Timer
+                    startTime={quizStartTimeResponse.data}
+                    onTimeUp={handleSubmitQuizMutation}
+                  />
                 </Box>
               </Box>
-              <Divider variant="middle" className={classes.divider} />
+              <Divider variant='middle' className={classes.divider} />
               <QuestionPanel
-                questions={data.getQuestions}
+                questions={
+                  questionsResponse.data
+                    ? questionsResponse.data.getQuestions
+                    : []
+                }
                 onQuestionClick={handleQuestionClick}
                 currentQuestion={currentQuestion}
                 reviewedAnswers={reviewedAnswers}
                 answers={answer}
                 visitedAnswers={visitedAnswers}
               />
-              <Divider variant="middle" className={classes.divider} />
+              <Divider variant='middle' className={classes.divider} />
               {viewer.role === 'TEAM_LEADER' && (
                 <>
                   {' '}
@@ -230,17 +260,19 @@ const QuizPage: React.FC<QuizPageProps> = ({
                     answers={answer}
                     visitedAnswers={visitedAnswers}
                   />
-                  <Divider variant="middle" className={classes.divider} />
-                  <Box mb={2} width="100%">
+                  <Divider variant='middle' className={classes.divider} />
+                  <Box mb={2} width='100%'>
                     <ListItemText
                       primary={'Submit Quiz'}
-                      secondary={'Quiz will be submitted automatically when time is over'}
+                      secondary={
+                        'Quiz will be submitted automatically when time is over'
+                      }
                       primaryTypographyProps={{ variant: 'h6' }}
                     />
                   </Box>
                   <Button
-                    color="primary"
-                    variant="contained"
+                    color='primary'
+                    variant='contained'
                     // onClick={() => handleSubmitQuizMutation()}
                     onClick={() => {
                       setSubmit(true);
@@ -258,4 +290,4 @@ const QuizPage: React.FC<QuizPageProps> = ({
   );
 };
 
-export default QuizPage
+export default QuizPage;
