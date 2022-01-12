@@ -347,7 +347,10 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['city']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={cities}
+                          options={cities.sort((a, b) => {
+                           return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+                          })}
+
                           getOptionLabel={(option) =>
                             `${option.name} , ${option.state}`
                           }
