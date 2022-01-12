@@ -82,8 +82,6 @@ const QuestionPanel: React.FC<Props> = ({
     }
 
     return { background: 'white', color: 'black' };
-
-
   };
 
   return (
@@ -116,19 +114,6 @@ const QuestionPanel: React.FC<Props> = ({
           );
         })}
       </Grid>
-      {/* <Grid container item xs={12} spacing={2}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={12} spacing={2}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={12} spacing={2}>
-          <FormRow />
-        </Grid>
-        <Grid container item xs={12} spacing={2}>
-          <FormRow />
-        </Grid>
-      </Grid> */}
     </div>
   );
 };

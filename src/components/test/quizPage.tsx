@@ -166,14 +166,9 @@ const QuizPage: React.FC<QuizPageProps> = ({
         setErrorMessage={setErrorMessage}
       />
       <SubmitQuizBox
-        viewer={viewer}
         submit={submit}
         handleClose={handleClose}
-        setSuccessMessage={setSuccessMessage}
-        setErrorMessage={setErrorMessage}
-        refetch={refetch}
-        setQuizStatus={setQuizStatus}
-        answer={answer}
+        handleSubmit={handleSubmitQuizMutation}
       />
       <div className={classes.root} onClick={() => setOpen(false)}>
         <Grid container component='main' className={classes.root}>

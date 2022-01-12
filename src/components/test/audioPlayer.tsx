@@ -1,27 +1,20 @@
-import React from "react"
-import AudioPlayer from 'material-ui-audio-player';
-
+import * as React from 'react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 interface AudioProps {
-    src: string
+  src: string;
 }
 
-const Audio: React.FC<AudioProps> = ({ src }) => {
-
-    return <>
-        <AudioPlayer
-            elevation={1}
-            width="100%"
-            variation="primary"
-            spacing={3}
-            download={false}
-            autoplay={false}
-            order="standart"
-
-            loop={true}
-            src={src}
-        />
+const Player: React.FC<AudioProps> = ({ src }) => {
+  return (
+    <>
+      <AudioPlayer
+        autoPlay={false}
+        src={src}
+        onPlay={(e) => console.log('onPlay')}
+      />
     </>
+  );
+};
 
-}
-
-export default Audio
+export default Player;

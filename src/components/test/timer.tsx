@@ -13,7 +13,7 @@ const Timer: React.FC<Props> = ({ startTime, onTimeUp }) => {
   const quizStartTime = moment(startTime?.getQuizDetails.quizStartTime);
   const minutesDiff = currentTime.diff(quizStartTime, 'minutes');
   const secondDiff = currentTime.diff(quizStartTime, 'second');
-  console.log(minutesDiff);
+  // console.log(minutesDiff);
   const [time, setTime] = React.useState(
     !Boolean(isNaN(minutesDiff))
       ? { minute: 29 - minutesDiff, seconds: 60 - (secondDiff % 60) }

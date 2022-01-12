@@ -6,7 +6,7 @@ import MuiDialogTitle from '@mui/material/DialogTitle';
 import MuiDialogContent from '@mui/material/DialogContent';
 import MuiDialogActions from '@mui/material/DialogActions';
 import Image from 'next/image';
-import Audio from './audioPlayer';
+import AudioPlayer from './audioPlayer';
 import Typography from '@mui/material/Typography';
 import {
   Box,
@@ -150,7 +150,6 @@ const QuestionComponent: React.FC<Props> = ({
   role,
 }) => {
   const getQuestionAnswer = (questionNo: number, answerNo: 'ans1' | 'ans2') => {
-
     if (answerNo === 'ans1') {
       const ans = answer.find((a) => a.questionNumber === questionNo)?.answer;
       return ans ? ans : '';
@@ -265,7 +264,7 @@ const QuestionComponent: React.FC<Props> = ({
             )}
             {question.questionType === 'AUDIO' && (
               <Box m={4}>
-                <Audio
+                <AudioPlayer
                   src={question.questionAssets ? question.questionAssets : ''}
                 />
               </Box>

@@ -1,14 +1,21 @@
 import ReactPlayer from 'react-player';
-import React from "react"
+import React from 'react';
 
-interface VideoProps{
-    src:string
+interface VideoProps {
+  src: string;
 }
-const VideoPlayer: React.FC <VideoProps>= ({src}) => {
-
-    return <>
-        <ReactPlayer url={src} controls={true} width={"100%"} height="auto"/>
+const VideoPlayer: React.FC<VideoProps> = ({ src }) => {
+  return (
+    <>
+      <ReactPlayer
+        url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+        // url={src}
+        controls={true}
+        width={'100%'}
+        height='auto'
+      />
     </>
-}
+  );
+};
 
-export default VideoPlayer
+export default VideoPlayer;

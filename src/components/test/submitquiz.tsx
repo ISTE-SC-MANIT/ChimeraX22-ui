@@ -5,65 +5,37 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useRouter } from 'next/router';
-import { ComponentProps } from '../../pages/_app';
-import { QuestionAnswer } from '../../__generated__/globalTypes';
-// import SubmitQuizMutation from './relay/mutations/SubmitQuizMutation';
-// import { QuestionAnswer, SubmitQuizInput } from '../__generated__/SubmitQuizMutation.graphql';
 
-
-interface SubmitQuizProps extends ComponentProps {
+interface SubmitQuizProps {
   submit: boolean;
   handleClose: () => void;
-  setQuizStatus: () => void;
-  answer: QuestionAnswer[];
+  handleSubmit: () => void;
 }
 
 const SubmitQuizBox: React.FC<SubmitQuizProps> = ({
   submit,
   handleClose,
-  setSuccessMessage,
-  setErrorMessage,
-  refetch,
-  setQuizStatus,
-  answer
+  handleSubmit,
 }) => {
-  const router = useRouter();
-  const handleSubmitQuizMutation = () => {
-    const input: SubmitQuizInput = { responses: answer };
-    SubmitQuizMutation(environment, input, {
-      onCompleted: () => {
-        setSuccessMessage('Quiz was successfully Submitted');
-        setQuizStatus();
-        // router.push('/');
-        // refetch();
-      },
-      onError: () => {
-        setErrorMessage('Something went wrong');
-        setQuizStatus();
-      },
-    });
-  };
-
   return (
     <div>
       <Dialog
         open={submit}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id="alert-dialog-title">{`Submit Quiz`}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{`Submit Quiz`}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id='alert-dialog-description'>
             Are you sure you want to submit your quiz?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color='primary'>
             Cancel
           </Button>
-          <Button onClick={handleSubmitQuizMutation} color="primary" autoFocus>
+          <Button onClick={handleSubmit} color='primary' autoFocus>
             Confirm
           </Button>
         </DialogActions>
@@ -73,7 +45,3 @@ const SubmitQuizBox: React.FC<SubmitQuizProps> = ({
 };
 
 export default SubmitQuizBox;
-function SubmitQuizMutation(environment: any, input: SubmitQuizInput, arg2: { onCompleted: () => void; onError: () => void; }) {
-  throw new Error('Function not implemented.');
-}
-
