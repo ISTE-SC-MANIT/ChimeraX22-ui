@@ -3,6 +3,39 @@ export const cities = [
     name: 'Vadodara',
     state: 'Gujarat',
   },
+  {
+    name: "Barishal",
+    state: " Bangladesh",
+  },
+  {
+    name: "chattogram",
+    state: " Bangladesh",
+  },
+  {
+    name: "Dhaka",
+    state: "Bangladesh",
+  },
+  {
+    name: "Khulna",
+    state: "Bangladesh",
+  },
+  {
+    name: "Rajshahi",
+    state: "Bangladesh",
+  },
+  {
+    name: "Rangpur",
+    state: "Bangladesh",
+  },
+  {
+    name: "Mymensingh",
+    state: " Bangladesh",
+  },
+  {
+    name: "Sylhet",
+    state: "Bangladesh",
+  },
+  
 
   {
     name: 'Kottayam',
