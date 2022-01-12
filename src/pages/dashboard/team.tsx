@@ -235,10 +235,12 @@ const Team: React.FC<ComponentProps> = ({
             <Box mt={5} mb={5} className={classes.header}>
               <Grid container justifyContent='flex-start' alignItems='center'>
                 <Grid item sm={4} alignItems='center'>
-                  <img
+                  <Image
                     src='/dashboard.png'
+                    width={240}
+                    height={180}
                     className={classes.dashboardImg}
-                  ></img>
+                  ></Image>
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>
