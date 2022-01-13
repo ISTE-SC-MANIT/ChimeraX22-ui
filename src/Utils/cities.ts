@@ -1,111 +1,24 @@
 export const cities = [
   {
-    name: 'Vadodara',
+    name: 'Ahmedabad',
     state: 'Gujarat',
+  },
+  {
+    name: 'Bangalore',
+    state: 'Karnataka',
   },
   {
     name: 'Barishal',
     state: ' Bangladesh',
   },
   {
-    name: 'chattogram',
-    state: ' Bangladesh',
-  },
-  {
-    name: 'Dhaka',
-    state: 'Bangladesh',
-  },
-  {
-    name: 'Khulna',
-    state: 'Bangladesh',
-  },
-  {
-    name: 'Rajshahi',
-    state: 'Bangladesh',
-  },
-  {
-    name: 'Rangpur',
-    state: 'Bangladesh',
-  },
-  {
-    name: 'Mymensingh',
-    state: ' Bangladesh',
-  },
-  {
-    name: 'Sylhet',
-    state: 'Bangladesh',
-  },
-
-  {
-    name: 'Kottayam',
-    state: 'Kerala',
-  },
-
-  {
-    name: 'Kolkata',
-    state: 'West Bengal',
-  },
-
-  {
-    name: 'Lucknow',
-    state: 'Uttar Pradesh',
-  },
-
-  {
-    name: 'Noida',
-    state: 'Uttar Pradesh',
-  },
-
-  {
-    name: 'Jammu',
-    state: 'Jammu and Kashmir',
-  },
-
-  {
-    name: 'Delhi',
-    state: 'Delhi',
-  },
-
-  {
-    name: 'Bangalore',
-    state: 'Karnataka',
-  },
-
-  {
-    name: 'Ahmedabad',
-    state: 'Gujarat',
-  },
-
-  {
-    name: 'Dehradun',
-    state: 'Uttarakhand',
-  },
-
-  {
-    name: 'Jabalpur',
-    state: 'Madhya Pradesh',
-  },
-
-  {
     name: 'Bhopal',
     state: 'Madhya Pradesh',
   },
-
   {
-    name: 'Kanpur',
-    state: 'Uttar Pradesh',
+    name: 'Bhubaneswar',
+    state: 'Odisha',
   },
-
-  {
-    name: 'Nagpur',
-    state: 'Maharashtra',
-  },
-
-  {
-    name: 'Jaipur',
-    state: 'Rajasthan',
-  },
-
   {
     name: 'Chandigarh',
     state: 'Punjab',
@@ -115,58 +28,28 @@ export const cities = [
     state: 'Haryana',
   },
   {
+    name: 'chattogram',
+    state: ' Bangladesh',
+  },
+  {
     name: 'Chennai',
     state: 'Tamil Nadu',
   },
-
   {
-    name: 'Kochi',
-    state: 'Kerala',
+    name: 'Dehradun',
+    state: 'Uttarakhand',
   },
-
   {
-    name: 'Ranchi',
-    state: 'Jharkhand',
+    name: 'Delhi',
+    state: 'Delhi',
   },
-
   {
-    name: 'Thiruvananthapuram',
-    state: 'Kerala',
+    name: 'Dhaka',
+    state: 'Bangladesh',
   },
-
-  {
-    name: 'Bhubaneswar',
-    state: 'Odisha',
-  },
-
   {
     name: 'Goa',
     state: 'Goa',
-  },
-
-  {
-    name: 'Hyderabad',
-    state: 'Telangana',
-  },
-
-  {
-    name: 'Pune',
-    state: 'Maharashtra',
-  },
-
-  {
-    name: 'Vellore',
-    state: 'Tamil Nadu',
-  },
-
-  {
-    name: 'Patiala',
-    state: 'Punjab',
-  },
-
-  {
-    name: 'Jalandhar',
-    state: 'Punjab',
   },
 
   {
@@ -175,8 +58,115 @@ export const cities = [
   },
 
   {
+    name: 'Hyderabad',
+    state: 'Telangana',
+  },
+
+  {
+    name: 'Jabalpur',
+    state: 'Madhya Pradesh',
+  },
+
+  {
+    name: 'Jaipur',
+    state: 'Rajasthan',
+  },
+
+  {
+    name: 'Jalandhar',
+    state: 'Punjab',
+  },
+
+  {
+    name: 'Jammu',
+    state: 'Jammu and Kashmir',
+  },
+
+  {
+    name: 'Kanpur',
+    state: 'Uttar Pradesh',
+  },
+
+  {
+    name: 'Khulna',
+    state: 'Bangladesh',
+  },
+  {
+    name: 'Kochi',
+    state: 'Kerala',
+  },
+  {
+    name: 'Kolkata',
+    state: 'West Bengal',
+  },
+  {
+    name: 'Kottayam',
+    state: 'Kerala',
+  },
+
+  {
+    name: 'Lucknow',
+    state: 'Uttar Pradesh',
+  },
+  {
+    name: 'Mymensingh',
+    state: ' Bangladesh',
+  },
+
+  {
+    name: 'Nagpur',
+    state: 'Maharashtra',
+  },
+  {
+    name: 'Noida',
+    state: 'Uttar Pradesh',
+  },
+
+  {
+    name: 'Patiala',
+    state: 'Punjab',
+  },
+
+  {
+    name: 'Pune',
+    state: 'Maharashtra',
+  },
+  {
+    name: 'Rajshahi',
+    state: 'Bangladesh',
+  },
+  {
+    name: 'Ranchi',
+    state: 'Jharkhand',
+  },
+  {
+    name: 'Rangpur',
+    state: 'Bangladesh',
+  },
+
+  {
     name: 'Shimla',
     state: 'Himachal pradesh',
+  },
+
+  {
+    name: 'Sylhet',
+    state: 'Bangladesh',
+  },
+
+  {
+    name: 'Thiruvananthapuram',
+    state: 'Kerala',
+  },
+
+  {
+    name: 'Vellore',
+    state: 'Tamil Nadu',
+  },
+
+  {
+    name: 'Vadodara',
+    state: 'Gujarat',
   },
 
   {

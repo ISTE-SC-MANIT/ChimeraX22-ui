@@ -190,8 +190,8 @@ const Register: React.FC<ComponentProps> = ({
       variables: { input: userInput },
       onCompleted: () => {
         setSuccessMessage('Registered Successfully');
-        refetch().then(()=>router.push('/dashboard/team'));
-        
+        refetch().then(() => router.push('/dashboard/team'));
+
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');
@@ -206,7 +206,6 @@ const Register: React.FC<ComponentProps> = ({
   ) => {
     setValues({ ...values, city: newValue });
   };
-
   return (
     <div className={classes.root} id='reg'>
       <CustomDrawer
@@ -347,9 +346,7 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['city']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={cities.sort((a, b) => {
-                           return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
-                          })}
+                          options={cities}
 
                           getOptionLabel={(option) =>
                             `${option.name} , ${option.state}`
@@ -373,7 +370,7 @@ const Register: React.FC<ComponentProps> = ({
                                 className={classes.textField}
                               />
                             )
-                           
+
                           }
                         />
                       )}
@@ -391,7 +388,7 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                     
+
                     >
                       Proceed
                     </Button>
