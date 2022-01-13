@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       // flexGrow: 1,
-      backgroundColor: '#3997F5',
+      backgroundColor: theme.palette.mode === 'light' ? '#3997F5' : '#0A1929',
       minHeight: '100vh',
       margin: '0px',
       padding: '0px',
@@ -113,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: '40px',
     },
     subHeading: {
-      color: '#333333',
+      color: theme.palette.mode === 'light' ? '#333333' : 'white',
       fontSize: '1.2rem',
     },
     details: {
