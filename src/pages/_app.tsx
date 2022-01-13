@@ -70,6 +70,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       createTheme({
         palette: {
           mode,
+          ...(mode === 'dark' && {
+            background: {
+              default: '#0A1929',
+              paper: '#0A1929',
+            },
+          }),
         },
       }),
     [mode]
