@@ -174,7 +174,7 @@ const QuestionComponent: React.FC<Props> = ({
   }, [question]);
 
   const classes = useStyles();
-  const handleClose = () => {};
+  const handleClose = () => { };
 
   const handleNext = () => {
     const index = questions.findIndex(
@@ -228,6 +228,10 @@ const QuestionComponent: React.FC<Props> = ({
     const exists = reviewedAnswers.find((answer) => answer === question.id);
     return Boolean(exists);
   };
+
+  const handlePaste = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+  }
 
   return (
     <div>
@@ -285,6 +289,7 @@ const QuestionComponent: React.FC<Props> = ({
                   setLocalState(e.target.value);
                 }}
                 value={localState}
+                onPaste={handlePaste}
                 disabled={role === 'TEAM_HELPER'}
               />
             </Box>
@@ -298,6 +303,7 @@ const QuestionComponent: React.FC<Props> = ({
                     setLocalState2(e.target.value);
                   }}
                   value={localState2}
+                  onPaste={handlePaste}
                   disabled={role === 'TEAM_HELPER'}
                 />
               </Box>
@@ -345,7 +351,7 @@ const QuestionComponent: React.FC<Props> = ({
                   !Boolean(
                     Boolean(
                       getQuestionAnswer(question.questionNo, 'ans1') ||
-                        Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
+                      Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
                     )
                   )
                 }
@@ -363,7 +369,7 @@ const QuestionComponent: React.FC<Props> = ({
                 disabled={Boolean(
                   Boolean(
                     getQuestionAnswer(question.questionNo, 'ans1') ||
-                      Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
+                    Boolean(getQuestionAnswer(question.questionNo, 'ans2'))
                   )
                 )}
               >

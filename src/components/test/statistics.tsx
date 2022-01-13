@@ -1,6 +1,6 @@
 import React from 'react';
-import {  Theme } from '@mui/material/styles';
-import {makeStyles, createStyles} from '@mui/styles';
+import { Theme } from '@mui/material/styles';
+import { makeStyles, createStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Box, Typography, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
@@ -48,9 +48,6 @@ const Stats: React.FC<Props> = ({ reviewedAnswers, visitedAnswers, answers }) =>
       }
       setAnswered(a)
     })
-
-
-
   }, [answers])
 
 
@@ -64,7 +61,7 @@ const Stats: React.FC<Props> = ({ reviewedAnswers, visitedAnswers, answers }) =>
         <Grid container item xs={12} spacing={2}>
           <Grid item xs={6}>
             <Box display="flex">
-  <Paper className={classes.paper} style={{ background: "green" }} elevation={6}><Box className={classes.box}>{answered}</Box></Paper>
+              <Paper className={classes.paper} style={{ background: "green" }} elevation={6}><Box className={classes.box}>{answered}</Box></Paper>
               <Box mt={1} ml={2}>Answered</Box>
             </Box>
           </Grid>
@@ -72,7 +69,7 @@ const Stats: React.FC<Props> = ({ reviewedAnswers, visitedAnswers, answers }) =>
 
           <Grid item xs={6}>
             <Box display="flex">
-  <Paper className={classes.paper} style={{ background: "red" }} elevation={6}><Box className={classes.box}>{ visitedAnswers.length-answered}</Box></Paper>
+              <Paper className={classes.paper} style={{ background: "red" }} elevation={6}><Box className={classes.box}>{visitedAnswers.length - answered}</Box></Paper>
               <Box mt={1} ml={2}>Visited & Not Answered</Box>
             </Box>
           </Grid>

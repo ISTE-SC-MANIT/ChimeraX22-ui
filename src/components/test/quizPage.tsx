@@ -109,7 +109,16 @@ const QuizPage: React.FC<QuizPageProps> = ({
       });
       setAnswer(answerMap);
     }
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
   }, [questionsResponse.data]);
+
+  const alertUser = e => {
+    e.preventDefault()
+    e.returnValue = ''
+  }
 
   if (questionsResponse.loading || quizStartTimeResponse.loading) {
     return <LoadingScreen loading />;
