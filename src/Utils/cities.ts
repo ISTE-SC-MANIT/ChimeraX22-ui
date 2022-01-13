@@ -4,38 +4,37 @@ export const cities = [
     state: 'Gujarat',
   },
   {
-    name: "Barishal",
-    state: " Bangladesh",
+    name: 'Barishal',
+    state: ' Bangladesh',
   },
   {
-    name: "chattogram",
-    state: " Bangladesh",
+    name: 'chattogram',
+    state: ' Bangladesh',
   },
   {
-    name: "Dhaka",
-    state: "Bangladesh",
+    name: 'Dhaka',
+    state: 'Bangladesh',
   },
   {
-    name: "Khulna",
-    state: "Bangladesh",
+    name: 'Khulna',
+    state: 'Bangladesh',
   },
   {
-    name: "Rajshahi",
-    state: "Bangladesh",
+    name: 'Rajshahi',
+    state: 'Bangladesh',
   },
   {
-    name: "Rangpur",
-    state: "Bangladesh",
+    name: 'Rangpur',
+    state: 'Bangladesh',
   },
   {
-    name: "Mymensingh",
-    state: " Bangladesh",
+    name: 'Mymensingh',
+    state: ' Bangladesh',
   },
   {
-    name: "Sylhet",
-    state: "Bangladesh",
+    name: 'Sylhet',
+    state: 'Bangladesh',
   },
-  
 
   {
     name: 'Kottayam',
@@ -173,6 +172,11 @@ export const cities = [
   {
     name: 'Gurugram',
     state: 'Haryana',
+  },
+
+  {
+    name: 'Shimla',
+    state: 'Himachal pradesh',
   },
 
   {
