@@ -5,15 +5,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Link, Typography } from '@mui/material';
-
 import Button from '@mui/material/Button';
-
 import { withStyles, makeStyles } from '@mui/styles';
 import { Theme, useTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   body: {
-    height: '100vh',
+    minheight: '100vh',
     textAlign: 'justify',
   },
 
@@ -44,7 +42,6 @@ const ScrollDialog: React.FC<Props> = ({ openDialog, onClose }) => {
     onClose()
   };
 
-  //const descriptionElementRef = React.useRef<HTMLElement>(null);
 
   return (
     <div>
@@ -130,7 +127,7 @@ const ScrollDialog: React.FC<Props> = ({ openDialog, onClose }) => {
             third-party materials or websites, or any other materials or services of third-parties.
             We are not liable for any harm or damages related to the purchase or use of goods,
             services, resources, content, or any other transactions made in connection with any
-            third-party websites. Please review carefully the third-party's policies and practices
+            third-party websites. Please review carefully the third-party&apos;s policies and practices
             and make sure you understand them before you engage in any transaction. Complaints,
             claims, concerns, or questions regarding third-party products should be directed to the
             third-party. <br />{' '}
@@ -139,7 +136,7 @@ const ScrollDialog: React.FC<Props> = ({ openDialog, onClose }) => {
             </Typography>
             <br /> If at our request, you send certain specific submissions or without a request
             from us you send creative ideas, suggestions, proposals, plans, or other materials,
-            whether online, by email, by postal mail, or otherwise (collectively, 'comments'), you
+            whether online, by email, by postal mail, or otherwise (collectively, &apos;comments&apos;), you
             agree that we may, at any time, without restriction, edit, copy, publish, distribute,
             translate and otherwise use in any medium any comments that you forward to us. We are
             and shall be under no obligation (1) to maintain any comments in confidence; (2) to pay
@@ -200,7 +197,7 @@ const ScrollDialog: React.FC<Props> = ({ openDialog, onClose }) => {
             from time to time we may remove the website for indefinite periods, without notice to
             you. You expressly agree that your use of, or inability to use, the website is at your
             sole risk. The website delivered to you are (except as expressly stated by us) provided
-            'as is' and 'as available' for your use, without any representation, warranties or
+            &apos;as is&apos; and &apos;as available&apos; for your use, without any representation, warranties or
             conditions of any kind, either express or implied, including all implied warranties or
             conditions of merchantability, merchantable quality, fitness for a particular purpose,
             durability, title, and non-infringement. In no case shall ISTE SC MANIT, our executives,

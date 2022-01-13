@@ -5,14 +5,13 @@ import Button from '@mui/material/Button';
 import { withStyles, makeStyles, createStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Box, Fade, Link, Grid, useMediaQuery } from '@mui/material';
+import { Box, Fade, Link, Grid, useMediaQuery, CssBaseline } from '@mui/material';
 import Image from 'next/image';
-import NavbarHeader from '../components/navbarheader';
+import NavbarHeader from '../components/navbar/navbarheader';
 import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
-import { url } from 'inspector';
-import { useContext } from 'react';
-
+import Footer from '../components/footer/contact';
+import { About } from '../components/about';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -21,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
-      background: `url('/bg.svg')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
@@ -56,11 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     body: {
       minHeight: '80vh',
-      overflow: 'hidden',
     },
     typo: {
       color: theme.palette.mode === 'light' ? '#1976D2' : 'white',
-      // color: '#221C64',
       [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(5),
       },
@@ -146,12 +142,12 @@ const Landing: React.FC = () => {
   };
   return (
     <>
+
       <NavbarHeader open={open} setOpen={setOpen} />
       <div className={classes.root} onClick={() => setOpen(false)}>
         <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
-              // style={{ cursor: 'pointer' }}
               src={
                 theme.palette.mode === 'light'
                   ? '/ChimeraX-logo-blue.svg'
@@ -211,7 +207,7 @@ const Landing: React.FC = () => {
           >
             <Box className={classes.margin}>
               <Typography variant='h4' align='center' className={classes.typo}>
-                <b>Central India's largest Quizzing Contest</b>
+                <b>Central India&apos;s largest Quizzing Contest</b>
               </Typography>
             </Box>
             <Box className={classes.margin}>
@@ -219,7 +215,7 @@ const Landing: React.FC = () => {
                 <Typography variant='h5' align='center'>
                   Prelims
                   <br />
-                  30th Jan' 2022
+                  30th Jan&apos; 2022
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
@@ -327,7 +323,10 @@ const Landing: React.FC = () => {
             <VectorImg />
           </Grid>
         </Grid>
+        <About/>
+        <Footer />
       </div>
+
     </>
   );
 };

@@ -40,9 +40,9 @@ const SendInvitation: React.FC<Props> = ({
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
 
-  // React.useEffect(() => {
-   
-  // }, [send]);
+  React.useEffect(() => {
+    refetch();
+  }, [send]);
 
   if (loading) {
     return (
@@ -54,11 +54,12 @@ const SendInvitation: React.FC<Props> = ({
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
-    console.log(id);
+    // console.log(id);
     deleteInvite({
       variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Deleted');
+        refetchRef();
         refetch();
       },
       onError: (err) => {
@@ -76,7 +77,7 @@ const SendInvitation: React.FC<Props> = ({
           sentInvitations.map((invitation) => {
             if (Boolean(invitation))
               return (
-                <ListItem>
+                <ListItem key={invitation._id}>
                   <ListItemAvatar>
                     <Avatar alt='Remy Sharp' src='/dummy.png' />
                   </ListItemAvatar>
@@ -85,7 +86,7 @@ const SendInvitation: React.FC<Props> = ({
                     secondary={invitation.receiversEmail}
                   />
                   <ListItemSecondaryAction>
-                    {/* <Button variant="contained" color="primary">Confirm</Button>&nbsp;&nbsp; */}
+                   
                     <Tooltip title='Delete Invitation'>
                       <IconButton
                         color='secondary'

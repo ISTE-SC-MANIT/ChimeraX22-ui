@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import { withStyles, makeStyles } from '@mui/styles';
 import * as yup from 'yup';
 import axios from 'axios';
-import { authenticate } from '../components/utils';
 import { useRouter } from 'next/router';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { InputAdornment, IconButton } from '@mui/material';
@@ -22,12 +21,15 @@ import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import { NextPage } from 'next';
-import { Status } from '../Utils/status';
+import { getStep, Status } from '../Utils/status';
 import firebaseSDK from '../firebase';
 import nookies from 'nookies';
 import { DisabledByDefault } from '@mui/icons-material';
+import LinearLoading from '../components/linearLoading';
+import { emailPasswordSignUp } from '../Auth/emailPasswordSignup';
+import { googleLogin } from '../Auth/googleLogin';
+import { facebookLogin } from '../Auth/facebookLogin';
 const LoginButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#3997F5'),
@@ -44,8 +46,6 @@ const LoginButton = withStyles((theme) => ({
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100vh',
-    overflow: 'hidden',
-
   },
   Backcolor: {
     backgroundColor:
@@ -84,7 +84,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   logo: {
-    // backgroundImage: `url('/chimerax.png')`,
     width: 'fit-content',
     height: '100px',
     marginLeft: 'auto',
@@ -174,7 +173,7 @@ const SignUp: NextPage<ComponentProps> = ({
 }) => {
   const classes = useStyles();
   const router = useRouter();
-  const [disabled ,setdisabled]=React.useState(false);
+  const [loading, setloading] = React.useState(false);
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
   const [visible, setVisible] = React.useState(false);
   const [formValues, setFormValues] = React.useState<FormValues>({
@@ -203,92 +202,17 @@ const SignUp: NextPage<ComponentProps> = ({
     setVisible(!visible);
   };
 
-  const handleSignUp = (values: typeof initialValues) => {
-    setStatus(Status.LOADING);
-   
-      setdisabled(!disabled);
-    firebaseSDK
-      .auth()
-      .createUserWithEmailAndPassword(values.email, values.password)
-      .then(async (response) => {
-        // console.log(response.user);
-        await response.user?.updateProfile({
-          displayName: values.fullName,
-        });
-        return response;
-      })
-      .then(async (response) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-            name: response.user?.displayName,
-            uid: response.user?.uid,
-            email: response.user?.email,
-            strategy: response.user?.providerData[0]?.providerId,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setStatus(Status.SUCCESS);
-            setSuccessMessage(
-              'Successfully created account. Please log in with your new account.'
-            );
-            return router.push('/dashboard/register');
-          })
-          .catch(async (error) => {
-            await response.user?.delete();
-            setFormValues({ ...formValues });
-            setStatus(Status.ERROR);
-            setErrorMessage(error.message);
-            return error;
-          });
-        // await firebaseSDK.auth().signOut();
-        return router.push('/login');
-      })
-      .catch((error) => {
-        setFormValues({ ...formValues });
-        setStatus(Status.ERROR);
-        setErrorMessage(error.message);
-        return error;
-      });
-  };
-
-  const handleGoogleSignIn = () => {
-    const provider = new firebaseSDK.auth.GoogleAuthProvider();
-    firebaseSDK
-      .auth()
-      .signInWithPopup(provider)
-      .then(async (response) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {
-            name: response.user?.displayName,
-            uid: response.user?.uid,
-            email: response.user?.email,
-            strategy: response.user?.providerData[0]?.providerId,
-          })
-          .then((response) => {
-            // console.log(response.data);
-            setStatus(Status.SUCCESS);
-            setSuccessMessage(
-              'Successfully created account. Please log in with your new account.'
-            );
-            return router.push('/dashboard/register');
-          })
-          .catch((error) => {
-            setFormValues({ ...formValues });
-            setStatus(Status.ERROR);
-            setErrorMessage(error.response.data.errors);
-            return error;
-          });
-        // await firebaseSDK.auth().signOut();
-        return router.push('/login');
-      })
-      .catch((error) => {
-        setErrorMessage(`Couldn't sign up with Google\n ${error.message}`);
-      });
-  };
-
   return (
     <Grid container component='main' className={classes.root}>
-      <Grid item xs={12} sm={6} component={Paper} elevation={0} square className={classes.Backcolor}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        component={Paper}
+        elevation={0}
+        square
+        className={classes.Backcolor}
+      >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -297,7 +221,18 @@ const SignUp: NextPage<ComponentProps> = ({
             Sign Up
           </Typography>
           <Formik
-            onSubmit={(values) => handleSignUp(values)}
+            onSubmit={(values) =>
+              emailPasswordSignUp(
+                values,
+                setStatus,
+                formValues,
+                setFormValues,
+                router,
+                setErrorMessage,
+                setSuccessMessage,
+                refetch
+              )
+            }
             validationSchema={validationSchema}
             initialValues={initialValues}
           >
@@ -316,9 +251,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
                     variant='outlined'
-                    // className={classes.field}
                     margin='normal'
-                  // disabled
                   />
                 )}
               </Field>
@@ -336,9 +269,7 @@ const SignUp: NextPage<ComponentProps> = ({
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
                     variant='outlined'
-                    // className={classes.field}
                     margin='normal'
-                  // disabled
                   />
                 )}
               </Field>
@@ -352,12 +283,10 @@ const SignUp: NextPage<ComponentProps> = ({
                     id='password-input'
                     label='Password'
                     required
-                    // disabled
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
                     variant='outlined'
-                    // className={classes.field}
                     margin='normal'
                     type={visible ? 'text' : 'password'}
                     InputProps={{
@@ -386,7 +315,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 variant='contained'
                 className={classes.submit}
                 color='primary'
-              disabled={disabled}
+                disabled={!status}
               >
                 {status === Status.LOADING
                   ? `Submitting...`
@@ -401,11 +330,35 @@ const SignUp: NextPage<ComponentProps> = ({
               <Box>
                 <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
-                    onClick={handleGoogleSignIn}
-                  // disabled={}
+                    onClick={() =>
+                      googleLogin(
+                        router,
+                        setErrorMessage,
+                        setSuccessMessage,
+                        refetch
+                      )
+                    }
                   >
                     <Image
                       src='/google-logo.png'
+                      alt='google'
+                      width={60}
+                      height={60}
+                      className={classes.logoIcon}
+                    />
+                  </IconButton>
+                  <IconButton
+                    onClick={() =>
+                      facebookLogin(
+                        router,
+                        setErrorMessage,
+                        setSuccessMessage,
+                        refetch
+                      )
+                    }
+                  >
+                    <Image
+                      src='/fb-logo.png'
                       alt='google'
                       width={60}
                       height={60}

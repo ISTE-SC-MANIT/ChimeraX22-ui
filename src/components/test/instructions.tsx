@@ -17,9 +17,9 @@ import {
 } from '@mui/material';
 
 import { useRouter } from 'next/dist/client/router';
-import Navbar from '../components/Navbar';
-import CustomDrawer from '../components/customDrawer';
-import { ComponentProps } from '../pages/_app';
+import Navbar from '../navbar/Navbar';
+import CustomDrawer from '../navbar/customDrawer';
+import { ComponentProps } from '../../pages/_app';
 
 
 
@@ -149,7 +149,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
         <></>
       )}
       <Grid container onClick={() => setOpen(false)}>
-        {/* <CustomDrawer name={'Devansh'} username={'Devansh'} open={open} setOpen={setOpen} /> */}
+       
         <Grid container alignItems="center" justifyContent="center">
           <Box display="flex" flexDirection="column" textAlign="center" margin={3}>
             <Typography variant="h3">
@@ -165,13 +165,13 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
             <Paper className={classes.paper} elevation={8}>
               <List component="nav" aria-label="Instructions for Test">
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>
                     1{')'} The test will begin at <b>7:00 pm and end at 7:30 pm</b>.
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                  
                   <ListItemText>
                     2{')'} <b>The “Start Test” button will be disabled at sharp 7:05 pm.</b> The
                     button will not be enabled again. Hence, all participants must start the quiz by
@@ -179,7 +179,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>
                     3{')'} There can be a maximum of 2 members in a team. The member who made the
                     payment is the Team Leader and the other member (if it’s a team) will be the
@@ -187,7 +187,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+             
                   <ListItemText>
                     4{')'} The team leader and team helper both will be able to see the questions
                     but only the team leader can answer, see the statistics and submit the quiz. The
@@ -195,38 +195,38 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                  
                   <ListItemText>
                     5{')'} Replacement of any participant of a team is not allowed after
                     registration.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>6{')'} There are 30 questions, All are compulsory.</ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                
                   <ListItemText>
                     7{')'} Each correct answer gets 2 marks and no marks will be deducted for a
                     wrong answer or an unanswered question.{' '}
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>
                     8{')'} Some questions are divided into 2 parts. Each part will hold 1 mark for
                     the correct answer and 0 for wrong or unattempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>
                     9{')'} Make sure to save your answers whenever a question is attempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                
                   <ListItemText>
                     10{')'} Marked for review questions would not be evaluated and counted as
                     unattempted.
@@ -240,13 +240,13 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>
                     12{')'} The quiz will automatically submit once the timer runs out.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+             
                   <ListItemText>
                     <Grid container alignItems="center" className={classes.list}>
                       <Box>
@@ -299,7 +299,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                  {/* <ListItemIcon></ListItemIcon> */}
+                 
                   <ListItemText>
                     <Box textAlign="center">
                       <Typography variant="h6">

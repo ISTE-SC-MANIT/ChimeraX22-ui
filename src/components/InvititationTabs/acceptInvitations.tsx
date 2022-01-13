@@ -11,16 +11,14 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { AcceptInvititation } from '../../lib/mutations/AcceptInvitationMutation';
 import { AcceptInvitationInput } from '../../__generated__/globalTypes';
+import { ComponentProps } from '../../pages/_app';
 
-interface Props {
+interface Props extends ComponentProps {
   name: string;
   userId: string;
   invitationId: string;
   open: boolean;
   handleClose: () => void;
-  setSuccessMessage: (message: string) => void;
-  setErrorMessage: (message: string) => void;
-  refetch: () => void;
 }
 const AcceptInvitationPage: React.FC<Props> = ({
   name,
@@ -45,8 +43,7 @@ const AcceptInvitationPage: React.FC<Props> = ({
       variables: { input: input },
       onCompleted: () => {
         setSuccessMessage('Teammate Selected');
-        router.push('/dashboard/payment');
-        refetch();
+        refetch().then(() => router.push('/dashboard/payment'));
       },
       onError: (err) => {
         setErrorMessage(err.message);
@@ -67,7 +64,7 @@ const AcceptInvitationPage: React.FC<Props> = ({
           <DialogContentText id='alert-dialog-description'>
             Please Note: Accepting this invitation is irreversible. You will not
             be able to send or receive invitations after accepting and your team
-            will be confirmed. You'll be your Team Helper.
+            will be confirmed. You&apos;ll be your Team Helper.
             <br />
             Proceed with caution.
           </DialogContentText>

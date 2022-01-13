@@ -9,35 +9,20 @@ import {
   ListItemText,
   TextField,
   Paper,
-  Divider,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  RadioGroup,
-  Radio,
-  Checkbox,
   Button,
-  ListItemIcon,
-  Link,
-  useMediaQuery,
-  useTheme,
-  ListItemSecondaryAction,
-  List,
-  Snackbar,
-  Grid,
 } from '@mui/material';
 import { Form, FormikFormProps, Formik, Field, FieldProps } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import Autocomplete from '@mui/material/Autocomplete';
 import * as yup from 'yup';
-import { cities } from '../../components/cities';
-import CustomDrawer from '../../components/customDrawer';
+import { cities } from '../../Utils/cities';
+import CustomDrawer from '../../components/navbar/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
 import { useMutation } from '@apollo/client';
+import { logout } from '../../Auth/logout';
+import Navbar from '../../components/navbar/Navbar';
+
 const validationSchema = yup.object({
   name: yup
     .string()
@@ -52,9 +37,16 @@ const validationSchema = yup.object({
     .email('Provide a valid Email ID')
     .required('Email cannot be empty'),
   phone: yup
-    .string()
-
-    .required('Phone cannot be empty'),
+    .number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number can't start with a minus")
+    .integer("A phone number can't include a decimal point")
+    .test(
+      'len',
+      'A phone number needs to be excatly 10 digits',
+      (val) => val?.toString().length === 10
+    )
+    .required('A phone number is required'),
 });
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -112,10 +104,8 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(2),
     },
     buttonGroup: {
-      // float: "right",
       width: 'fit-content',
       margin: 'auto',
-      //marginTop: theme.spacing(4)
     },
     heading: {
       color: 'white',
@@ -163,12 +153,10 @@ const Register: React.FC<ComponentProps> = ({
   const classes = useStyles();
   const router = useRouter();
   const [terms, setTerms] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState(false);
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
   React.useEffect(() => {
-    console.log(viewer);
-
     if (viewer.step === 'REGISTER') {
-      router.push('/dashboard/register');
     }
     if (viewer.step === 'CHOOSE_TEAM') {
       router.push('/dashboard/team');
@@ -197,13 +185,13 @@ const Register: React.FC<ComponentProps> = ({
       college: values.college,
       city: values.city.name,
     };
-    console.log(userInput);
+
     mutateFunction({
       variables: { input: userInput },
       onCompleted: () => {
         setSuccessMessage('Registered Successfully');
-        refetch();
-        router.push('/dashboard/team');
+        refetch().then(() => router.push('/dashboard/team'));
+
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');
@@ -218,10 +206,21 @@ const Register: React.FC<ComponentProps> = ({
   ) => {
     setValues({ ...values, city: newValue });
   };
-
   return (
     <div className={classes.root} id='reg'>
-      {/* <CustomDrawer name={'Devansh'} username={'Devansh'} open={open} setOpen={setOpen} /> */}
+      <CustomDrawer
+        name={viewer.name}
+        username={viewer.email}
+        open={open}
+        setOpen={setOpen}
+        setSuccessMessage={setSuccessMessage}
+        setErrorMessage={setErrorMessage}
+      />
+      <Navbar
+        setOpen={setOpen}
+        setSuccessMessage={setSuccessMessage}
+        setErrorMessage={setErrorMessage}
+      />
       <Box>
         <ListItem className={classes.heading}>
           <ListItemText
@@ -270,6 +269,7 @@ const Register: React.FC<ComponentProps> = ({
                           variant='outlined'
                           size='small'
                           className={classes.textField}
+                          disabled
                         />
                       )}
                     </Field>
@@ -347,6 +347,7 @@ const Register: React.FC<ComponentProps> = ({
                         <Autocomplete
                           id='combo-box-demo'
                           options={cities}
+
                           getOptionLabel={(option) =>
                             `${option.name} , ${option.state}`
                           }
@@ -369,7 +370,7 @@ const Register: React.FC<ComponentProps> = ({
                                 className={classes.textField}
                               />
                             )
-                            // <TextField {...params} label="Combo box" variant="outlined" />
+
                           }
                         />
                       )}
@@ -387,7 +388,7 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                      // disabled
+
                     >
                       Proceed
                     </Button>

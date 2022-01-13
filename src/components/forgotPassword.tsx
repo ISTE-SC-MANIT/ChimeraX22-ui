@@ -8,10 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
-import { authenticate } from '../components/utils';
 import { useRouter } from 'next/router';
-
+import firebase from 'firebase';
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -19,8 +17,12 @@ interface Props {
   setErrorMessage: (message: string) => void;
 }
 
-const FormDialog: React.FC<Props> = ({ open, onClose, setErrorMessage, setSuccessMessage }) => {
-  // const [open, setOpen] = React.useState(false);
+const FormDialog: React.FC<Props> = ({
+  open,
+  onClose,
+  setErrorMessage,
+  setSuccessMessage,
+}) => {
   const [formData, setFormData] = React.useState({ email: '' });
   const router = useRouter();
 
@@ -30,15 +32,19 @@ const FormDialog: React.FC<Props> = ({ open, onClose, setErrorMessage, setSucces
   const handleChange = (field: string) => (e: any) => {
     setFormData({ ...formData, [field]: e.target.value });
   };
-
+  const validationSchema = yup.object({
+    email: yup
+      .string()
+      .email('Provide a valid Email ID')
+      .required('Email cannot be empty'),
+  });
   const handleSubmit = (values: typeof initialValues) => {
-    setFormData({ ...formData });
-    onClose();
-
-    axios
-      .put(`${process.env.NEXT_PUBLIC_BACKEND}/api/forgotpassword`, { ...values })
-      .then((response) => {
-        setSuccessMessage('Reset Link has been sent to your mail');
+    firebase
+      .auth()
+      .sendPasswordResetEmail(values.email)
+      .then(() => {
+        setSuccessMessage('Reset Link has been sent to your mail.');
+        onClose();
       })
       .catch((error) => {
         setErrorMessage(error.response.data.errors);
@@ -55,38 +61,48 @@ const FormDialog: React.FC<Props> = ({ open, onClose, setErrorMessage, setSucces
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title"> Forgot Password ?</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='form-dialog-title'
+      >
+        <DialogTitle id='form-dialog-title'> Forgot Password ?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter your email id , a reset link will be sent to your registered email id which will
-            redirect you to update pass word page.
+            Enter your email id, a reset link will be sent to your registered
+            email id which will redirect you to update password page.
           </DialogContentText>
 
-          <Formik onSubmit={(values) => handleSubmit(values)} initialValues={initialValues}>
-            <Form id="myform">
-              <Field name="email">
-                {({ field, meta }: FieldProps<typeof initialValues['email']>) => (
+          <Formik
+            onSubmit={(values) => handleSubmit(values)}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+          >
+            <Form id='myform'>
+              <Field name='email'>
+                {({
+                  field,
+                  meta,
+                }: FieldProps<typeof initialValues['email']>) => (
                   <TextField
                     fullWidth
-                    id="email"
-                    label="Email Address"
+                    id='email'
+                    label='Email Address'
                     required
                     {...field}
                     error={!!(meta.touched && meta.error)}
                     helperText={meta.touched ? meta.error : ''}
-                    variant="outlined"
-                    // className={classes.field}
-                    margin="normal"
-                    type="email"
+                    variant='outlined'
+                    margin='normal'
+                    type='email'
                   />
                 )}
               </Field>
               <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleClose} color='primary'>
                   Cancel
                 </Button>
-                <Button type="submit" color="primary">
+                <Button type='submit' color='primary'>
                   Submit
                 </Button>
               </DialogActions>

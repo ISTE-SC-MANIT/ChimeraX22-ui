@@ -9,8 +9,10 @@ import { Theme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
-import firebaseSDK from '../firebase';
+import firebaseSDK from '../../firebase';
 import nookies from 'nookies';
+import Link from 'next/link';
+import { logout } from '../../Auth/logout';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -35,16 +37,6 @@ const Navbar: React.FC<NavbarProps> = ({
     setOpen(true);
   };
 
-  const logoutHandle = () => {
-    firebaseSDK
-      .auth()
-      .signOut()
-      .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-      .then(() => router.push('/'))
-      .catch(() => {
-        console.log('error deleting token');
-      });
-  };
   return (
     <AppBar position='sticky'>
       <Toolbar>
@@ -59,7 +51,15 @@ const Navbar: React.FC<NavbarProps> = ({
         <Typography variant='h6' className={classes.title}>
           Chimera-X
         </Typography>
-        <Button color='inherit' onClick={logoutHandle}>
+
+        <Button
+          color='inherit'
+          onClick={async () => {
+            // await logout();
+            router.push('/400');
+
+          }}
+        >
           Log out
         </Button>
       </Toolbar>

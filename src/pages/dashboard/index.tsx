@@ -1,15 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { useRouter } from 'next/router';
+import { getStep } from '../../Utils/status';
 
-import {ComponentProps} from '../_app';
+import { ComponentProps } from '../_app';
+import LoadingScreen from '../../components/loadingScreen';
 
-const Index : React.FC<ComponentProps> = ({ viewer })=> {
-  console.log(viewer);
-  console.log(viewer.email);
-  return (
-    <div>
-      <h1>Hello dashboard</h1>
-    </div>
-  )
-}
+const Index: React.FC<ComponentProps> = ({ viewer, refetch }) => {
+  const router = useRouter();
+  React.useEffect(() => {
+    refetch().then((response) => {
+      console.log('di', response);
 
-export default Index
+      router.push(getStep(response.data.viewer.step));
+    });
+  }, []);
+
+  return <LoadingScreen loading={true} />;
+};
+
+export default Index;

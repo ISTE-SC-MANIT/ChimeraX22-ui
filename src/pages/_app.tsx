@@ -1,20 +1,29 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import { ApolloProvider, useQuery } from '@apollo/client';
-import {CssBaseline} from '@mui/material';
+import {
+  ApolloProvider,
+  ApolloQueryResult,
+  useLazyQuery,
+} from '@apollo/client';
+import { CssBaseline } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeContext, toggleMode } from '../components/theme';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { client } from '../lib/apollo';
 import { viewer, viewer_viewer } from '../__generated__/viewer';
 import { User } from '../lib/queries/user';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import SEO from '../components/SEO';
+import SEO from '../SEO';
 import { AuthProvider } from '../Auth/AuthContext';
+import cookie from 'js-cookie';
+import LoadingScreen from '../components/loadingScreen';
+import ErrorPage400 from './400';
+import { getStep } from '../Utils/status';
 export interface ComponentProps {
   viewer: viewer_viewer;
-  refetch: () => void;
+  refetch: () => Promise<ApolloQueryResult<viewer>>;
+
   setSuccessMessage: (message: string) => void;
   setErrorMessage: (message: string) => void;
 }
@@ -44,18 +53,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
   /* Page loading animation */
   const [routeChange, setRouteChange] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [viewerData, setViewerData] = React.useState<viewer_viewer | null>();
 
   const isProtectedRoute = React.useMemo(() => {
     return first === 'dashboard';
   }, [first]);
 
-  // Router.events.on('routeChangeStart', () => {
-  //   setRouteChange(true);
-  // });
-  // Router.events.on('routeChangeComplete', () => setRouteChange(false));
-  // Router.events.on('routeChangeError', () => setRouteChange(false));
+  Router.events.on('routeChangeStart', () => {
+    setRouteChange(true);
+  });
+  Router.events.on('routeChangeComplete', () => setRouteChange(false));
+  Router.events.on('routeChangeError', () => setRouteChange(false));
 
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const theme = React.useMemo(
@@ -63,27 +70,55 @@ function MyApp({ Component, pageProps }: AppProps) {
       createTheme({
         palette: {
           mode,
+          ...(mode === 'dark' && {
+            background: {
+              default: '#0A1929',
+              paper: '#0A1929',
+            },
+          }),
         },
       }),
     [mode]
   );
 
-  const viewerQuery = useQuery<viewer>(User, { client: client });
+  const [view, viewerQuery] = useLazyQuery<viewer>(User, {
+    client: client,
+    // onCompleted: () => {
+    //   console.log('completed', viewerQuery);
+    //   router.push(getStep(viewerQuery.data?.viewer.step));
+    // },
+    onError: () => {
+      router.push('/login');
+    },
+  });
+
+  React.useEffect(() => {
+    if (first == 'dashboard') {
+      view()
+        .then(() => {
+          console.log(123, viewerQuery);
+        })
+        .catch((e) => {
+          console.log(321, e.message);
+        });
+    }
+  }, [first]);
 
   return (
     <>
       <SEO />
+      <CssBaseline />
       <AuthProvider>
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ThemeContext.Provider
-            value={{
-              toggleMode: () => toggleMode(setMode),
-            }}
-          >
+            <CssBaseline />
+            <ThemeContext.Provider
+              value={{
+                toggleMode: () => toggleMode(setMode),
+              }}
+            >
               <>
-                {routeChange && <h1>loading</h1>}
+                {routeChange && <LoadingScreen loading={true} />}
                 {!isProtectedRoute ? (
                   <Component
                     {...pageProps}
@@ -93,7 +128,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                   />
                 ) : viewerQuery.loading ? (
                   <>
-                    <h1>Loading</h1>
+                    <LoadingScreen loading={true} />
                   </>
                 ) : viewerQuery.data ? (
                   <Component
@@ -103,25 +138,43 @@ function MyApp({ Component, pageProps }: AppProps) {
                     setSuccessMessage={setSuccessMessage}
                     setErrorMessage={setErrorMessage}
                   />
+                ) : viewerQuery.error ? (
+                  <>
+                    <ErrorPage400 />
+                  </>
                 ) : (
                   <>
-                    <h1>Error</h1>
-                    {viewerQuery.error?.message}
+                    <LoadingScreen loading={true} />
                   </>
                 )}
-                <Snackbar open={true} autoHideDuration={6000}>
+
+                <Snackbar
+                  open={success}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                  onClose={() => {
+                    handleClose();
+                  }}
+                  autoHideDuration={3000}
+                >
                   <Alert onClose={handleClose} severity='success'>
                     {successMsg}
                   </Alert>
                 </Snackbar>
-                <Snackbar open={errors} autoHideDuration={6000}>
+                <Snackbar
+                  open={errors}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                  onClose={() => {
+                    handleClose();
+                  }}
+                  autoHideDuration={3000}
+                >
                   <Alert onClose={handleClose} severity='error'>
                     {errorMsg}
                   </Alert>
                 </Snackbar>
               </>
-          </ThemeContext.Provider>
-            </ThemeProvider>
+            </ThemeContext.Provider>
+          </ThemeProvider>
         </ApolloProvider>
       </AuthProvider>
     </>

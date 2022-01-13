@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
+      marginLeft: '22px'
     },
     button: {
       marginTop: theme.spacing(1),
@@ -84,8 +85,6 @@ export default function VerticalStepper() {
           <Step key={index}>
             <StepLabel>{label}</StepLabel>
             <StepContent>
-              {/* <Typography>{getStepContent(index)}</Typography> */}
-
             </StepContent>
           </Step>
         ))}

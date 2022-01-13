@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import AcceptInvitation from './acceptInvitations';
 import { useMutation, useQuery } from '@apollo/client';
 import { DeleteInvitationInput } from '../../__generated__/globalTypes';
@@ -22,22 +21,19 @@ import { DeleteInvitationMutation } from '../../__generated__/DeleteInvitationMu
 import { DeleteInvititation } from '../../lib/mutations/DeleteInvitationMutation';
 import { GetInvitationQuery } from '../../__generated__/GetInvitationQuery';
 import { GetInvitation } from '../../lib/queries/GetInvitationQuery';
-interface Props {
+import { ComponentProps } from '../../pages/_app';
+interface Props extends ComponentProps {
   refetchRef: any;
-
-  setSuccessMessage: (message: string) => void;
-  setErrorMessage: (message: string) => void;
-  refetch: () => void;
 }
 
 const ReceivedInvitation: React.FC<Props> = ({
   refetchRef,
   setSuccessMessage,
   setErrorMessage,
-  //refetch,
+  refetch,
+  viewer
 }) => {
-  const { data, error, loading, refetch } =
-    useQuery<GetInvitationQuery>(GetInvitation);
+  const invitationResponse = useQuery<GetInvitationQuery>(GetInvitation);
 
   const [details, setDetails] = React.useState({
     userId: '',
@@ -49,15 +45,23 @@ const ReceivedInvitation: React.FC<Props> = ({
 
   const [deleteInvite, DeleteInvitationResponse] =
     useMutation(DeleteInvititation);
+  // to receive invitation without Reloading
 
-  if (loading) {
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      invitationResponse.refetch();
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
+  if (invitationResponse.loading) {
     return (
       <Box ml={32} mt={12}>
         <CircularProgress disableShrink size={60} />
       </Box>
     );
   }
-  
 
   const handleDelete = (id: string) => {
     const input: DeleteInvitationInput = { invitationId: id };
@@ -70,9 +74,11 @@ const ReceivedInvitation: React.FC<Props> = ({
         setErrorMessage(err.message);
       },
     });
+    invitationResponse.refetch();
   };
 
-  const receivedInvitation = data?.getInvitations?.receivedInvitations;
+  const receivedInvitation =
+    invitationResponse.data?.getInvitations?.receivedInvitations;
 
   return (
     <>
@@ -85,13 +91,14 @@ const ReceivedInvitation: React.FC<Props> = ({
         setSuccessMessage={setSuccessMessage}
         setErrorMessage={setErrorMessage}
         refetch={refetch}
+        viewer={viewer}
       />
       <List>
         {receivedInvitation &&
           receivedInvitation.map((invitation) => {
             if (Boolean(invitation))
               return (
-                <ListItem>
+                <ListItem key={invitation._id}>
                   <ListItemAvatar>
                     <Avatar alt='Remy Sharp' src='/dummy.png' />
                   </ListItemAvatar>

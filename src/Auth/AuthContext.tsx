@@ -6,6 +6,8 @@ import * as React from 'react';
 const AuthContext = createContext<{ user: firebase.default.User | null }>({
   user: null,
 });
+
+const REFRESH_INTERVAL = 45 * 60 * 1000; //45 mins
 interface authProps {
   children: React.ReactNode;
 }
@@ -26,6 +28,20 @@ export const AuthProvider = (props: authProps) => {
       }
     });
   }, [router]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const user = firebaseSDK.auth().currentUser;
+      // Firebase limit is 60 min. Force Refresh token to regenerate after 45 mins
+      if (user) {
+        const newToken = await user.getIdToken(true);
+        // console.log(newToken);
+        return nookies.set(undefined, 'token', newToken, { path: '/' });
+      }
+    }, REFRESH_INTERVAL);
+    //clear setInterval
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user }}>

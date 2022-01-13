@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/auth';
+import { authPersist } from './persistence';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,6 +16,7 @@ const firebaseConfig = {
 if (typeof window !== 'undefined' && !firebase.apps.length) {
   try {
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().setPersistence(authPersist.local);
     if ('measurementId' in firebaseConfig) {
       firebase.analytics();
     }

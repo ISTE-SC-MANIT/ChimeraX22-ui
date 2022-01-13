@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Image from 'next/image';
 import {
   Avatar,
   Box,
@@ -18,13 +19,12 @@ import {
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ComponentProps } from '../_app';
-import CustomDrawer from '../../components/customDrawer';
+import CustomDrawer from '../../components/navbar/customDrawer';
 import VerticalStepper from '../../components/VerticalStepper';
 import { ThemeContext } from '../../components/theme';
-// import PlayAsIndividualMutation from "../../components/relay/mutations/PlayAsIndividualMutation"
 import { useRouter } from 'next/dist/client/router';
 import cookie from 'js-cookie';
-import Navbar from '../../components/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import LoadingScreen from '../../components/loadingScreen';
 import DialogBox from '../../components/dialog';
 import firebaseSDK from '../../firebase';
@@ -40,6 +40,7 @@ import { InvitationInput } from '../../__generated__/globalTypes';
 import { PlayAsIndividual } from '../../lib/mutations/PlayAsIndividualMutation';
 import SendInvitation from '../../components/InvititationTabs/sendInvititaions';
 import ReceivedInvitation from '../../components/InvititationTabs/recievedInvitations';
+import { getStep } from '../../Utils/status';
 
 class Amount extends Component {
   render() {
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       padding: 0,
       boxSizing: 'border-box',
-      height: '100vh',
+      minheight: '100vh',
     },
     leftGrid: {
       [theme.breakpoints.up('sm')]: {
@@ -120,7 +121,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 'fit-content',
       margin: 'auto',
       marginTop: theme.spacing(4),
-      // marginLeft: '50%',
       marginBottom: theme.spacing(2),
     },
     tab: {
@@ -177,14 +177,6 @@ const Team: React.FC<ComponentProps> = ({
   const [playIndividual, playIndividualResponse] =
     useMutation(PlayAsIndividual);
   const SingleUserResponse = useQuery<GetSingleUserQuery>(GetSingleUser);
-  //if (SendInvititation.loading && !rendered) return <h1>Loading</h1>;
-  const EligibleUsers = SingleUserResponse.data?.getSingleUsers.map((u) => {
-    const name = u.name;
-    const email = u.email;
-    const _id = u._id ? u._id : '';
-
-    return { _id, name, email };
-  });
   const handleSendInvitation = () => {
     console.log(receiver);
     const receiverInput: InvitationInput = {
@@ -198,6 +190,7 @@ const Team: React.FC<ComponentProps> = ({
         setSuccessMessage('Invitation Sent');
         setReceiver(null);
         setSend(!send);
+        SingleUserResponse.refetch();
       },
       onError: (err) => {
         setErrorMessage('Something went wrong Please try again later!');
@@ -208,31 +201,8 @@ const Team: React.FC<ComponentProps> = ({
     //retry()
     //refetchRef.current && refetchRef.current.retry();
   };
-  const handlePlayAsIndividual = () => {
-    playIndividual({
-      onCompleted: () => {
-        setSuccessMessage('Redirecting ....');
-        refetch();
-        router.push('/dashboard/payment');
-      },
-      onError: () => {
-        setErrorMessage('Something went wrong Please try again later!');
-      },
-    });
-  };
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTab(newValue);
-  };
-
-  const logoutHandle = () => {
-    firebaseSDK
-      .auth()
-      .signOut()
-      .then(() => nookies.destroy(undefined, 'token', { path: '/' }))
-      .then(() => router.push('/'))
-      .catch(() => {
-        console.log('error deleting token');
-      });
   };
   const handleClose = () => setOpenDialog(false);
 
@@ -244,6 +214,7 @@ const Team: React.FC<ComponentProps> = ({
         setSuccessMessage={setSuccessMessage}
         setErrorMessage={setErrorMessage}
         refetch={refetch}
+        viewer={viewer}
       />
       <div className={classes.root}>
         <CustomDrawer
@@ -264,10 +235,12 @@ const Team: React.FC<ComponentProps> = ({
             <Box mt={5} mb={5} className={classes.header}>
               <Grid container justifyContent='flex-start' alignItems='center'>
                 <Grid item sm={4} alignItems='center'>
-                  <img
+                  <Image
                     src='/dashboard.png'
+                    width={240}
+                    height={180}
                     className={classes.dashboardImg}
-                  ></img>
+                  ></Image>
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>
@@ -310,7 +283,6 @@ const Team: React.FC<ComponentProps> = ({
                         <Button
                           variant='contained'
                           color='primary'
-                          // onClick={handlePlayAsIndividual}
                           onClick={() => {
                             setOpenDialog(true);
                           }}
@@ -348,7 +320,11 @@ const Team: React.FC<ComponentProps> = ({
                   <Autocomplete
                     id='country-select-demo'
                     sx={{ width: 300 }}
-                    options={EligibleUsers ? EligibleUsers : []}
+                    options={
+                      SingleUserResponse.data?.getSingleUsers
+                        ? SingleUserResponse.data?.getSingleUsers
+                        : []
+                    }
                     onChange={(event: any, newValue: any) => {
                       setReceiver(newValue);
                     }}
@@ -404,18 +380,12 @@ const Team: React.FC<ComponentProps> = ({
               </Typography>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-            //   component={Paper} elevation={6} square
-          >
+          <Grid item xs={12} md={4}>
             <Paper elevation={6} className={classes.container}>
               <Tabs
                 value={tab}
                 onChange={handleChange}
                 indicatorColor='primary'
-                // textColor="primary"
                 variant='fullWidth'
               >
                 <Tab label='Sent Invitations' />
@@ -425,13 +395,14 @@ const Team: React.FC<ComponentProps> = ({
               <Divider />
               {tab === 0 ? (
                 <SendInvitation
-                  refetchRef={refetchRef}
+                  refetchRef={SingleUserResponse.refetch}
                   send={send}
                   setSuccessMessage={setSuccessMessage}
                   setErrorMessage={setErrorMessage}
                 />
               ) : (
                 <ReceivedInvitation
+                  viewer={viewer}
                   refetchRef={refetchRef}
                   setSuccessMessage={setSuccessMessage}
                   setErrorMessage={setErrorMessage}

@@ -1,11 +1,8 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-// import teamQuery from "../../components/relay/queries/GetTeamDetailsQuery"
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-// import CreateOrder from "../../components/relay/mutations/CreateOrderMutation"
-// import PayOrder  from "../../lib/mutations/PayOrderMutation";
 import Typography from '@mui/material/Typography';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import { useTheme, Theme } from '@mui/material/styles';
@@ -25,11 +22,10 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { ComponentProps } from '../_app';
-import { loadScript } from '../../components/utils';
-// import { CreateOrderMutationResponse } from '../../__generated__/CreateOrderMutation.graphql';
+import { loadScript } from '../../Utils/loadScript';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CustomDrawer from '../../components/customDrawer';
-import Navbar from '../../components/Navbar';
+import CustomDrawer from '../../components/navbar/customDrawer';
+import Navbar from '../../components/navbar/Navbar';
 import { GetTeamDetails } from '../../lib/queries/GetTeamDetailsQuery';
 import LoadingScreen from '../../components/loadingScreen';
 import { useRouter } from 'next/router';
@@ -58,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor:
       theme.palette.mode === 'light'
         ? theme.palette.grey[50]
-        : theme.palette.grey[500],
+        : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
@@ -69,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       backgroundColor:
         theme.palette.mode === 'light'
           ? theme.palette.grey[50]
-          : theme.palette.grey[500],
+          : theme.palette.grey[800],
     },
   },
   paper: {
@@ -101,6 +97,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 'auto',
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
+  },
+  Backcolor: {
+    backgroundColor:
+      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   input: {
     width: '50%',
@@ -170,9 +170,9 @@ const Payment: React.FC<ComponentProps> = ({
 
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
+      router.push('/dashboard/register');
     }
     if (viewer.step === 'PAYMENT') {
-      router.push('/dashboard/payment');
     }
     if (viewer.step === 'TEST') {
       router.push('/dashboard/test');
@@ -189,8 +189,8 @@ const Payment: React.FC<ComponentProps> = ({
   const [PayOrderFunction, payOrderResponse] = useMutation(PayOrder);
   const loading = teamDetailResponse.loading;
 
-  if (loading) {
-    return <LoadingScreen loading />;
+  if (teamDetailResponse.loading) {
+    return <LoadingScreen loading={true} />;
   }
 
   const handleSuccess = (res: CreateOrderMutation) => {
@@ -211,8 +211,9 @@ const Payment: React.FC<ComponentProps> = ({
         await PayOrderFunction({
           variables: { input: payOrderInput },
           onCompleted: () => {
-            setSuccessMessage('Payment Successful'), refetch();
-            router.push('/dashboard/test');
+            setSuccessMessage('Payment Successful');
+             refetch().then(() => router.push('/dashboard/test'));
+            
           },
           onError: () => setErrorMessage('Payment Failed'),
         });
@@ -280,7 +281,12 @@ const Payment: React.FC<ComponentProps> = ({
           setSuccessMessage={setSuccessMessage}
           setErrorMessage={setErrorMessage}
         />
-        <Grid container component='main' onClick={() => setOpen(false)}>
+        <Grid
+          container
+          component='main'
+          onClick={() => setOpen(false)}
+          className={classes.Backcolor}
+        >
           <Grid item xs={12} sm={8} md={6} className={classes.leftGrid}>
             <Box className={classes.heading}>
               <Typography variant='h4'>
@@ -305,11 +311,11 @@ const Payment: React.FC<ComponentProps> = ({
                   />
                 </ListItem>
               </List>
-              {/* <Divider variant="inset" component="li" /> */}
+              
             </Box>
             <Box>
               <TextField
-                // fullWidth
+                
                 value={teamName}
                 onChange={(e) => {
                   setTeamName(e.target.value);
@@ -333,7 +339,6 @@ const Payment: React.FC<ComponentProps> = ({
                 size='small'
                 id='password-input'
                 label='Enter Referral Code'
-                required
                 variant='outlined'
                 margin='normal'
                 disabled={teamHelperDisable}
@@ -388,8 +393,8 @@ const Payment: React.FC<ComponentProps> = ({
                 </Typography>
                 <Typography>
                   {' '}
-                  {teamDetailResponse.data.getTeamDetails.teamHelper.name} (
-                  {teamDetailResponse.data.getTeamDetails.teamHelper.email})
+                  {teamDetailResponse.data?.getTeamDetails.teamHelper?.name} (
+                  {teamDetailResponse.data?.getTeamDetails.teamHelper?.email})
                 </Typography>
               </Box>
             )}

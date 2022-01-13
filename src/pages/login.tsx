@@ -12,14 +12,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { GoogleLogin, GoogleLoginResponse } from 'react-google-login';
 import axios from 'axios';
 import { withStyles, makeStyles } from '@mui/styles';
 import { useTheme } from '@mui/material/styles';
 import FormDialog from '../components/forgotPassword';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useRouter } from 'next/router';
-import { authenticate } from '../components/utils';
 import { InputAdornment, IconButton, Theme } from '@mui/material';
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { ComponentProps } from './_app';
@@ -27,7 +25,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import firebaseSDK from '../firebase';
 import { Status } from '../Utils/status';
-import { authPersist } from '../firebase/persistence';
+import nookies from 'nookies';
+import { googleLogin } from '../Auth/googleLogin';
+import { facebookLogin } from '../Auth/facebookLogin';
+import { emailPasswordLogin } from '../Auth/emailpasswordLogin';
+import { padding } from '@mui/system';
 
 const SigninButton = withStyles((theme) => ({
   root: {
@@ -82,7 +84,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   logo: {
-    // backgroundImage: `url('/chimerax.png')`,
     width: '80%',
     height: '200px',
     marginLeft: 'auto',
@@ -161,6 +162,7 @@ const VectorImg = (classes: any) => {
 };
 
 const Login: React.FC<ComponentProps> = ({
+  refetch,
   setErrorMessage,
   setSuccessMessage,
 }) => {
@@ -169,10 +171,9 @@ const Login: React.FC<ComponentProps> = ({
   const [pending, setPending] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
-  const [user, setUser] = React.useState<firebase.default.User | null>(null);
   const [remember, setRemember] = React.useState(true);
-  const persist = remember ? authPersist.local : authPersist.session;
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
 
   const handleShowPassword = () => {
     setVisible(!visible);
@@ -192,67 +193,6 @@ const Login: React.FC<ComponentProps> = ({
       .min(6, 'Password must be minimum of 6 characters')
       .required('Password cannot be empty'),
   });
-
-  const getStep = (step: 'REGISTER' | 'CHOOSE_TEAM' | 'PAYMENT' | 'TEST') => {
-    switch (step) {
-      case 'REGISTER':
-        return '/dashboard/register';
-        break;
-      case 'CHOOSE_TEAM':
-        return '/dashboard/team';
-        break;
-      case 'PAYMENT':
-        return '/dashboard/payment';
-        break;
-      case 'TEST':
-        return '/dashboard/test';
-        break;
-    }
-  };
-
-  const handleLogin = (values: typeof initialValues) => {
-    if (!(values.email && values.password))
-      return setErrorMessage('Please enter valid email and password');
-    setStatus(Status.LOADING);
-
-    firebaseSDK
-      .auth()
-      .setPersistence(persist)
-      .then(() =>
-        firebaseSDK
-          .auth()
-          .signInWithEmailAndPassword(values.email, values.password)
-          .then((response) => {
-            setUser(response.user);
-            setStatus(Status.SUCCESS);
-            setSuccessMessage('Logged in successfully');
-            router.push('/dashboard/register');
-          })
-          .catch((e) => {
-            setStatus(Status.ERROR);
-            setErrorMessage(`Error while logging in ${e.message}`);
-          })
-      )
-      .catch((e) => {
-        setErrorMessage(`Error while logging in ${e.message}`);
-      });
-  };
-
-  const handleGoogleLogin = () => {
-    const provider = new firebaseSDK.auth.GoogleAuthProvider();
-    firebaseSDK
-      .auth()
-      .signInWithPopup(provider)
-      .then(async (response) => {
-        setUser(response.user);
-        setStatus(Status.SUCCESS);
-        setSuccessMessage('Logged in successfully');
-        router.push('/dashboard/register');
-      })
-      .catch((error) => {
-        setErrorMessage(`Couldn't sign up with Google\n ${error.message}`);
-      });
-  };
 
   return (
     <>
@@ -289,7 +229,15 @@ const Login: React.FC<ComponentProps> = ({
           </Box>
           <VectorImg classes={classes} />
         </Grid>
-        <Grid item xs={12} sm={6} component={Paper} elevation={0} square className={classes.Backcolor}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          component={Paper}
+          elevation={0}
+          square
+          className={classes.Backcolor}
+        >
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -297,9 +245,17 @@ const Login: React.FC<ComponentProps> = ({
             <Typography component='h1' variant='h2'>
               Log In
             </Typography>
-            {/* <form className={classes.form} noValidate> */}
             <Formik
-              onSubmit={(values) => handleLogin(values)}
+              onSubmit={(values) =>
+                emailPasswordLogin(
+                  values,
+                  setStatus,
+                  router,
+                  setErrorMessage,
+                  setSuccessMessage,
+                  refetch
+                )
+              }
               validationSchema={validationSchema}
               initialValues={initialValues}
             >
@@ -318,7 +274,6 @@ const Login: React.FC<ComponentProps> = ({
                       error={!!(meta.touched && meta.error)}
                       helperText={meta.touched ? meta.error : ''}
                       variant='outlined'
-                      // className={classes.field}
                       margin='normal'
                     />
                   )}
@@ -357,7 +312,13 @@ const Login: React.FC<ComponentProps> = ({
                 </Field>
 
                 <FormControlLabel
-                  control={<Checkbox value='remember' color='primary' />}
+                  control={
+                    <Checkbox
+                      value='remember'
+                      onChange={() => setRemember(!remember)}
+                      color='primary'
+                    />
+                  }
                   label='Remember me'
                 />
                 <Button
@@ -366,6 +327,7 @@ const Login: React.FC<ComponentProps> = ({
                   variant='contained'
                   className={classes.submit}
                   color='primary'
+                  disabled={!status}
                 >
                   {status === Status.LOADING ? `Submitting...` : `Log In`}
                 </Button>
@@ -381,7 +343,7 @@ const Login: React.FC<ComponentProps> = ({
                   </Grid>
                   <Grid item>
                     <Link
-                      onClick={() => router.push('/signin')}
+                      onClick={() => router.push('/signup')}
                       variant='body2'
                       className={classes.link}
                     >
@@ -398,11 +360,35 @@ const Login: React.FC<ComponentProps> = ({
                 <Box>
                   <Grid container justifyContent='center' alignItems='center'>
                     <IconButton
-                      onClick={handleGoogleLogin}
-                    // disabled={}
+                      onClick={() =>
+                        googleLogin(
+                          router,
+                          setErrorMessage,
+                          setSuccessMessage,
+                          refetch
+                        )
+                      }
                     >
                       <Image
                         src='/google-logo.png'
+                        alt='google'
+                        width={60}
+                        height={60}
+                        className={classes.logoIcon}
+                      />
+                    </IconButton>
+                    <IconButton
+                      onClick={() =>
+                        facebookLogin(
+                          router,
+                          setErrorMessage,
+                          setSuccessMessage,
+                          refetch
+                        )
+                      }
+                    >
+                      <Image
+                        src='/fb-logo.png'
                         alt='google'
                         width={60}
                         height={60}

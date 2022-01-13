@@ -2,25 +2,18 @@ import React, { Dispatch, SetStateAction } from "react";
 import {
   Drawer,
   Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Hidden,
   Avatar,
   Box,
   Typography,
   Fade,
 } from "@mui/material";
-import {  Theme } from "@mui/material/styles";
-import {makeStyles} from '@mui/styles'
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from '@mui/styles'
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import clsx from "clsx";
-import ThemeToggleButton from "../components/theme/modeToggle";
+import ThemeToggleButton from "../theme/modeToggle";
 import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GamepadIcon from "@mui/icons-material/Gamepad";
@@ -28,7 +21,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useRouter } from "next/dist/client/router";
 import cookie from "js-cookie"
-import VerticalStepper from "./VerticalStepper";
+import VerticalStepper from "../VerticalStepper";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -83,7 +76,6 @@ const CustomDrawer: React.FC<DrawerProps> = ({
   setSuccessMessage,
   setErrorMessage,
 }) => {
-  // const [open, setOpen] = React.useState(false);
   const classes = useStyles({ open });
   const router = useRouter();
   const icons = [
@@ -152,7 +144,7 @@ const CustomDrawer: React.FC<DrawerProps> = ({
           >
             <Avatar>{name[0].toUpperCase()}</Avatar>
             <Fade in={open}>
-              <Typography variant="subtitle2">{name[0].toUpperCase()+name.substring(1)}</Typography>
+              <Typography variant="subtitle2">{name[0].toUpperCase() + name.substring(1)}</Typography>
             </Fade>
             <Fade in={open}>
               <Typography variant="subtitle2">{username}</Typography>
