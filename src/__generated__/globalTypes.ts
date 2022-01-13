@@ -85,6 +85,12 @@ export interface AcceptInvitationInput {
   receiverId: string;
 }
 
+export interface ByPassPaymentInput {
+  TeamLeaderEmail: string;
+  TeamName: string;
+  PaymentId: string;
+}
+
 export interface CreateOrderInput {
   teamName: string;
   referralCode?: string | null;
