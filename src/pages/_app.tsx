@@ -77,6 +77,14 @@ function MyApp({ Component, pageProps }: AppProps) {
             },
           }),
         },
+        typography: {
+          fontFamily: [
+            'Nunito',
+            'Montserrat',
+            'Roboto',
+            'sans-serif',
+          ].join(','),
+        }
       }),
     [mode]
   );
