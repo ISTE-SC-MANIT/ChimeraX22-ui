@@ -28,7 +28,7 @@ export const cities = [
     state: 'Haryana',
   },
   {
-    name: 'chattogram',
+    name: 'Chattogram',
     state: ' Bangladesh',
   },
   {
@@ -118,6 +118,10 @@ export const cities = [
     state: 'Maharashtra',
   },
   {
+    name: 'New South Wales',
+    state: 'Australia',
+  },
+  {
     name: 'Noida',
     state: 'Uttar Pradesh',
   },
@@ -130,6 +134,10 @@ export const cities = [
   {
     name: 'Pune',
     state: 'Maharashtra',
+  },
+  {
+    name: 'Queensland',
+    state: 'Australia',
   },
   {
     name: 'Rajshahi',
@@ -150,8 +158,16 @@ export const cities = [
   },
 
   {
+    name: 'South Australia',
+    state: 'Australia',
+  },
+  {
     name: 'Sylhet',
     state: 'Bangladesh',
+  },
+  {
+    name: 'Tasmania',
+    state: 'Australia',
   },
 
   {
@@ -167,6 +183,14 @@ export const cities = [
   {
     name: 'Vadodara',
     state: 'Gujarat',
+  },
+  {
+    name: 'Victoria',
+    state: 'Australia',
+  },
+  {
+    name: 'Western Australia',
+    state: 'Australia',
   },
 
   {
