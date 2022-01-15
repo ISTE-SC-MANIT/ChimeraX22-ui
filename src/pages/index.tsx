@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
+      backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhite.png')` : `url('/landingdark.png')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
@@ -35,12 +36,13 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: 'auto',
       },
     },
+
     menuBtn: {
-      backgroundColor: '#3997F5',
-      color: 'white',
+      backgroundColor: 'white',
+      color: '#3997F5',
       marginRight: theme.spacing(1),
       '&:hover': {
-        backgroundColor: '#1976D2',
+        backgroundColor: 'white',
       },
       [theme.breakpoints.down('sm')]: {
         display: 'none',
@@ -54,9 +56,32 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     body: {
       minHeight: '80vh',
+      display: 'flex',
+      justifyContent: 'right',
+      alignItems: 'center',
+      paddingBottom: '5rem',
+      paddingRight: '16rem',
+      [theme.breakpoints.down('sm')]: {
+        margin: 'auto',
+        paddingBottom: '5rem',
+        paddingRight: '0.5rem',
+        backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhitemobile.png')` :  `url('/landingdarkmobile.png')`
+      },
+      [theme.breakpoints.down('md')]: {
+        margin: 'auto',
+        paddingBottom: '5rem',
+        paddingRight: '0rem',
+      },
+    },
+    Link: {
+      color: 'white',
+      [theme.breakpoints.down('md')]: {
+        color: 'white',
+        textDecoration: 'none',
+      },
     },
     typo: {
-      color: theme.palette.mode === 'light' ? '#1976D2' : 'white',
+      color:'white',
       [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(5),
       },
@@ -149,9 +174,10 @@ const Landing: React.FC = () => {
           <Box className={classes.logo}>
             <Image
               src={
-                theme.palette.mode === 'light'
-                  ? '/ChimeraX-logo-blue.svg'
-                  : '/ChimeraX-logo-whitebg.svg'
+                // theme.palette.mode === 'light'
+                  // ? '/ChimeraX-logo-blue.svg'
+                   '/ChimeraX-logo-blue.svg'
+                // : '/ChimeraX-logo-whitebg.svg'
               }
               width='256px'
               height='100%'
@@ -221,6 +247,7 @@ const Landing: React.FC = () => {
               <Box className={classes.flexColumn} lineHeight={2}>
                 <Btn onClick={() => router.push('/signup')}>Register Now</Btn>
                 <Link
+                  className={classes.Link}
                   target='_blank'
                   href='https://drive.google.com/file/d/18fYq_uSXg76WQ4Ov6BTZ4rjJFkwTXThV/view?usp=sharing'
                 >
@@ -228,104 +255,12 @@ const Landing: React.FC = () => {
                 </Link>
               </Box>
             </Box>
-            <Box className={classes.prize}>
-              <Box marginBottom={2}>
-                <Typography variant='h5' align='center'>
-                  PRIZES
-                </Typography>
-              </Box>
-              <Grid container justifyContent='center' alignItems='center'>
-                <Grid
-                  item
-                  xs={4}
-                  container
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  <Box className={classes.flexColumn}>
-                    <Image
-                      src={
-                        theme.palette.mode === 'light'
-                          ? '/first.svg'
-                          : '/first-white.svg'
-                      }
-                      alt='first'
-                      width='70px'
-                      height='100%'
-                    />
-                    <Typography variant='h6'>
-                      <b>₹ 15,000</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  container
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  <Box className={classes.flexColumn}>
-                    <Image
-                      src={
-                        theme.palette.mode === 'light'
-                          ? '/second.svg'
-                          : '/second-white.svg'
-                      }
-                      alt='first'
-                      height='100%'
-                      width='70px'
-                    />
-                    <Typography variant='h6'>
-                      <b>₹ 10,000</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  container
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  <Box className={classes.flexColumn}>
-                    <Image
-                      src={
-                        theme.palette.mode === 'light'
-                          ? '/third.svg'
-                          : '/third-white.svg'
-                      }
-                      alt='first'
-                      width='70px'
-                      height='100%'
-                    />
-                    <Typography variant='h6'>
-                      <b>₹ 5,000</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-              <Box className={classes.margin}>
-                <Typography variant='subtitle1' align='center'>
-                  *Merchandise for City Winners!
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            md={8}
-            justifyContent='flex-end'
-            alignItems='flex-end'
-          >
-            <VectorImg />
           </Grid>
         </Grid>
-        <About/>
-        <Footer />
+
       </div>
+      <About />
+      <Footer />
 
     </>
   );
