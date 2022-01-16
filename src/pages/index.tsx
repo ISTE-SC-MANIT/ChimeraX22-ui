@@ -12,6 +12,7 @@ import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import Footer from '../components/footer/contact';
 import { About } from '../components/about';
+import Sponsors from '../components/sponsors';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -323,7 +324,8 @@ const Landing: React.FC = () => {
             <VectorImg />
           </Grid>
         </Grid>
-        <About/>
+        <About />
+        <Sponsors />
         <Footer />
       </div>
 

@@ -156,6 +156,10 @@ export const cities = [
     name: 'Shimla',
     state: 'Himachal pradesh',
   },
+  {
+    name: 'Shrinagar',
+    state: 'Jammu & Kashmir',
+  },
 
   {
     name: 'South Australia',
