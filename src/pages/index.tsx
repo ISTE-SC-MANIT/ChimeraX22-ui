@@ -172,12 +172,7 @@ const Landing: React.FC = () => {
         <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
-              src={
-                // theme.palette.mode === 'light'
-                  // ? '/ChimeraX-logo-blue.svg'
-                   '/ChimeraX-logo-blue.svg'
-                // : '/ChimeraX-logo-whitebg.svg'
-              }
+              src={'/ChimeraX-logo-blue.svg'}
               width='256px'
               height='100%'
               alt='logo'
