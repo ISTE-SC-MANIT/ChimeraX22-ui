@@ -57,33 +57,30 @@ const useStyles = makeStyles((theme: Theme) =>
     body: {
       minHeight: '80vh',
       display: 'flex',
-      justifyContent: 'right',
+      justifyContent: 'space-around',
       alignItems: 'center',
-      paddingBottom: '5rem',
-      paddingRight: '16rem',
-      [theme.breakpoints.down('sm')]: {
-        margin: 'auto',
-        paddingBottom: '5rem',
-        paddingRight: '0.5rem',
-        backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhitemobile.png')` :  `url('/landingdarkmobile.png')`
-      },
+      padding: theme.spacing(-3),
       [theme.breakpoints.down('md')]: {
         margin: 'auto',
-        paddingBottom: '5rem',
-        paddingRight: '0rem',
+        flexDirection:'column-reverse',
+        backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhitemobile.png')` :  `url('/landingdarkmobile.png')`
       },
     },
     Link: {
       color: 'white',
       [theme.breakpoints.down('md')]: {
-        color: 'white',
-        textDecoration: 'none',
+        padding: theme.spacing(5),
       },
     },
     typo: {
       color:'white',
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.down('md')]: {
         padding: theme.spacing(5),
+        color:'white'
+      },
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(5),
+        color:'white'
       },
     },
     prize: {
@@ -142,9 +139,9 @@ const VectorImg = () => {
     return (
       <Box>
         <Image
-          src='/prize.svg'
+          src={'/vectorlanding.png'}
           alt='logo'
-          width={window.innerWidth}
+          width={window.innerWidth/1.2}
           height={window.innerWidth / 1.74}
         />
       </Box>
@@ -152,7 +149,9 @@ const VectorImg = () => {
   }
   return (
     <Box>
-      <Image src='/prize.svg' alt='logo' width={800} height={460} />
+      <Image 
+       src={'/vectorlanding.png'}
+      alt='logo' width={450} height={450} />
     </Box>
   );
 };
@@ -221,6 +220,7 @@ const Landing: React.FC = () => {
           </IconButton>
         </Box>
         <Grid container className={classes.body}>
+         <VectorImg/>
           <Grid
             container
             item
