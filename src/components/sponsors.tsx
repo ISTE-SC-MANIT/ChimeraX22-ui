@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
             minHeight: '20vh',
             justifyContent: 'center',
+            backgroundColor:theme.palette.mode === 'light' ? '#FBFAFB' : '#0A1929',
             [theme.breakpoints.down('md')]: {
                 minHeight: '60vh',
             }

@@ -40,11 +40,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   button: {
     margin: theme.spacing(1),
-    backgroundColor: '#3997F5',
+    backgroundColor: '#7638FF',
     color: 'white',
     marginRight: theme.spacing(1),
     '&:hover': {
-      backgroundColor: '#1976D2',
+      backgroundColor: '#7638FF',
     },
   },
 }));
