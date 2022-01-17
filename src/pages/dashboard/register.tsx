@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       // flexGrow: 1,
-      backgroundColor: theme.palette.mode === 'light' ? '#3997F5' : '#0A1929',
+      // backgroundColor: theme.palette.mode === 'light' ? '#3997F5' : '#0A1929',
       minHeight: '100vh',
       margin: '0px',
       padding: '0px',
@@ -102,13 +102,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       margin: theme.spacing(2),
+      backgroundColor: '#7638FF',
     },
     buttonGroup: {
       width: 'fit-content',
       margin: 'auto',
     },
     heading: {
-      color: 'white',
+      color: theme.palette.mode === 'light' ? '#333333' : 'white',
       marginBottom: theme.spacing(4),
       paddingTop: '40px',
     },

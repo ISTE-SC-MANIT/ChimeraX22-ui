@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 10,
     },
     menuButton: {
+
       // marginRight: theme.spacing(2),
     },
     title: {
@@ -116,12 +117,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(1),
       marginBottom: '6px',
       marginTop: '6px',
+      backgroundColor: '#7638FF'
     },
     proceed_button: {
       width: 'fit-content',
       margin: 'auto',
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(2),
+      backgroundColor: '#7638FF',
+    },
+    proceed_button_main: {
+      backgroundColor: '#7638FF',
     },
     tab: {
       overflow: 'scroll',
@@ -240,7 +246,8 @@ const Team: React.FC<ComponentProps> = ({
                     width={240}
                     height={180}
                     className={classes.dashboardImg}
-                  ></Image>
+                    alt='logo'
+                  />
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>
@@ -286,6 +293,7 @@ const Team: React.FC<ComponentProps> = ({
                           onClick={() => {
                             setOpenDialog(true);
                           }}
+                          className={classes.proceed_button_main}
                         >
                           PROCEED TO PAY
                         </Button>
