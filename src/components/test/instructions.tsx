@@ -149,7 +149,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
         <></>
       )}
       <Grid container onClick={() => setOpen(false)}>
-       
+
         <Grid container alignItems="center" justifyContent="center">
           <Box display="flex" flexDirection="column" textAlign="center" margin={3}>
             <Typography variant="h3">
@@ -165,7 +165,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
             <Paper className={classes.paper} elevation={8}>
               <List component="nav" aria-label="Instructions for Test">
                 <ListItem>
-                 
+
                   <ListItemText>
                     1{')'} The test timing will be displayed soon.
                   </ListItemText>
@@ -179,7 +179,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '} */}
                 <ListItem>
-                 
+
                   <ListItemText>
                     2{')'} There can be a maximum of 2 members in a team. The member who made the
                     payment is the Team Leader and the other member (if it’s a team) will be the
@@ -187,7 +187,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-             
+
                   <ListItemText>
                     3{')'} The team leader and team helper both will be able to see the questions
                     but only the team leader can answer, see the statistics and submit the quiz. The
@@ -195,38 +195,38 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-                  
+
                   <ListItemText>
                     4{')'} Replacement of any participant of a team is not allowed after
                     registration.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                 
+
                   <ListItemText>5{')'} There are 30 questions, All are compulsory.</ListItemText>
                 </ListItem>
                 <ListItem>
-                
+
                   <ListItemText>
                     6{')'} Each correct answer gets 2 marks and no marks will be deducted for a
                     wrong answer or an unanswered question.{' '}
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                 
+
                   <ListItemText>
                     7{')'} Some questions are divided into 2 parts. Each part will hold 1 mark for
                     the correct answer and 0 for wrong or unattempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                 
+
                   <ListItemText>
                     8{')'} Make sure to save your answers whenever a question is attempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                
+
                   <ListItemText>
                     9{')'} Marked for review questions would not be evaluated and counted as
                     unattempted.
@@ -240,13 +240,13 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                 
+
                   <ListItemText>
                     11{')'} The quiz will automatically submit once the timer runs out.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-             
+
                   <ListItemText>
                     <Grid container alignItems="center" className={classes.list}>
                       <Box>
@@ -299,7 +299,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-                 
+
                   <ListItemText>
                     <Box textAlign="center">
                       <Typography variant="h6">

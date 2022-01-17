@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     borderRadius: 50,
     borderStyle: 'solid',
+    color: 'white',
     cursor: 'pointer',
   },
   icon: {
@@ -30,7 +31,15 @@ const ThemeToggleButton: React.FC = () => {
   const theme = useTheme();
   const themeCtx = useContext(ThemeContext);
   return (
-    <button className={classes.button} onClick={themeCtx.toggleMode}>
+    <button
+      className={classes.button}
+      onClick={() => {
+        themeCtx.toggleMode();
+        theme.palette.mode === 'light'
+          ? localStorage.setItem('theme', JSON.stringify('dark'))
+          : localStorage.setItem('theme', JSON.stringify('light'));
+      }}
+    >
       <WbSunnyIcon
         fontSize='small'
         color='inherit'

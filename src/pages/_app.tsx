@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   Router.events.on('routeChangeComplete', () => setRouteChange(false));
   Router.events.on('routeChangeError', () => setRouteChange(false));
 
-  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -101,6 +101,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   React.useEffect(() => {
+    const themeMode: string | null = localStorage.getItem('theme');
+    if (themeMode) setMode(JSON.parse(themeMode));
     if (first == 'dashboard') {
       view()
         .then(() => {

@@ -13,35 +13,48 @@ import { useRouter } from 'next/router';
 import Footer from '../components/footer/contact';
 import { About } from '../components/about';
 import Sponsors from '../components/sponsors';
+import Prize from '../components/prize';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minHeight: '100%',
+      minHeight: '100vh',
       margin: 0,
       padding: 0,
       boxSizing: 'border-box',
       flexGrow: 1,
+      backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhite.png')` : `url('/landingdark.png')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
     header: {
       minHeight: '10vh',
       alignItems: 'center',
-      flexWrap: 'wrap',
+      // flexWrap: 'wrap',
       display: 'flex',
+      width: '90%',
+      justifyContent: 'space-between',
+    },
+    rightNav: {
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      }
     },
     logo: {
-      marginRight: 'auto',
+      // marginRight: 'auto',
       [theme.breakpoints.down('sm')]: {
-        margin: 'auto',
+        width: '150px',
       },
     },
+
     menuBtn: {
-      backgroundColor: '#3997F5',
-      color: 'white',
+      backgroundColor: 'white',
+      color: '#7638FF',
       marginRight: theme.spacing(1),
       '&:hover': {
-        backgroundColor: '#1976D2',
+        backgroundColor: 'white',
       },
       [theme.breakpoints.down('sm')]: {
         display: 'none',
@@ -55,11 +68,32 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     body: {
       minHeight: '80vh',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      padding: theme.spacing(-3),
+      [theme.breakpoints.down('md')]: {
+        margin: 'auto',
+        flexDirection: 'column-reverse',
+        backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhitemobile.png')` : `url('/landingdarkmobile.png')`
+      },
+    },
+    Link: {
+      color: 'white',
+      marginTop: '10px',
+      [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(5),
+      },
     },
     typo: {
-      color: theme.palette.mode === 'light' ? '#1976D2' : 'white',
-      [theme.breakpoints.up('sm')]: {
-        padding: theme.spacing(5),
+      color: 'white',
+      [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(3),
+        color: 'white'
+      },
+      [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(2),
+        color: 'white'
       },
     },
     prize: {
@@ -77,6 +111,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     margin: {
+      margin: '50px',
+      color: 'white',
       [theme.breakpoints.down('sm')]: {
         marginBottom: theme.spacing(3),
       },
@@ -100,13 +136,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Btn = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText('#3997F5'),
-    backgroundColor: '#3997F5',
+    // color: theme.palette.getContrastText('#3997F5'),
+    backgroundColor: 'white',
     border: '2px solid white',
     borderRadius: '25px',
     padding: '10px 20px',
     '&:hover': {
-      backgroundColor: '#1976D2',
+      backgroundColor: '#7638FF',
+      color: 'white'
     },
   },
 }))(Button);
@@ -118,9 +155,9 @@ const VectorImg = () => {
     return (
       <Box>
         <Image
-          src='/prize.svg'
+          src={'/vectorlanding.png'}
           alt='logo'
-          width={window.innerWidth}
+          width={window.innerWidth / 1.2}
           height={window.innerWidth / 1.74}
         />
       </Box>
@@ -128,7 +165,9 @@ const VectorImg = () => {
   }
   return (
     <Box>
-      <Image src='/prize.svg' alt='logo' width={800} height={460} />
+      <Image
+        src={'/vectorlanding.png'}
+        alt='logo' width={700} height={450} />
     </Box>
   );
 };
@@ -149,18 +188,14 @@ const Landing: React.FC = () => {
         <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
-              src={
-                theme.palette.mode === 'light'
-                  ? '/ChimeraX-logo-blue.svg'
-                  : '/ChimeraX-logo-whitebg.svg'
-              }
+              src={theme.palette.mode === 'light' ? '/chimera-x logo black.png' : '/chimera-x white.png'}
               width='256px'
-              height='100%'
+              height='80%'
               alt='logo'
               onClick={() => router.push('/')}
             />
           </Box>
-          <Box display='flex' alignItems='center' justifyContent='center'>
+          <Box display='flex' alignItems='center' justifyContent='center' className={classes.rightNav}>
             <Fade in={true}>
               <Box className={classes.darkTheme}>
                 <ThemeToggleButton />
@@ -181,21 +216,22 @@ const Landing: React.FC = () => {
               Sign up
             </Button>
           </Box>
-        </Box>
-        <Box className={classes.mobileDrawer}>
-          <IconButton
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            onClick={(event) => {
-              event.stopPropagation();
-              handleDrawerOpen();
-            }}
-          >
-            <MenuIcon fontSize='large' color='primary' />
-          </IconButton>
+          <Box className={classes.mobileDrawer}>
+            <IconButton
+              edge='start'
+              color='inherit'
+              aria-label='menu'
+              onClick={(event) => {
+                event.stopPropagation();
+                handleDrawerOpen();
+              }}
+            >
+              <MenuIcon fontSize='large' color='primary' />
+            </IconButton>
+          </Box>
         </Box>
         <Grid container className={classes.body}>
+          <VectorImg />
           <Grid
             container
             item
@@ -220,8 +256,9 @@ const Landing: React.FC = () => {
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
-                <Btn onClick={() => router.push('/signup')}>Register Now</Btn>
+                <Btn sx={{ color: '#7638FF' }} onClick={() => router.push('/signup')}>Register Now</Btn>
                 <Link
+                  className={classes.Link}
                   target='_blank'
                   href='https://drive.google.com/file/d/18fYq_uSXg76WQ4Ov6BTZ4rjJFkwTXThV/view?usp=sharing'
                 >
@@ -229,106 +266,11 @@ const Landing: React.FC = () => {
                 </Link>
               </Box>
             </Box>
-            <Box className={classes.prize}>
-              <Box marginBottom={2}>
-                <Typography variant='h5' align='center'>
-                  PRIZES
-                </Typography>
-              </Box>
-              <Grid container justifyContent='center' alignItems='center'>
-                <Grid
-                  item
-                  xs={4}
-                  container
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  <Box className={classes.flexColumn}>
-                    <Image
-                      src={
-                        theme.palette.mode === 'light'
-                          ? '/first.svg'
-                          : '/first-white.svg'
-                      }
-                      alt='first'
-                      width='70px'
-                      height='100%'
-                    />
-                    <Typography variant='h6'>
-                      <b>₹ 15,000</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  container
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  <Box className={classes.flexColumn}>
-                    <Image
-                      src={
-                        theme.palette.mode === 'light'
-                          ? '/second.svg'
-                          : '/second-white.svg'
-                      }
-                      alt='first'
-                      height='100%'
-                      width='70px'
-                    />
-                    <Typography variant='h6'>
-                      <b>₹ 10,000</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  container
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  <Box className={classes.flexColumn}>
-                    <Image
-                      src={
-                        theme.palette.mode === 'light'
-                          ? '/third.svg'
-                          : '/third-white.svg'
-                      }
-                      alt='first'
-                      width='70px'
-                      height='100%'
-                    />
-                    <Typography variant='h6'>
-                      <b>₹ 5,000</b>
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Grid>
-              <Box className={classes.margin}>
-                <Typography variant='subtitle1' align='center'>
-                  *Merchandise for City Winners!
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            md={8}
-            justifyContent='flex-end'
-            alignItems='flex-end'
-          >
-            <VectorImg />
           </Grid>
         </Grid>
-        <About />
-        <Sponsors />
-        <Footer />
       </div>
-
+      <Prize />
+      <Sponsors />
     </>
   );
 };

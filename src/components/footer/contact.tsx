@@ -24,6 +24,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 const useStyles = makeStyles((theme: Theme) =>
 
     createStyles({
+         
         footerPrivacyli: {
             margin: '10px 15px 10px 15px',
         },
