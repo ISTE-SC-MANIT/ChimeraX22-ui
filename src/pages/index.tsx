@@ -12,11 +12,11 @@ import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import Footer from '../components/footer/contact';
 import { About } from '../components/about';
-import  Prize  from '../components/prize';
+import Prize from '../components/prize';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minHeight: '100%',
+      minHeight: '100vh',
       margin: 0,
       padding: 0,
       boxSizing: 'border-box',
@@ -31,21 +31,26 @@ const useStyles = makeStyles((theme: Theme) =>
     header: {
       minHeight: '10vh',
       alignItems: 'center',
-      flexWrap: 'wrap',
+      // flexWrap: 'wrap',
       display: 'flex',
       width: '90%',
-
+      justifyContent: 'space-between',
+    },
+    rightNav: {
+      [theme.breakpoints.down('md')]: {
+        display: 'none',
+      }
     },
     logo: {
-      marginRight: 'auto',
+      // marginRight: 'auto',
       [theme.breakpoints.down('sm')]: {
-        margin: 'auto',
+        width: '150px',
       },
     },
 
     menuBtn: {
       backgroundColor: 'white',
-      color: '#3997F5',
+      color: '#7638FF',
       marginRight: theme.spacing(1),
       '&:hover': {
         backgroundColor: 'white',
@@ -74,6 +79,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     Link: {
       color: 'white',
+      marginTop: '10px',
       [theme.breakpoints.down('md')]: {
         padding: theme.spacing(5),
       },
@@ -129,13 +135,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Btn = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText('#3997F5'),
-    backgroundColor: '#1F51FF',
+    // color: theme.palette.getContrastText('#3997F5'),
+    backgroundColor: 'white',
     border: '2px solid white',
     borderRadius: '25px',
     padding: '10px 20px',
     '&:hover': {
-      backgroundColor: '#1976D2',
+      backgroundColor: '#7638FF',
+      color: 'white'
     },
   },
 }))(Button);
@@ -180,14 +187,14 @@ const Landing: React.FC = () => {
         <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
-              src={theme.palette.mode === 'light' ? '/ChimeraX-logo-blue.svg' : '/ChimeraX-logo-whitebg.svg'}
+              src={theme.palette.mode === 'light' ? '/chimera-x logo black.png' : '/chimera-x white.png'}
               width='256px'
-              height='100%'
+              height='80%'
               alt='logo'
               onClick={() => router.push('/')}
             />
           </Box>
-          <Box display='flex' alignItems='center' justifyContent='center'>
+          <Box display='flex' alignItems='center' justifyContent='center' className={classes.rightNav}>
             <Fade in={true}>
               <Box className={classes.darkTheme}>
                 <ThemeToggleButton />
@@ -208,19 +215,19 @@ const Landing: React.FC = () => {
               Sign up
             </Button>
           </Box>
-        </Box>
-        <Box className={classes.mobileDrawer}>
-          <IconButton
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            onClick={(event) => {
-              event.stopPropagation();
-              handleDrawerOpen();
-            }}
-          >
-            <MenuIcon fontSize='large' color='primary' />
-          </IconButton>
+          <Box className={classes.mobileDrawer}>
+            <IconButton
+              edge='start'
+              color='inherit'
+              aria-label='menu'
+              onClick={(event) => {
+                event.stopPropagation();
+                handleDrawerOpen();
+              }}
+            >
+              <MenuIcon fontSize='large' color='primary' />
+            </IconButton>
+          </Box>
         </Box>
         <Grid container className={classes.body}>
           <VectorImg />
@@ -248,7 +255,7 @@ const Landing: React.FC = () => {
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
-                <Btn variant='contained' onClick={() => router.push('/signup')}>Register Now</Btn>
+                <Btn sx={{ color: '#7638FF' }} onClick={() => router.push('/signup')}>Register Now</Btn>
                 <Link
                   className={classes.Link}
                   target='_blank'

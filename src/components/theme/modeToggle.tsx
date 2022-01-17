@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     borderRadius: 50,
     borderStyle: 'solid',
+    color: 'white',
     cursor: 'pointer',
   },
   icon: {
