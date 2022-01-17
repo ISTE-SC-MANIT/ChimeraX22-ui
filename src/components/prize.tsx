@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) => (
             backgroundColor: theme.palette.mode === 'light' ? '#FFFFE0' : '#0A1929',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            margin:theme.spacing(3),
         },
         money: {
             marginRight: '10px',
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => (
             fontWeight: 'bold'
         },
         cardContainer: {
-            width: '90%'
+            width: '90%',
         }
     })
 ));

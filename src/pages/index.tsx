@@ -81,11 +81,11 @@ const useStyles = makeStyles((theme: Theme) =>
     typo: {
       color: 'white',
       [theme.breakpoints.down('md')]: {
-        padding: theme.spacing(5),
+        padding: theme.spacing(3),
         color: 'white'
       },
       [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(5),
+        padding: theme.spacing(2),
         color: 'white'
       },
     },
@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Btn = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#3997F5'),
-    backgroundColor: '#3997F5',
+    backgroundColor: '#1F51FF',
     border: '2px solid white',
     borderRadius: '25px',
     padding: '10px 20px',
@@ -248,7 +248,7 @@ const Landing: React.FC = () => {
                 </Typography>
               </Box>
               <Box className={classes.flexColumn} lineHeight={2}>
-                <Btn onClick={() => router.push('/signup')}>Register Now</Btn>
+                <Btn variant='contained' onClick={() => router.push('/signup')}>Register Now</Btn>
                 <Link
                   className={classes.Link}
                   target='_blank'
