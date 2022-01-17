@@ -190,8 +190,8 @@ const Landing: React.FC = () => {
           <Box className={classes.logo}>
             <Image
               src={theme.palette.mode === 'light' ? '/chimera-x logo black.png' : '/chimera-x white.png'}
-              width='256px'
-              height='80%'
+              width='300px'
+              height='100%'
               alt='logo'
               onClick={() => router.push('/')}
             />
