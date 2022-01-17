@@ -12,6 +12,7 @@ import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import Footer from '../components/footer/contact';
 import { About } from '../components/about';
+import Prize from '../components/prize';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -23,12 +24,17 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhite.png')` : `url('/landingdark.png')`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
     header: {
       minHeight: '10vh',
       alignItems: 'center',
       flexWrap: 'wrap',
       display: 'flex',
+      width: '90%',
+
     },
     logo: {
       marginRight: 'auto',
@@ -62,8 +68,8 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(-3),
       [theme.breakpoints.down('md')]: {
         margin: 'auto',
-        flexDirection:'column-reverse',
-        backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhitemobile.png')` :  `url('/landingdarkmobile.png')`
+        flexDirection: 'column-reverse',
+        backgroundImage: theme.palette.mode === 'light' ? `url('/landingwhitemobile.png')` : `url('/landingdarkmobile.png')`
       },
     },
     Link: {
@@ -73,14 +79,14 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     typo: {
-      color:'white',
+      color: 'white',
       [theme.breakpoints.down('md')]: {
         padding: theme.spacing(5),
-        color:'white'
+        color: 'white'
       },
       [theme.breakpoints.down('sm')]: {
         padding: theme.spacing(5),
-        color:'white'
+        color: 'white'
       },
     },
     prize: {
@@ -98,6 +104,8 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     margin: {
+      margin: '50px',
+      color: 'white',
       [theme.breakpoints.down('sm')]: {
         marginBottom: theme.spacing(3),
       },
@@ -141,7 +149,7 @@ const VectorImg = () => {
         <Image
           src={'/vectorlanding.png'}
           alt='logo'
-          width={window.innerWidth/1.2}
+          width={window.innerWidth / 1.2}
           height={window.innerWidth / 1.74}
         />
       </Box>
@@ -149,9 +157,9 @@ const VectorImg = () => {
   }
   return (
     <Box>
-      <Image 
-       src={'/vectorlanding.png'}
-      alt='logo' width={450} height={450} />
+      <Image
+        src={'/vectorlanding.png'}
+        alt='logo' width={700} height={450} />
     </Box>
   );
 };
@@ -172,7 +180,7 @@ const Landing: React.FC = () => {
         <Box padding={2} className={classes.header}>
           <Box className={classes.logo}>
             <Image
-              src={'/ChimeraX-logo-blue.svg'}
+              src={theme.palette.mode === 'light' ? '/ChimeraX-logo-blue.svg' : '/ChimeraX-logo-whitebg.svg'}
               width='256px'
               height='100%'
               alt='logo'
@@ -215,7 +223,7 @@ const Landing: React.FC = () => {
           </IconButton>
         </Box>
         <Grid container className={classes.body}>
-         <VectorImg/>
+          <VectorImg />
           <Grid
             container
             item
@@ -255,6 +263,7 @@ const Landing: React.FC = () => {
 
       </div>
       <About />
+      <Prize />
       <Footer />
 
     </>
