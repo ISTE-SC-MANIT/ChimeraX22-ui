@@ -56,6 +56,10 @@ export const cities = [
     name: 'Gurugram',
     state: 'Haryana',
   },
+  {
+    name: 'Guwahati',
+    state: 'Assam',
+  },
 
   {
     name: 'Hyderabad',
@@ -103,7 +107,7 @@ export const cities = [
     name: 'Kottayam',
     state: 'Kerala',
   },
-  
+
   {
     name: 'Lucknow',
     state: 'Uttar Pradesh',
