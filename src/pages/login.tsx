@@ -49,22 +49,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: `url('/vector.png')`,
+    backgroundImage: `url('/loginvector.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
-      backgroundColor: `#3997F5`,
+      backgroundImage: `url('/signupmobile.png')`,
     },
     [theme.breakpoints.down('sm')]: {
       minHeight: '100vh',
     },
   },
   Backcolor: {
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   paper: {
     margin: theme.spacing(8, 4),

@@ -48,18 +48,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100vh',
   },
   Backcolor: {
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   image: {
-    backgroundImage: `url('/Vector2.png')`,
+    backgroundImage: `url('/signup.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
-      backgroundColor: `#3997F5`,
+      backgroundColor: `#7638FF`,
+      backgroundImage: `url('signupmobile.png')`
     },
     [theme.breakpoints.down('xs')]: {
       backgroundColor:
@@ -182,9 +183,9 @@ const SignUp: NextPage<ComponentProps> = ({
     password: '',
   });
   const initialValues = {
-    fullName: 'quiz testing',
-    email: 'fj10@gmail.com',
-    password: '123456',
+    fullName: '',
+    email: '',
+    password: '',
   };
   const validationSchema = yup.object({
     fullName: yup.string().required(),
