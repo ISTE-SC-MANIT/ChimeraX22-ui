@@ -39,8 +39,8 @@ const SigninButton = withStyles((theme) => ({
     borderRadius: '50px',
     padding: '10px 20px',
     '&:hover': {
-      backgroundColor: '#1976D2',
-      color:'white'
+      backgroundColor: '#7638FF',
+      color: 'white'
     },
   },
 }))(Button);
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: `url('/loginvector.png')`,
+    backgroundImage: `url('/login1.png')`,
     backgroundRepeat: 'no-repeat',
     // backgroundColor:
     //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#7638FF',
   },
   logo: {
     width: '80%',
@@ -220,7 +221,7 @@ const Login: React.FC<ComponentProps> = ({
           <Box className={classes.signinBtn}>
             <Grid container justifyContent='center' alignItems='center'>
               <SigninButton
-                 sx={{ color: '#7638FF' }}
+                sx={{ color: '#7638FF' }}
                 onClick={() => {
                   router.push('/signup');
                 }}
