@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     typo: {
       color: 'white',
+      textDecoration: 'none',
       [theme.breakpoints.down('md')]: {
         padding: theme.spacing(3),
         color: 'white'
