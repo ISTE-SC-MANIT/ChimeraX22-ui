@@ -33,13 +33,14 @@ import { padding } from '@mui/system';
 
 const SigninButton = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText('#3997F5'),
-    backgroundColor: '#3997F5',
+    // color: theme.palette.getContrastText('#3997F5'),
+    backgroundColor: 'white',
     border: '2px solid white',
     borderRadius: '50px',
     padding: '10px 20px',
     '&:hover': {
       backgroundColor: '#1976D2',
+      color:'white'
     },
   },
 }))(Button);
@@ -219,6 +220,7 @@ const Login: React.FC<ComponentProps> = ({
           <Box className={classes.signinBtn}>
             <Grid container justifyContent='center' alignItems='center'>
               <SigninButton
+                 sx={{ color: '#7638FF' }}
                 onClick={() => {
                   router.push('/signup');
                 }}

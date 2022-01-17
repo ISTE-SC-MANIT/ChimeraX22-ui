@@ -32,13 +32,14 @@ import { googleLogin } from '../Auth/googleLogin';
 import { facebookLogin } from '../Auth/facebookLogin';
 const LoginButton = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText('#3997F5'),
-    backgroundColor: '#3997F5',
+    // color: theme.palette.getContrastText('#3997F5'),
+    backgroundColor: 'white',
     border: '2px solid white',
     borderRadius: '50px',
     padding: '10px 20px',
     '&:hover': {
       backgroundColor: '#1976D2',
+      color:'white'
     },
   },
 }))(Button);
