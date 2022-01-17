@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            minHeight: '90vh',
+            minHeight: '20vh',
             justifyContent: 'center',
             [theme.breakpoints.down('md')]: {
                 minHeight: '60vh',
             }
         },
         heading: {
-            marginBottom: '170px',
+            marginBottom: '50px',
             fontWeight: "200",
             fontSize: '60px',
             [theme.breakpoints.down('md')]: {
@@ -40,18 +40,22 @@ const useStyles = makeStyles((theme: Theme) =>
 const sponsorDetails = [
     {
         imageUrl: '/Unschool Logo Horizontal White.png',
+        imageUrlG:'/Unschool Logo Horizontal black.png' ,
         url: 'https://www.unschool.in/',
     },
     {
-        imageUrl: '/MentorX.png',
-        url: 'https://thementorx.com/',
-    },
-    {
-        imageUrl: '/ELearnmarket Logo.jpg',
+        imageUrl: '/ELearnmarket Logo (2).png',
+        imageUrlG: '/ElearnMarketG.png',
         url: 'http://elearnmarkets.com/',
     },
     {
+        imageUrl: '/MentorX.png',
+        imageUrlG:'/MentorXG.png',
+        url: 'https://thementorx.com/',
+    },
+    {
         imageUrl: '/hoverRobotix.png',
+        imageUrlG: '/hoverRobotixG.png',
         url: 'https://hoverrobotix.com/',
     }
 ]
@@ -59,6 +63,8 @@ const sponsorDetails = [
 
 const Sponsors = () => {
     const classes = useStyles();
+    
+    const [state,setState]=React.useState<Number>(100);
     return (
         <>
             <Box className={classes.root}>
@@ -68,12 +74,14 @@ const Sponsors = () => {
                         sponsorDetails.map((sponsor, key) => (
                             <Grid item key={key} className={classes.card}>
                                 <Link href={sponsor.url} target='_blank'>
-                                    <Image
-                                        src={sponsor.imageUrl}
-                                        width='200px'
-                                        height={key === 2 ? '60px' : '200px'}
+                                    <a><Image
+                                        onMouseOver={() => setState(key)}
+                                        onMouseOut={() => setState(100)}
+                                        src={ state === key ? sponsor.imageUrl : sponsor.imageUrlG} 
+                                        width='130px'
+                                        height={key === 1 ? '40px' : '100px'}
                                         alt='logo'
-                                    />
+                                    /></a>
                                 </Link>
                             </Grid>
                         ))
