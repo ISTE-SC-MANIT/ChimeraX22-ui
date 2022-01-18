@@ -76,6 +76,9 @@ function MyApp({ Component, pageProps }: AppProps) {
               paper: '#0A1929',
             },
           }),
+          primary: {
+            main: '#7638FF'
+          },
         },
         typography: {
           fontFamily: [
