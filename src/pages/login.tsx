@@ -132,6 +132,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     cursor: 'pointer',
+    color: theme.palette.mode === 'light' ? 'black' : 'white',
   },
 }));
 const VectorImg = (classes: any) => {

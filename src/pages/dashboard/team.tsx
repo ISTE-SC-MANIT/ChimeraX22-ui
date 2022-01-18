@@ -131,6 +131,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     tab: {
       overflow: 'scroll',
+      // color: theme.palette.mode === 'light' ? 'black' : 'white'
     },
     note: {
       padding: theme.spacing(8),
@@ -184,7 +185,7 @@ const Team: React.FC<ComponentProps> = ({
     useMutation(PlayAsIndividual);
   const SingleUserResponse = useQuery<GetSingleUserQuery>(GetSingleUser);
   const handleSendInvitation = () => {
-    console.log(receiver);
+    // console.log(receiver);
     const receiverInput: InvitationInput = {
       receiverId: receiver._id,
       receiverEmail: receiver.email,
@@ -393,6 +394,7 @@ const Team: React.FC<ComponentProps> = ({
               <Tabs
                 value={tab}
                 onChange={handleChange}
+                textColor="inherit"
                 indicatorColor='primary'
                 variant='fullWidth'
               >

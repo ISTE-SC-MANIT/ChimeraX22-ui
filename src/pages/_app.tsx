@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             'Roboto',
             'sans-serif',
           ].join(','),
-        }
+        },
       }),
     [mode]
   );
@@ -109,7 +109,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (first == 'dashboard') {
       view()
         .then(() => {
-          console.log(123, viewerQuery);
+          // console.log(123, viewerQuery);
         })
         .catch((e) => {
           console.log(321, e.message);

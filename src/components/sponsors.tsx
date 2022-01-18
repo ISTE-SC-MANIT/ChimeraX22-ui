@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
             minHeight: '20vh',
             justifyContent: 'center',
-            backgroundColor:theme.palette.mode === 'light' ? '#FBFAFB' : '#0A1929',
+            backgroundColor: theme.palette.mode === 'light' ? '#FBFAFB' : '#0A1929',
             [theme.breakpoints.down('md')]: {
                 minHeight: '60vh',
             }
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const sponsorDetails = [
     {
         imageUrl: '/Unschool Logo Horizontal White.png',
-        imageUrlG:'/Unschool Logo Horizontal black.png' ,
+        imageUrlG: '/Unschool Logo Horizontal black.png',
         url: 'https://www.unschool.in/',
     },
     {
@@ -51,7 +51,7 @@ const sponsorDetails = [
     },
     {
         imageUrl: '/MentorX.png',
-        imageUrlG:'/MentorXG.png',
+        imageUrlG: '/MentorXG.png',
         url: 'https://thementorx.com/',
     },
     {
@@ -64,8 +64,8 @@ const sponsorDetails = [
 
 const Sponsors = () => {
     const classes = useStyles();
-    
-    const [state,setState]=React.useState<Number>(100);
+
+    const [state, setState] = React.useState<Number>(100);
     return (
         <>
             <Box className={classes.root}>
@@ -75,14 +75,14 @@ const Sponsors = () => {
                         sponsorDetails.map((sponsor, key) => (
                             <Grid item key={key} className={classes.card}>
                                 <Link href={sponsor.url} target='_blank'>
-                                    <a><Image
+                                    <Image
                                         onMouseOver={() => setState(key)}
                                         onMouseOut={() => setState(100)}
-                                        src={ state === key ? sponsor.imageUrl : sponsor.imageUrlG} 
+                                        src={state === key ? sponsor.imageUrl : sponsor.imageUrlG}
                                         width='130px'
                                         height={key === 1 ? '40px' : '100px'}
                                         alt='logo'
-                                    /></a>
+                                    />
                                 </Link>
                             </Grid>
                         ))
