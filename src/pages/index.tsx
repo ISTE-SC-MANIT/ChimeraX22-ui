@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       minHeight: '10vh',
-      alignItems: 'center',
       // flexWrap: 'wrap',
       display: 'flex',
       width: '90%',
       justifyContent: 'space-between',
+      alignItems: 'center',
     },
     rightNav: {
       [theme.breakpoints.down('md')]: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
     logo: {
       // marginRight: 'auto',
       [theme.breakpoints.down('sm')]: {
-        width: '150px',
+        width: '180px',
       },
     },
 
@@ -191,7 +191,7 @@ const Landing: React.FC = () => {
             <Image
               src={theme.palette.mode === 'light' ? '/chimera-x logo black.png' : '/chimera-x white.png'}
               width='300px'
-              height='100%'
+              height='125px'
               alt='logo'
               onClick={() => router.push('/')}
             />

@@ -1,6 +1,6 @@
 import { Box, ButtonBase, Card, CardContent, CardMedia, Grid, Paper, Typography, Button, Link } from '@mui/material';
 import { createStyles, makeStyles } from '@mui/styles'
-import React from 'react'
+import React, { useState } from 'react'
 import { Theme } from '@mui/material/styles'
 import Image from 'next/image';
 
@@ -21,19 +21,23 @@ const useStyles = makeStyles((theme: Theme) =>
         heading: {
             marginBottom: '50px',
             fontWeight: "200",
-            fontSize: '60px',
+            fontSize: '48px',
             [theme.breakpoints.down('md')]: {
                 marginBottom: '80px',
                 fontSize: '30px'
             }
         },
+        cardGroup: {
+            width: '80%',
+        },
         card: {
-            height: '200px',
+            height: '130px',
+            width: '160px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            margin: '30px'
-        }
+            margin: '30px',
+        },
     })
 )
 
@@ -64,23 +68,22 @@ const sponsorDetails = [
 
 const Sponsors = () => {
     const classes = useStyles();
-
-    const [state, setState] = React.useState<Number>(100);
+    const [keyIndex, setKey] = useState<number>(100);
     return (
         <>
             <Box className={classes.root}>
                 <Typography variant="h3" className={classes.heading}>SPONSORS</Typography>
-                <Grid container justifyContent='space-around' alignItems='center' spacing={{ xs: 2, md: 3 }}>
+                <Grid container justifyContent='space-around' alignItems='center' className={classes.cardGroup}>
                     {
                         sponsorDetails.map((sponsor, key) => (
-                            <Grid item key={key} className={classes.card}>
+                            <Grid item key={key} className={classes.card}
+                                onMouseOver={() => setKey(key)}
+                                onMouseOut={() => setKey(100)}>
                                 <Link href={sponsor.url} target='_blank'>
                                     <Image
-                                        onMouseOver={() => setState(key)}
-                                        onMouseOut={() => setState(100)}
-                                        src={state === key ? sponsor.imageUrl : sponsor.imageUrlG}
-                                        width='130px'
-                                        height={key === 1 ? '40px' : '100px'}
+                                        src={sponsor.imageUrl}
+                                        width={keyIndex === key ? '140px' : '130px'}
+                                        height={key === 1 ? keyIndex === key ? '45px' : '40px' : keyIndex === key ? '140px' : '130px'}
                                         alt='logo'
                                     />
                                 </Link>
