@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => (
     createStyles({
         root: {
             minHeight: '80vh',
-            backgroundColor: theme.palette.mode === 'light' ? '#FBFAFB' : '#0A1929',
+            backgroundColor: theme.palette.mode === 'light' ? '#ECF0F6' : '#0A1929',
         },
         card: {
             padding: '40px',

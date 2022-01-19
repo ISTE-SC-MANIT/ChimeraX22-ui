@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       // flexGrow: 1,
       // backgroundColor: theme.palette.mode === 'light' ? '#3997F5' : '#0A1929',
+
       minHeight: '100vh',
       margin: '0px',
       padding: '0px',
@@ -102,7 +103,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       margin: theme.spacing(2),
-      backgroundColor: '#7638FF',
     },
     buttonGroup: {
       width: 'fit-content',
@@ -155,6 +155,7 @@ const Register: React.FC<ComponentProps> = ({
   const router = useRouter();
   const [terms, setTerms] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
+  const [currentState, setState] = React.useState<string | null>(null);
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
@@ -176,7 +177,8 @@ const Register: React.FC<ComponentProps> = ({
     college: '',
     phone: '',
     year: 1,
-    city: { name: '', state: '' },
+    state : '',
+    city: { name: ''},
   };
   const handleSubmit = (values: typeof initialValues) => {
     const userInput: UserInput = {
@@ -199,7 +201,15 @@ const Register: React.FC<ComponentProps> = ({
       },
     });
   };
+  const state: Set<string> = new Set();
+  cities.map((city, key) => {
+    state.add(city.state);
+  })
 
+  const stateFilter: any[] = [];
+  state.forEach((state) => {
+    stateFilter.push(state);
+  })
   const handleCity = (
     values: typeof initialValues,
     setValues: (v: typeof initialValues) => void,
@@ -340,6 +350,47 @@ const Register: React.FC<ComponentProps> = ({
                     </Field>
                   </ListItem>
                   <ListItem>
+                    <Field name='state'>
+                      {({
+                        field,
+                        meta,
+                      }: FieldProps<typeof initialValues['state']>) => (
+                        <Autocomplete
+                          id='combo-box-demo'
+                          options={stateFilter.sort((a, b) => {
+                            return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+                          })}
+
+                          getOptionLabel={(option) =>
+                            `${option}`
+                          }
+                          style={{ width: '95%' }}
+                          onChange={(event: any, newValue: any) =>
+                          setState(newValue) 
+                            
+                        }
+                          renderInput={
+                            (params) => (
+                              <TextField
+                                {...params}
+                                fullWidth
+                                id='name-input'
+                                label='State where your college exists'
+                                required
+                                error={!!(meta.touched && meta.error)}
+                                helperText={meta.touched ? meta.error : ''}
+                                variant='outlined'
+                                size='small'
+                                className={classes.textField}
+                              />
+                            )
+
+                          }
+                        />
+                      )}
+                    </Field>
+                  </ListItem>
+                  <ListItem>
                     <Field name='city'>
                       {({
                         field,
@@ -347,12 +398,14 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['city']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={cities}
-
+                          options={cities.filter((city) => {
+                            return city.state === currentState
+                          })}
+                          disabled={currentState===null}
                           getOptionLabel={(option) =>
-                            `${option.name} , ${option.state}`
+                            `${option.name}`
                           }
-                          style={{ width: '98%' }}
+                          style={{ width: '95%' }}
                           onChange={(event: any, newValue: any) =>
                             handleCity(values, setValues, newValue)
                           }

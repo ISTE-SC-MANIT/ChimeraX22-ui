@@ -168,7 +168,7 @@ const VectorImg = () => {
     <Box>
       <Image
         src={'/vectorlanding.png'}
-        alt='logo' width={700} height={450} />
+        alt='logo' width={650} height={430} />
     </Box>
   );
 };

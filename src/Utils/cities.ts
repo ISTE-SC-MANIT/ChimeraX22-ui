@@ -9,7 +9,7 @@ export const cities = [
   },
   {
     name: 'Barishal',
-    state: ' Bangladesh',
+    state: 'Bangladesh',
   },
   {
     name: 'Bhopal',
@@ -29,7 +29,7 @@ export const cities = [
   },
   {
     name: 'Chattogram',
-    state: ' Bangladesh',
+    state: 'Bangladesh',
   },
   {
     name: 'Chennai',
@@ -114,7 +114,7 @@ export const cities = [
   },
   {
     name: 'Mymensingh',
-    state: ' Bangladesh',
+    state: 'Bangladesh',
   },
 
   {
