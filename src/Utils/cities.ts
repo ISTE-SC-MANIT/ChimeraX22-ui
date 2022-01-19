@@ -48,6 +48,10 @@ export const cities = [
     state: 'Bangladesh',
   },
   {
+    name: 'Dubai',
+    state: 'UAE',
+  },
+  {
     name: 'Goa',
     state: 'Goa',
   },
