@@ -44,26 +44,47 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const sponsorDetails = [
     {
-        imageUrl: '/Unschool Logo Horizontal White.png',
+        imageUrl: '/UnschoolLogo.png',
         url: 'https://www.unschool.in/',
+        width:'190px',
+        height:'120px',
+        widthH:'210px',
+        heightH:'140px'
     },
     {
         imageUrl: '/ELearnmarket Logo (2).png',
         url: 'http://elearnmarkets.com/',
+        width:'140px',
+        height:'50px',
+        widthH:'150px',
+        heightH:'60px'
     },
     {
         imageUrl: '/MentorX.png',
         url: 'https://thementorx.com/',
+        width:'150px',
+        height:'130px',
+        widthH:'160px',
+        heightH:'140px'
     },
     {
         imageUrl: '/hoverRobotix.png',
         url: 'https://hoverrobotix.com/',
+        width:'150px',
+        height:'130px',
+        widthH:'160px',
+        heightH:'140px'
     }
     ,
     {
         imageUrl: '/bull.svg',
         url: 'http://sponsorbull.com/',
-    }
+        width:'150px',
+        height:'130px',
+        widthH:'160px',
+        heightH:'140px'
+    },
+    
    
 ]
 
@@ -84,8 +105,8 @@ const Sponsors = () => {
                                 <Link href={sponsor.url} target='_blank'>
                                     <Image
                                         src={sponsor.imageUrl}
-                                        width={keyIndex === key ? '140px' : '130px'}
-                                        height={key === 1 ? keyIndex === key ? '45px' : '40px' : keyIndex === key ? '140px' : '130px'}
+                                        width={ keyIndex === key ? sponsor.widthH : sponsor.width}
+                                        height={keyIndex === key ? sponsor.heightH: sponsor.height}
                                         alt='logo'
                                     />
                                 </Link>
@@ -99,3 +120,10 @@ const Sponsors = () => {
 }
 
 export default Sponsors;
+
+{/* <Image
+src={sponsor.imageUrl}
+width={keyIndex === key ? '140px' : '130px'}
+height={key === 1 ? keyIndex === key ? '45px' : '40px' : keyIndex === key ? '140px' : '130px'}
+alt='logo'
+/> */}
