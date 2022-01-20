@@ -120,10 +120,3 @@ const Sponsors = () => {
 }
 
 export default Sponsors;
-
-{/* <Image
-src={sponsor.imageUrl}
-width={keyIndex === key ? '140px' : '130px'}
-height={key === 1 ? keyIndex === key ? '45px' : '40px' : keyIndex === key ? '140px' : '130px'}
-alt='logo'
-/> */}
