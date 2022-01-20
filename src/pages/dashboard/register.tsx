@@ -41,11 +41,11 @@ const validationSchema = yup.object({
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
-    .test(
-      'len',
-      'A phone number needs to be excatly 10 digits',
-      (val) => val?.toString().length === 10
-    )
+    // .test(
+    //   'len',
+    //   'A phone number needs to be excatly 10 digits',
+    //   (val) => val?.toString().length === 10
+    // )
     .required('A phone number is required'),
 });
 
@@ -177,8 +177,8 @@ const Register: React.FC<ComponentProps> = ({
     college: '',
     phone: '',
     year: 1,
-    state : '',
-    city: { name: ''},
+    state: '',
+    city: { name: '' },
   };
   const handleSubmit = (values: typeof initialValues) => {
     const userInput: UserInput = {
@@ -366,9 +366,9 @@ const Register: React.FC<ComponentProps> = ({
                           }
                           style={{ width: '95%' }}
                           onChange={(event: any, newValue: any) =>
-                          setState(newValue) 
-                            
-                        }
+                            setState(newValue)
+
+                          }
                           renderInput={
                             (params) => (
                               <TextField
@@ -401,7 +401,7 @@ const Register: React.FC<ComponentProps> = ({
                           options={cities.filter((city) => {
                             return city.state === currentState
                           })}
-                          disabled={currentState===null}
+                          disabled={currentState === null}
                           getOptionLabel={(option) =>
                             `${option.name}`
                           }
