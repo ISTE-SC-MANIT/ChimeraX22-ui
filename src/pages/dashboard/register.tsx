@@ -379,7 +379,7 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['state']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={countries.find((country) => country.name === currentCountry)?.states.map((state) => state.name) ? countries.find((country) => country.name === currentCountry)?.states.map((state) => state.name) : []}
+                          options={countries.find((country) => country.name === currentCountry)?.states.map((state) => state.name) || []}
 
                           inputValue={currentState ? currentState : ''}
                           getOptionLabel={(option) =>
@@ -400,7 +400,7 @@ const Register: React.FC<ComponentProps> = ({
                                 value={currentState}
                                 fullWidth
                                 id='name-input'
-                                label='State where your college exists'
+                                label='State'
                                 required
                                 error={!!(meta.touched && meta.error)}
                                 helperText={meta.touched ? meta.error : ''}
@@ -423,7 +423,7 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['city']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={countries.find((country) => country.name === currentCountry)?.states.find((state) => state.name === currentState)?.cities ? countries.find((country) => country.name === currentCountry)?.states.find((state) => state.name === currentState)?.cities : []}
+                          options={countries.find((country) => country.name === currentCountry)?.states.find((state) => state.name === currentState)?.cities || []}
                           disabled={currentState === null}
                           getOptionLabel={(option) =>
                             `${option}`
@@ -442,7 +442,7 @@ const Register: React.FC<ComponentProps> = ({
                                 fullWidth
                                 value={currentCity}
                                 id='name-input'
-                                label='City where your college exists'
+                                label='City'
                                 required
                                 error={!!(meta.touched && meta.error)}
                                 helperText={meta.touched ? meta.error : ''}
