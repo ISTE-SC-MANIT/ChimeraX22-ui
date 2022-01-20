@@ -16,7 +16,7 @@ import { Form, FormikFormProps, Formik, Field, FieldProps } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import Autocomplete from '@mui/material/Autocomplete';
 import * as yup from 'yup';
-import { cities, countries } from '../../Utils/cities';
+import { countries } from '../../Utils/cities';
 import CustomDrawer from '../../components/navbar/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
