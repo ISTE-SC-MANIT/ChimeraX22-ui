@@ -45,24 +45,26 @@ const useStyles = makeStyles((theme: Theme) =>
 const sponsorDetails = [
     {
         imageUrl: '/Unschool Logo Horizontal White.png',
-        imageUrlG: '/Unschool Logo Horizontal black.png',
         url: 'https://www.unschool.in/',
     },
     {
         imageUrl: '/ELearnmarket Logo (2).png',
-        imageUrlG: '/ElearnMarketG.png',
         url: 'http://elearnmarkets.com/',
     },
     {
         imageUrl: '/MentorX.png',
-        imageUrlG: '/MentorXG.png',
         url: 'https://thementorx.com/',
     },
     {
         imageUrl: '/hoverRobotix.png',
-        imageUrlG: '/hoverRobotixG.png',
         url: 'https://hoverrobotix.com/',
     }
+    ,
+    {
+        imageUrl: '/bull.svg',
+        url: 'http://sponsorbull.com/',
+    }
+   
 ]
 
 
