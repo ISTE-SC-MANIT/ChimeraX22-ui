@@ -10,12 +10,13 @@ import {
   TextField,
   Paper,
   Button,
+  InputAdornment,
 } from '@mui/material';
 import { Form, FormikFormProps, Formik, Field, FieldProps } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import Autocomplete from '@mui/material/Autocomplete';
 import * as yup from 'yup';
-import { cities } from '../../Utils/cities';
+import { cities, countries } from '../../Utils/cities';
 import CustomDrawer from '../../components/navbar/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
@@ -113,6 +114,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(4),
       paddingTop: '40px',
     },
+    hide: {
+      display: 'none',
+    },
     subHeading: {
       color: theme.palette.mode === 'light' ? '#333333' : 'white',
       fontSize: '1.2rem',
@@ -145,6 +149,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+
 const Register: React.FC<ComponentProps> = ({
   viewer,
   refetch,
@@ -155,8 +160,10 @@ const Register: React.FC<ComponentProps> = ({
   const router = useRouter();
   const [terms, setTerms] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
-  const [currentState, setState] = React.useState<string | null>(null);
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
+  const [currentCountry, setCountry] = React.useState<string | null>(null);
+  const [currentState, setState] = React.useState<string | null>(null);
+  const [currentCity, setCurrentCity] = React.useState<string | null>(null);
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
     }
@@ -177,16 +184,17 @@ const Register: React.FC<ComponentProps> = ({
     college: '',
     phone: '',
     year: 1,
+    country: '',
     state: '',
     city: { name: '' },
   };
   const handleSubmit = (values: typeof initialValues) => {
     const userInput: UserInput = {
       name: values.name,
-      phone: values.phone,
+      phone: `${countries?.find((country) => country.name === currentCountry)?.phone_code}${values.phone}`,
       year: values.year,
       college: values.college,
-      city: values.city.name,
+      city: currentCity,
     };
 
     mutateFunction({
@@ -201,15 +209,8 @@ const Register: React.FC<ComponentProps> = ({
       },
     });
   };
-  const state: Set<string> = new Set();
-  cities.map((city, key) => {
-    state.add(city.state);
-  })
 
-  const stateFilter: any[] = [];
-  state.forEach((state) => {
-    stateFilter.push(state);
-  })
+
   const handleCity = (
     values: typeof initialValues,
     setValues: (v: typeof initialValues) => void,
@@ -329,26 +330,47 @@ const Register: React.FC<ComponentProps> = ({
                     </Field>
                   </ListItem>
                   <ListItem>
-                    <Field name='phone'>
+                    <Field name='country'>
                       {({
                         field,
                         meta,
-                      }: FieldProps<typeof initialValues['phone']>) => (
-                        <TextField
-                          fullWidth
-                          id='name-input'
-                          label='Mobile no.'
-                          required
-                          {...field}
-                          error={!!(meta.touched && meta.error)}
-                          helperText={meta.touched ? meta.error : ''}
-                          variant='outlined'
-                          size='small'
-                          className={classes.textField}
+                      }: FieldProps<typeof initialValues['country']>) => (
+                        <Autocomplete
+                          id='combo-box-demo'
+                          options={countries.map((country) => country.name)}
+
+                          getOptionLabel={(option) =>
+                            `${option}`
+                          }
+                          style={{ width: '95%' }}
+                          onChange={(event: any, newValue: any) => {
+                            setCountry(newValue)
+                            setState(null)
+                            handleCity(values, setValues, null)
+                          }
+                          }
+                          renderInput={
+                            (params) => (
+                              <TextField
+                                {...params}
+                                fullWidth
+                                id='name-input'
+                                label='Country'
+                                required
+                                error={!!(meta.touched && meta.error)}
+                                helperText={meta.touched ? meta.error : ''}
+                                variant='outlined'
+                                size='small'
+                                className={classes.textField}
+                              />
+                            )
+
+                          }
                         />
                       )}
                     </Field>
                   </ListItem>
+
                   <ListItem>
                     <Field name='state'>
                       {({
@@ -357,22 +379,25 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['state']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={stateFilter.sort((a, b) => {
-                            return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
-                          })}
+                          options={countries.find((country) => country.name === currentCountry)?.states.map((state) => state.name) ? countries.find((country) => country.name === currentCountry)?.states.map((state) => state.name) : []}
 
+                          inputValue={currentState ? currentState : ''}
                           getOptionLabel={(option) =>
                             `${option}`
                           }
                           style={{ width: '95%' }}
-                          onChange={(event: any, newValue: any) =>
-                            setState(newValue)
-
+                          onChange={(event: any, newValue: any) => {
+                            setState(newValue);
+                            // handleCity(values, setValues, null)
+                            setCurrentCity(null)
                           }
+                          }
+                          disabled={currentCountry === null}
                           renderInput={
                             (params) => (
                               <TextField
                                 {...params}
+                                value={currentState}
                                 fullWidth
                                 id='name-input'
                                 label='State where your college exists'
@@ -381,7 +406,7 @@ const Register: React.FC<ComponentProps> = ({
                                 helperText={meta.touched ? meta.error : ''}
                                 variant='outlined'
                                 size='small'
-                                className={classes.textField}
+                                className={currentCountry ? classes.textField : classes.hide}
                               />
                             )
 
@@ -398,22 +423,24 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['city']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={cities.filter((city) => {
-                            return city.state === currentState
-                          })}
+                          options={countries.find((country) => country.name === currentCountry)?.states.find((state) => state.name === currentState)?.cities ? countries.find((country) => country.name === currentCountry)?.states.find((state) => state.name === currentState)?.cities : []}
                           disabled={currentState === null}
                           getOptionLabel={(option) =>
-                            `${option.name}`
+                            `${option}`
                           }
+                          inputValue={currentCity ? currentCity : ''}
                           style={{ width: '95%' }}
-                          onChange={(event: any, newValue: any) =>
-                            handleCity(values, setValues, newValue)
+                          onChange={(event: any, newValue: any) => {
+                            // handleCity(values, setValues, newValue)
+                            setCurrentCity(newValue)
+                          }
                           }
                           renderInput={
                             (params) => (
                               <TextField
                                 {...params}
                                 fullWidth
+                                value={currentCity}
                                 id='name-input'
                                 label='City where your college exists'
                                 required
@@ -421,11 +448,34 @@ const Register: React.FC<ComponentProps> = ({
                                 helperText={meta.touched ? meta.error : ''}
                                 variant='outlined'
                                 size='small'
-                                className={classes.textField}
+                                className={currentState ? classes.textField : classes.hide}
                               />
                             )
-
                           }
+                        />
+                      )}
+                    </Field>
+                  </ListItem>
+                  <ListItem>
+                    <Field name='phone'>
+                      {({
+                        field,
+                        meta,
+                      }: FieldProps<typeof initialValues['phone']>) => (
+                        <TextField
+                          fullWidth
+                          id='name-input'
+                          label='Mobile no.'
+                          InputProps={{
+                            startAdornment: <InputAdornment position="start">{countries?.find((country) => country.name === currentCountry)?.phone_code}</InputAdornment>,
+                          }}
+                          required
+                          {...field}
+                          error={!!(meta.touched && meta.error)}
+                          helperText={meta.touched ? meta.error : ''}
+                          variant='outlined'
+                          size='small'
+                          className={currentCountry ? classes.textField : classes.hide}
                         />
                       )}
                     </Field>
