@@ -400,7 +400,7 @@ const Register: React.FC<ComponentProps> = ({
                                 value={currentState}
                                 fullWidth
                                 id='name-input'
-                                label='State'
+                                label='State where your college exists'
                                 required
                                 error={!!(meta.touched && meta.error)}
                                 helperText={meta.touched ? meta.error : ''}
@@ -442,7 +442,7 @@ const Register: React.FC<ComponentProps> = ({
                                 fullWidth
                                 value={currentCity}
                                 id='name-input'
-                                label='City'
+                                label='City where your college exists'
                                 required
                                 error={!!(meta.touched && meta.error)}
                                 helperText={meta.touched ? meta.error : ''}
