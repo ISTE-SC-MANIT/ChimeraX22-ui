@@ -75,6 +75,10 @@ export const countries = [
     phone_code: '+91',
     states: [
       {
+        name: 'Andhra pradesh',
+        cities: ['Visakhapatnam'],
+      },
+      {
         name: 'Assam',
         cities: ['Guwahati', 'Other'],
       },

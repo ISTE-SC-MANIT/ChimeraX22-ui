@@ -14,21 +14,19 @@ const useStyles = makeStyles((theme: Theme) =>
             minHeight: '20vh',
             justifyContent: 'center',
             backgroundColor: theme.palette.mode === 'light' ? '#ECF0F6' : '#0A1929',
-            [theme.breakpoints.down('md')]: {
-                minHeight: '60vh',
-            }
         },
         heading: {
             marginBottom: '50px',
             fontWeight: "200",
             fontSize: '48px',
             [theme.breakpoints.down('md')]: {
-                marginBottom: '80px',
-                fontSize: '30px'
+                marginBottom: '30px',
+                marginTop: '50px',
+                fontSize: '40px'
             }
         },
         cardGroup: {
-            width: '90%',
+            width: '70%',
         },
         card: {
             height: '130px',
@@ -78,7 +76,18 @@ const sponsorDetails = [
         width: '160px',
         height: '130px',
     },
-
+    {
+        imageUrl: '/teacoin_1.png',
+        url: '',
+        width: '150px',
+        height: '150px',
+    },
+    {
+        imageUrl: '/tp-nb.png',
+        url: 'https://www.enavabharat.com/',
+        width: '160px',
+        height: '40px',
+    }
 
 ]
 
