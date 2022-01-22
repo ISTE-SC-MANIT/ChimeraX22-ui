@@ -15,7 +15,7 @@ export const googleLogin = (
     .auth()
     .signInWithPopup(provider)
     .then((response) => {
-      console.log('response', response);
+      // console.log('response', response);
       if (response.additionalUserInfo?.isNewUser) {
         axios
           .post(`${process.env.NEXT_PUBLIC_BACKEND}/auth/register`, {

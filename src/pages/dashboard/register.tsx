@@ -10,12 +10,13 @@ import {
   TextField,
   Paper,
   Button,
+  InputAdornment,
 } from '@mui/material';
 import { Form, FormikFormProps, Formik, Field, FieldProps } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import Autocomplete from '@mui/material/Autocomplete';
 import * as yup from 'yup';
-import { cities } from '../../Utils/cities';
+import { countries } from '../../Utils/cities';
 import CustomDrawer from '../../components/navbar/customDrawer';
 import { UserInput } from '../../__generated__/globalTypes';
 import { RegisterUser } from '../../lib/mutations/RegisterUserMutation';
@@ -41,11 +42,11 @@ const validationSchema = yup.object({
     .typeError("That doesn't look like a phone number")
     .positive("A phone number can't start with a minus")
     .integer("A phone number can't include a decimal point")
-    .test(
-      'len',
-      'A phone number needs to be excatly 10 digits',
-      (val) => val?.toString().length === 10
-    )
+    // .test(
+    //   'len',
+    //   'A phone number needs to be excatly 10 digits',
+    //   (val) => val?.toString().length === 10
+    // )
     .required('A phone number is required'),
 });
 
@@ -53,7 +54,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       // flexGrow: 1,
-      backgroundColor: '#3997F5',
+      // backgroundColor: theme.palette.mode === 'light' ? '#3997F5' : '#0A1929',
+
       minHeight: '100vh',
       margin: '0px',
       padding: '0px',
@@ -108,12 +110,15 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 'auto',
     },
     heading: {
-      color: 'white',
+      color: theme.palette.mode === 'light' ? '#333333' : 'white',
       marginBottom: theme.spacing(4),
       paddingTop: '40px',
     },
+    hide: {
+      display: 'none',
+    },
     subHeading: {
-      color: '#333333',
+      color: theme.palette.mode === 'light' ? '#333333' : 'white',
       fontSize: '1.2rem',
     },
     details: {
@@ -144,6 +149,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+
 const Register: React.FC<ComponentProps> = ({
   viewer,
   refetch,
@@ -155,6 +161,9 @@ const Register: React.FC<ComponentProps> = ({
   const [terms, setTerms] = React.useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const [mutateFunction, { data, loading, error }] = useMutation(RegisterUser);
+  const [currentCountry, setCountry] = React.useState<string | null>(null);
+  const [currentState, setState] = React.useState<string | null>(null);
+  const [currentCity, setCurrentCity] = React.useState<string | null>(null);
   React.useEffect(() => {
     if (viewer.step === 'REGISTER') {
     }
@@ -175,29 +184,32 @@ const Register: React.FC<ComponentProps> = ({
     college: '',
     phone: '',
     year: 1,
-    city: { name: '', state: '' },
+    country: '',
+    state: '',
+    city: { name: '' },
   };
   const handleSubmit = (values: typeof initialValues) => {
     const userInput: UserInput = {
       name: values.name,
-      phone: values.phone,
+      phone: `${countries?.find((country) => country.name === currentCountry)?.phone_code}${values.phone}`,
       year: values.year,
       college: values.college,
-      city: values.city.name,
+      city: currentCity,
     };
 
     mutateFunction({
       variables: { input: userInput },
       onCompleted: () => {
         setSuccessMessage('Registered Successfully');
-        refetch().then(()=>router.push('/dashboard/team'));
-        
+        refetch().then(() => router.push('/dashboard/team'));
+
       },
       onError: () => {
         setErrorMessage('Something went wrong Please try again later!');
       },
     });
   };
+
 
   const handleCity = (
     values: typeof initialValues,
@@ -206,7 +218,6 @@ const Register: React.FC<ComponentProps> = ({
   ) => {
     setValues({ ...values, city: newValue });
   };
-
   return (
     <div className={classes.root} id='reg'>
       <CustomDrawer
@@ -319,22 +330,87 @@ const Register: React.FC<ComponentProps> = ({
                     </Field>
                   </ListItem>
                   <ListItem>
-                    <Field name='phone'>
+                    <Field name='country'>
                       {({
                         field,
                         meta,
-                      }: FieldProps<typeof initialValues['phone']>) => (
-                        <TextField
-                          fullWidth
-                          id='name-input'
-                          label='Mobile no.'
-                          required
-                          {...field}
-                          error={!!(meta.touched && meta.error)}
-                          helperText={meta.touched ? meta.error : ''}
-                          variant='outlined'
-                          size='small'
-                          className={classes.textField}
+                      }: FieldProps<typeof initialValues['country']>) => (
+                        <Autocomplete
+                          id='combo-box-demo'
+                          options={countries.map((country) => country.name)}
+
+                          getOptionLabel={(option) =>
+                            `${option}`
+                          }
+                          style={{ width: '95%' }}
+                          onChange={(event: any, newValue: any) => {
+                            setCountry(newValue)
+                            setState(null)
+                            handleCity(values, setValues, null)
+                          }
+                          }
+                          renderInput={
+                            (params) => (
+                              <TextField
+                                {...params}
+                                fullWidth
+                                id='name-input'
+                                label='Country'
+                                required
+                                error={!!(meta.touched && meta.error)}
+                                helperText={meta.touched ? meta.error : ''}
+                                variant='outlined'
+                                size='small'
+                                className={classes.textField}
+                              />
+                            )
+
+                          }
+                        />
+                      )}
+                    </Field>
+                  </ListItem>
+
+                  <ListItem>
+                    <Field name='state'>
+                      {({
+                        field,
+                        meta,
+                      }: FieldProps<typeof initialValues['state']>) => (
+                        <Autocomplete
+                          id='combo-box-demo'
+                          options={countries.find((country) => country.name === currentCountry)?.states.map((state) => state.name) || []}
+
+                          inputValue={currentState ? currentState : ''}
+                          getOptionLabel={(option) =>
+                            `${option}`
+                          }
+                          style={{ width: '95%' }}
+                          onChange={(event: any, newValue: any) => {
+                            setState(newValue);
+                            // handleCity(values, setValues, null)
+                            setCurrentCity(null)
+                          }
+                          }
+                          disabled={currentCountry === null}
+                          renderInput={
+                            (params) => (
+                              <TextField
+                                {...params}
+                                value={currentState}
+                                fullWidth
+                                id='name-input'
+                                label='State where your college exists'
+                                required
+                                error={!!(meta.touched && meta.error)}
+                                helperText={meta.touched ? meta.error : ''}
+                                variant='outlined'
+                                size='small'
+                                className={currentCountry ? classes.textField : classes.hide}
+                              />
+                            )
+
+                          }
                         />
                       )}
                     </Field>
@@ -347,19 +423,24 @@ const Register: React.FC<ComponentProps> = ({
                       }: FieldProps<typeof initialValues['city']>) => (
                         <Autocomplete
                           id='combo-box-demo'
-                          options={cities}
+                          options={countries.find((country) => country.name === currentCountry)?.states.find((state) => state.name === currentState)?.cities || []}
+                          disabled={currentState === null}
                           getOptionLabel={(option) =>
-                            `${option.name} , ${option.state}`
+                            `${option}`
                           }
-                          style={{ width: '98%' }}
-                          onChange={(event: any, newValue: any) =>
-                            handleCity(values, setValues, newValue)
+                          inputValue={currentCity ? currentCity : ''}
+                          style={{ width: '95%' }}
+                          onChange={(event: any, newValue: any) => {
+                            // handleCity(values, setValues, newValue)
+                            setCurrentCity(newValue)
+                          }
                           }
                           renderInput={
                             (params) => (
                               <TextField
                                 {...params}
                                 fullWidth
+                                value={currentCity}
                                 id='name-input'
                                 label='City where your college exists'
                                 required
@@ -367,11 +448,34 @@ const Register: React.FC<ComponentProps> = ({
                                 helperText={meta.touched ? meta.error : ''}
                                 variant='outlined'
                                 size='small'
-                                className={classes.textField}
+                                className={currentState ? classes.textField : classes.hide}
                               />
                             )
-                           
                           }
+                        />
+                      )}
+                    </Field>
+                  </ListItem>
+                  <ListItem>
+                    <Field name='phone'>
+                      {({
+                        field,
+                        meta,
+                      }: FieldProps<typeof initialValues['phone']>) => (
+                        <TextField
+                          fullWidth
+                          id='name-input'
+                          label='Mobile no.'
+                          InputProps={{
+                            startAdornment: <InputAdornment position="start">{countries?.find((country) => country.name === currentCountry)?.phone_code}</InputAdornment>,
+                          }}
+                          required
+                          {...field}
+                          error={!!(meta.touched && meta.error)}
+                          helperText={meta.touched ? meta.error : ''}
+                          variant='outlined'
+                          size='small'
+                          className={currentCountry ? classes.textField : classes.hide}
                         />
                       )}
                     </Field>
@@ -388,7 +492,7 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                     
+
                     >
                       Proceed
                     </Button>

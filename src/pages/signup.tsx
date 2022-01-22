@@ -32,13 +32,14 @@ import { googleLogin } from '../Auth/googleLogin';
 import { facebookLogin } from '../Auth/facebookLogin';
 const LoginButton = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText('#3997F5'),
-    backgroundColor: '#3997F5',
+    // color: theme.palette.getContrastText('#3997F5'),
+    backgroundColor: 'white',
     border: '2px solid white',
     borderRadius: '50px',
     padding: '10px 20px',
     '&:hover': {
-      backgroundColor: '#1976D2',
+      backgroundColor: '#7638FF',
+      color: 'white'
     },
   },
 }))(Button);
@@ -48,18 +49,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100vh',
   },
   Backcolor: {
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   image: {
-    backgroundImage: `url('/Vector2.png')`,
+    backgroundImage: `url('/signup1.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
-      backgroundColor: `#3997F5`,
+      backgroundColor: `#7638FF`,
+      backgroundImage: `url('signupmobile.png')`
     },
     [theme.breakpoints.down('xs')]: {
       backgroundColor:
@@ -74,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: '#3997F5',
+    backgroundColor: '#7638FF',
   },
   form: {
     width: '100%', // Fix IE11 issue.
@@ -82,6 +84,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    // backgroundColor: '#7638FF',
   },
   logo: {
     width: 'fit-content',
@@ -182,9 +185,9 @@ const SignUp: NextPage<ComponentProps> = ({
     password: '',
   });
   const initialValues = {
-    fullName: 'quiz testing',
-    email: 'fj10@gmail.com',
-    password: '123456',
+    fullName: '',
+    email: '',
+    password: '',
   };
   const validationSchema = yup.object({
     fullName: yup.string().required(),
@@ -385,7 +388,7 @@ const SignUp: NextPage<ComponentProps> = ({
         </Box>
         <Box className={classes.loginBtn}>
           <Grid container justifyContent='center' alignItems='center'>
-            <LoginButton onClick={() => router.push('/login')}>
+            <LoginButton sx={{ color: '#7638FF' }} onClick={() => router.push('/login')}>
               Log In
             </LoginButton>
           </Grid>

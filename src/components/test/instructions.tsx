@@ -171,7 +171,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>{' '}
                 {/* <ListItem>
-
+                  
                   <ListItemText>
                   2{')'} The “Start Test” button will be disabled at quiz time.
                     2{')'} <b>The “Start Test” button will be disabled at quiz time.</b> The
@@ -183,7 +183,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
 
                   <ListItemText>
                     2{')'} There can be a maximum of 2 members in a team. The member who made the
-                    payment is the Team Leader and the other member (if it’s a team) will be the
+                    payment is the Team Leader and the other member (if it&apos;s a team) will be the
                     Team Helper.
                   </ListItemText>
                 </ListItem>{' '}
@@ -192,7 +192,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   <ListItemText>
                     3{')'} The team leader and team helper both will be able to see the questions
                     but only the team leader can answer, see the statistics and submit the quiz. The
-                    team helper won’t be able to do any of the above actions.
+                    team helper won&apos;t be able to do any of the above actions.
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>

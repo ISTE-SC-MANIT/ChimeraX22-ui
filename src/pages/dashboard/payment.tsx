@@ -49,23 +49,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '100vh',
   },
   image: {
-    backgroundImage: `url('/Vector3.png')`,
+    backgroundImage: `url('/paymentvector.png')`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? theme.palette.grey[50]
-        : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light'
+    //     ? theme.palette.grey[50]
+    //     : theme.palette.grey[800],
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
-      backgroundColor: `#3997F5`,
+      backgroundImage: `url('/signupmobile.png')`,
+
     },
     [theme.breakpoints.down('xs')]: {
       minHeight: '60vh',
-      backgroundColor:
-        theme.palette.mode === 'light'
-          ? theme.palette.grey[50]
-          : theme.palette.grey[800],
+      // backgroundColor:
+      //   theme.palette.mode === 'light'
+      //     ? theme.palette.grey[50]
+      //     : theme.palette.grey[800],
     },
   },
   paper: {
@@ -99,8 +100,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2),
   },
   Backcolor: {
-    backgroundColor:
-      theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
+    // backgroundColor:
+    //   theme.palette.mode === 'light' ? 'white' : theme.palette.grey[800],
   },
   input: {
     width: '50%',
@@ -125,6 +126,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   link: {
     cursor: 'pointer',
   },
+  payment_button: {
+    backgroundColor: '#7638FF',
+  }
 }));
 const VectorImg = () => {
   const theme = useTheme();
@@ -212,8 +216,8 @@ const Payment: React.FC<ComponentProps> = ({
           variables: { input: payOrderInput },
           onCompleted: () => {
             setSuccessMessage('Payment Successful');
-             refetch().then(() => router.push('/dashboard/test'));
-            
+            refetch().then(() => router.push('/dashboard/test'));
+
           },
           onError: () => setErrorMessage('Payment Failed'),
         });
@@ -311,11 +315,11 @@ const Payment: React.FC<ComponentProps> = ({
                   />
                 </ListItem>
               </List>
-              
+
             </Box>
             <Box>
               <TextField
-                
+
                 value={teamName}
                 onChange={(e) => {
                   setTeamName(e.target.value);
@@ -466,6 +470,7 @@ const Payment: React.FC<ComponentProps> = ({
                       variant='contained'
                       onClick={handleRazorpay}
                       disabled={disable}
+                      className={classes.payment_button}
                     >
                       Proceed for payment
                     </Button>

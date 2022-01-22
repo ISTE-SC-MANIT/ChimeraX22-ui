@@ -22,6 +22,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { useRouter } from "next/dist/client/router";
 import cookie from "js-cookie"
 import VerticalStepper from "../VerticalStepper";
+import firebase from 'firebase/app';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -118,6 +119,8 @@ const CustomDrawer: React.FC<DrawerProps> = ({
     },
   ];
 
+  const userPhoto = firebase.auth().currentUser?.photoURL
+
   return (
     <>
       <Drawer
@@ -142,7 +145,7 @@ const CustomDrawer: React.FC<DrawerProps> = ({
             justifyContent="center"
             flexDirection="column"
           >
-            <Avatar>{name[0].toUpperCase()}</Avatar>
+            <Avatar src={userPhoto ? userPhoto : ''}>{name[0].toUpperCase()}</Avatar>
             <Fade in={open}>
               <Typography variant="subtitle2">{name[0].toUpperCase() + name.substring(1)}</Typography>
             </Fade>

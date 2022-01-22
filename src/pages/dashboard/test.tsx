@@ -98,14 +98,14 @@ const Test: React.FC<ComponentProps> = ({
       />
       <Grid container spacing={0} alignItems='center' justifyContent='center'>
         <Box marginBottom={4}>
-          <Button
+          {/* <Button
             onClick={handleStartQuiz}
             disabled={false}
             variant='contained'
             color='primary'
           >
             Start Quiz
-          </Button>
+          </Button> */}
         </Box>
       </Grid>
     </>

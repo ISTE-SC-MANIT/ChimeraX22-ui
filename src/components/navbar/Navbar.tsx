@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <AppBar position='sticky'>
-      <Toolbar>
+      <Toolbar sx={{ backgroundColor: '#7638FF' }}>
         <IconButton
           edge='start'
           color='inherit'

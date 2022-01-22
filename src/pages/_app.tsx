@@ -64,12 +64,29 @@ function MyApp({ Component, pageProps }: AppProps) {
   Router.events.on('routeChangeComplete', () => setRouteChange(false));
   Router.events.on('routeChangeError', () => setRouteChange(false));
 
-  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const [mode, setMode] = React.useState<'light' | 'dark'>('dark');
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
           mode,
+          ...(mode === 'dark' && {
+            background: {
+              default: '#0A1929',
+              paper: '#0A1929',
+            },
+          }),
+          primary: {
+            main: '#7638FF'
+          },
+        },
+        typography: {
+          fontFamily: [
+            'Nunito',
+            'Montserrat',
+            'Roboto',
+            'sans-serif',
+          ].join(','),
         },
       }),
     [mode]
@@ -87,10 +104,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   React.useEffect(() => {
+    const themeMode: string | null = localStorage.getItem('theme');
+    if (themeMode) setMode(JSON.parse(themeMode));
     if (first == 'dashboard') {
       view()
         .then(() => {
-          console.log(123, viewerQuery);
+          // console.log(123, viewerQuery);
         })
         .catch((e) => {
           console.log(321, e.message);

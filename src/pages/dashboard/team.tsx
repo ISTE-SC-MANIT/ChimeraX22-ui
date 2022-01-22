@@ -83,6 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 10,
     },
     menuButton: {
+
       // marginRight: theme.spacing(2),
     },
     title: {
@@ -116,15 +117,21 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(1),
       marginBottom: '6px',
       marginTop: '6px',
+      backgroundColor: '#7638FF'
     },
     proceed_button: {
       width: 'fit-content',
       margin: 'auto',
       marginTop: theme.spacing(4),
       marginBottom: theme.spacing(2),
+      backgroundColor: '#7638FF',
+    },
+    proceed_button_main: {
+      backgroundColor: '#7638FF',
     },
     tab: {
       overflow: 'scroll',
+      // color: theme.palette.mode === 'light' ? 'black' : 'white'
     },
     note: {
       padding: theme.spacing(8),
@@ -178,7 +185,7 @@ const Team: React.FC<ComponentProps> = ({
     useMutation(PlayAsIndividual);
   const SingleUserResponse = useQuery<GetSingleUserQuery>(GetSingleUser);
   const handleSendInvitation = () => {
-    console.log(receiver);
+    // console.log(receiver);
     const receiverInput: InvitationInput = {
       receiverId: receiver._id,
       receiverEmail: receiver.email,
@@ -235,10 +242,13 @@ const Team: React.FC<ComponentProps> = ({
             <Box mt={5} mb={5} className={classes.header}>
               <Grid container justifyContent='flex-start' alignItems='center'>
                 <Grid item sm={4} alignItems='center'>
-                  <img
+                  <Image
                     src='/dashboard.png'
+                    width={240}
+                    height={180}
                     className={classes.dashboardImg}
-                  ></img>
+                    alt='logo'
+                  />
                 </Grid>
                 <Grid item sm={8}>
                   <Typography variant='h4' className={classes.Head_title}>
@@ -284,6 +294,7 @@ const Team: React.FC<ComponentProps> = ({
                           onClick={() => {
                             setOpenDialog(true);
                           }}
+                          className={classes.proceed_button_main}
                         >
                           PROCEED TO PAY
                         </Button>
@@ -383,6 +394,7 @@ const Team: React.FC<ComponentProps> = ({
               <Tabs
                 value={tab}
                 onChange={handleChange}
+                textColor="inherit"
                 indicatorColor='primary'
                 variant='fullWidth'
               >
