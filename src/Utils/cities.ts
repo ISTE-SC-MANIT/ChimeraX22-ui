@@ -120,7 +120,7 @@ export const countries = [
       },
       {
         name: 'Maharashtra',
-        cities: ['Nagpur', 'Pune', 'Others'],
+        cities: ['Mumbai', 'Nagpur', 'Navi Mumbai', 'Pune', 'Others'],
       },
       {
         name: 'Odisha',
