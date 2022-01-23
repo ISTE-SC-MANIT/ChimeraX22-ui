@@ -25,19 +25,7 @@ const Success: React.FC<ComponentProps> = ({ viewer, setSuccessMessage, setError
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   
-  const CongoImg = (classes: any) => {
-   
-    return (
-      <Box className={classes.vector}>
-        <Image
-          src='/success.png'
-          alt='logo'
-          width={600}
-          height={245}
-        />
-      </Box>
-    );
-  };
+ 
   return (
     <div>
       <CustomDrawer
@@ -61,7 +49,6 @@ const Success: React.FC<ComponentProps> = ({ viewer, setSuccessMessage, setError
       >
         <Box textAlign="center" margin={3}>
           <Typography variant="h5" className={classes.typo} >
-            <CongoImg/><br/><br/>
             Congratulations. Your quiz was successfully submitted. We will get back to you soon.
           </Typography>
         </Box>
