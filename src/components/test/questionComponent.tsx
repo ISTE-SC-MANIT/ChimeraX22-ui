@@ -180,7 +180,7 @@ const QuestionComponent: React.FC<Props> = ({
     const index = questions.findIndex(
       (question) => question.id === currentQuestion.id
     );
-    setCurrentQuestion(questions[index + 1]);
+      setCurrentQuestion(questions[index + 1]);
   };
 
   const handlePrevious = () => {
@@ -363,7 +363,9 @@ const QuestionComponent: React.FC<Props> = ({
             )}
             {role === 'TEAM_LEADER' && (
               <Button
-                onClick={saveAnswer}
+                onClick={currentQuestion.questionNo === 30 ?  saveAnswer : function(event){ 
+                    saveAnswer(); handleNext()}
+                }
                 variant='contained'
                 color='primary'
                 disabled={Boolean(
@@ -373,7 +375,7 @@ const QuestionComponent: React.FC<Props> = ({
                   )
                 )}
               >
-                Save Answer
+                Save Answer & Next
               </Button>
             )}
           </DialogActions>
