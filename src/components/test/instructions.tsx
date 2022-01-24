@@ -167,21 +167,21 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                 <ListItem>
 
                   <ListItemText>
-                    1{')'} The test timing will be displayed soon.
+                  1{')'} The test will begin at <b>4:00 pm and end at 4:30 pm</b>.
                   </ListItemText>
                 </ListItem>{' '}
-                {/* <ListItem>
+                <ListItem>
                   
                   <ListItemText>
-                    2{')'} <b>The “Start Test” button will be disabled at sharp 7:05 pm.</b> The
+                    2{')'} <b>The “Start Test” button will be disabled at sharp 4:05 pm.</b> The
                     button will not be enabled again. Hence, all participants must start the quiz by
-                    7:05 pm.{' '}
+                    4:05 pm.{' '}
                   </ListItemText>
-                </ListItem>{' '} */}
+                </ListItem>{' '}
                 <ListItem>
 
                   <ListItemText>
-                    2{')'} There can be a maximum of 2 members in a team. The member who made the
+                    3{')'} There can be a maximum of 2 members in a team. The member who made the
                     payment is the Team Leader and the other member (if it’s a team) will be the
                     Team Helper.
                   </ListItemText>
@@ -189,7 +189,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                 <ListItem>
 
                   <ListItemText>
-                    3{')'} The team leader and team helper both will be able to see the questions
+                    4{')'} The team leader and team helper both will be able to see the questions
                     but only the team leader can answer, see the statistics and submit the quiz. The
                     team helper won’t be able to do any of the above actions.
                   </ListItemText>
@@ -197,44 +197,46 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                 <ListItem>
 
                   <ListItemText>
-                    4{')'} Replacement of any participant of a team is not allowed after
+                    5{')'} Replacement of any participant of a team is not allowed after
                     registration.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
 
-                  <ListItemText>5{')'} There are 30 questions, All are compulsory.</ListItemText>
+                  <ListItemText>
+                    6{')'} There are 30 questions, All are compulsory.
+                    </ListItemText>
                 </ListItem>
                 <ListItem>
 
                   <ListItemText>
-                    6{')'} Each correct answer gets 2 marks and no marks will be deducted for a
+                    7{')'} Each correct answer gets 2 marks and no marks will be deducted for a
                     wrong answer or an unanswered question.{' '}
                   </ListItemText>
                 </ListItem>
                 <ListItem>
 
                   <ListItemText>
-                    7{')'} Some questions are divided into 2 parts. Each part will hold 1 mark for
+                    8{')'} Some questions are divided into 2 parts. Each part will hold 1 mark for
                     the correct answer and 0 for wrong or unattempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
 
                   <ListItemText>
-                    8{')'} Make sure to save your answers whenever a question is attempted.
+                    9{')'} Make sure to save your answers whenever a question is attempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
 
                   <ListItemText>
-                    9{')'} Marked for review questions would not be evaluated and counted as
+                    10{')'} Marked for review questions would not be evaluated and counted as
                     unattempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
                   <ListItemText>
-                    10{')'} Do not use special characters {'('}ex: !/*=#${')'}. Make sure to use an
+                    11{')'} Do not use special characters {'('}ex: !/*=#${')'}. Make sure to use an
                     appropriate single space between 2 words in an answer and no more than that.
                     Write full words and use their correct spellings.
                   </ListItemText>
@@ -242,7 +244,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                 <ListItem>
 
                   <ListItemText>
-                    11{')'} The quiz will automatically submit once the timer runs out.
+                    12{')'} The quiz will automatically submit once the timer runs out.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
