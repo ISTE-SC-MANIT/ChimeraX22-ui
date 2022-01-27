@@ -95,6 +95,10 @@ export const countries = [
         cities: ['Ahmedabad', 'Vadodara', 'Others'],
       },
       {
+        name: 'Goa',
+        cities: ['Panaji', 'Others'],
+      },
+      {
         name: 'Haryana',
         cities: ['Chandigarh', 'Gurugram', 'Others'],
       },
@@ -159,6 +163,7 @@ export const countries = [
         cities: [
           'Agra',
           'Allahabad',
+          'Ghaziabad',
           'Jhansi',
           'Kanpur',
           'Lucknow',
