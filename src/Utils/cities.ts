@@ -144,7 +144,7 @@ export const countries = [
       },
       {
         name: 'Rajasthan',
-        cities: ['Jaipur', 'Udaipur', 'Others'],
+        cities: ['Jaipur', 'Jodhpur', 'Udaipur', 'Others'],
       },
       {
         name: 'Tamil Nadu',
