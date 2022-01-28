@@ -26,7 +26,7 @@ const Test: React.FC<ComponentProps> = ({
   );
 
   const [disableButton, setButtonDisable] = React.useState(true);
-  const [time, setTime] = React.useState('');
+  const [time, setTime] = React.useState<Date>(new Date());
   const { data, error, loading } = useQuery<GetQuizStatusQuery>(GetQuizStatus);
   const router = useRouter();
 
@@ -47,7 +47,7 @@ const Test: React.FC<ComponentProps> = ({
   const currTime = async () => {
     try {
       await axios.get('https://worldtimeapi.org/api/timezone/Asia/Kolkata').then((response) => {
-        setTime(response.data.datetime.slice(11, 19))
+        setTime(new Date(response.data.datetime))
         // console.log(response.data)
       })
 
@@ -55,14 +55,17 @@ const Test: React.FC<ComponentProps> = ({
       console.log(error);
     }
   }
-  currTime()
+  React.useEffect(() => {
+    currTime()
+  }, [])
 
   React.useEffect(() => {
     console.log(time);
     const timer = setInterval(() => {
+      time.setTime(time.getTime() + (1 * 1000))
       const currentTime = moment(time, 'hh:mm:ss');
-      const enableTime = moment('12:00:00', 'hh:mm:ss');
-      const disableTime = moment('22:06:00', 'hh:mm:ss');
+      const enableTime = moment('02:42:00', 'hh:mm:ss');
+      const disableTime = moment('02:43:00', 'hh:mm:ss');
       if (currentTime.isBetween(enableTime, disableTime)) {
         setButtonDisable(false);
       } else {
