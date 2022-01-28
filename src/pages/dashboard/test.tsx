@@ -121,7 +121,6 @@ const Test: React.FC<ComponentProps> = ({
           <Button
             onClick={handleStartQuiz}
             disabled={disableButton}
-            // disabled={false}
             variant='contained'
             color='primary'
           >
