@@ -6,27 +6,27 @@ export const countries = [
     states: [
       {
         name: 'New South Wales',
-        cities: ['New South Wales', 'Other'],
+        cities: ['Sydney', 'Others'],
       },
       {
         name: 'Queensland',
-        cities: ['Queensland', 'Other'],
+        cities: ['Brisbane', 'Others'],
       },
       {
         name: 'South Australia',
-        cities: ['South Australia', 'Other'],
+        cities: ['Adelaide', 'Others'],
       },
       {
         name: 'Tasmania',
-        cities: ['Tasmania', 'Other'],
+        cities: ['Hobart', 'Others'],
       },
       {
         name: 'Victoria',
-        cities: ['Victoria', 'Other'],
+        cities: ['Melbourne', 'Others'],
       },
       {
         name: 'Western Australia',
-        cities: ['Western Australia', 'Other'],
+        cities: ['Perth', 'Others'],
       },
     ],
   },
@@ -36,36 +36,36 @@ export const countries = [
     phone_code: '+880',
     states: [
       {
-        name: 'Barishal division',
-        cities: ['Barishal', 'Other'],
+        name: 'Barishal Division',
+        cities: ['Barishal', 'Others'],
       },
       {
-        name: 'Chattogram division',
-        cities: ['Chattogram', 'Other'],
+        name: 'Chattogram Division',
+        cities: ['Chattogram', 'Others'],
       },
       {
-        name: 'Dhaka division',
-        cities: ['Dhaka', 'Other'],
+        name: 'Dhaka Division',
+        cities: ['Dhaka', 'Others'],
       },
       {
-        name: 'Khulna division',
-        cities: ['Khulna', 'Other'],
+        name: 'Khulna Division',
+        cities: ['Khulna', 'Others'],
       },
       {
-        name: 'Mymensingh division',
-        cities: ['Mymensingh', 'Other'],
+        name: 'Mymensingh Division',
+        cities: ['Mymensingh', 'Others'],
       },
       {
-        name: 'Rajshahi division',
-        cities: ['Rajshahi', 'Other'],
+        name: 'Rajshahi Division',
+        cities: ['Rajshahi', 'Others'],
       },
       {
-        name: 'Rangpur division',
-        cities: ['Rangpur', 'Other'],
+        name: 'Rangpur Division',
+        cities: ['Rangpur', 'Others'],
       },
       {
-        name: 'Sylhet division',
-        cities: ['Sylhet', 'Other'],
+        name: 'Sylhet Division',
+        cities: ['Sylhet', 'Others'],
       },
     ],
   },
@@ -76,83 +76,109 @@ export const countries = [
     states: [
       {
         name: 'Andhra pradesh',
-        cities: ['Visakhapatnam'],
+        cities: ['Visakhapatnam', 'Others'],
       },
       {
         name: 'Assam',
-        cities: ['Guwahati', 'Other'],
+        cities: ['Guwahati', 'Others'],
+      },
+      {
+        name: 'Chhattisgarh',
+        cities: ['Raipur', 'Others'],
       },
       {
         name: 'Delhi',
-        cities: ['Delhi', 'Other'],
+        cities: ['Delhi', 'Others'],
       },
       {
         name: 'Gujarat',
-        cities: ['Ahmedabad', 'Vadodara', 'Other'],
+        cities: ['Ahmedabad', 'Vadodara', 'Others'],
+      },
+      {
+        name: 'Goa',
+        cities: ['Panaji', 'Others'],
       },
       {
         name: 'Haryana',
-        cities: ['Chandigarh', 'Gurugram', 'Other'],
+        cities: ['Chandigarh', 'Gurugram', 'Others'],
       },
       {
         name: 'Himachal pradesh',
-        cities: ['Shimla', 'Other'],
+        cities: ['Shimla', 'Others'],
       },
       {
         name: 'Jammu & Kashmir',
-        cities: ['Jammu', 'Shrinagar', 'Other'],
+        cities: ['Jammu', 'Shrinagar', 'Others'],
       },
       {
         name: 'Jharkhand',
-        cities: ['Ranchi', 'Other'],
+        cities: ['Ranchi', 'Others'],
       },
       {
         name: 'Karnataka',
-        cities: ['Bangalore', 'Other'],
+        cities: ['Bangalore', 'Others'],
       },
       {
         name: 'Kerala',
-        cities: ['Kochi', 'Kottayam', 'Thiruvananthapuram', 'Other'],
+        cities: ['Kochi', 'Kottayam', 'Thiruvananthapuram', 'Others'],
       },
       {
         name: 'Madhya pradesh',
-        cities: ['Bhopal', 'Jabalpur', 'Sagar', 'Other'],
+        cities: [
+          'Bhopal',
+          'Gwalior',
+          'Indore',
+          'Jabalpur',
+          'Sagar',
+          'Ujjain',
+          'Others',
+        ],
       },
       {
         name: 'Maharashtra',
-        cities: ['Nagpur', 'Pune', 'Other'],
+        cities: ['Mumbai', 'Nagpur', 'Nashik', 'Navi Mumbai', 'Pune', 'Others'],
       },
       {
         name: 'Odisha',
-        cities: ['Bhubaneswar', 'Other'],
+        cities: ['Bhubaneswar', 'Others'],
       },
       {
         name: 'Punjab',
-        cities: ['Chandigarh', 'Jalandhar', 'Patiala', 'Other'],
+        cities: ['Amritsar', 'Chandigarh', 'Jalandhar', 'Patiala', 'Others'],
       },
       {
         name: 'Rajasthan',
-        cities: ['Jaipur', 'Other'],
+        cities: ['Jaipur', 'Jodhpur', 'Udaipur', 'Others'],
       },
       {
         name: 'Tamil Nadu',
-        cities: ['Chennai', 'Vellore', 'Other'],
+        cities: ['Chennai', 'Coimbatore', 'Vellore', 'Others'],
       },
       {
         name: 'Telangana',
-        cities: ['Hyderabad', 'Other'],
+        cities: ['Hyderabad', 'Others'],
       },
       {
         name: 'Uttar pradesh',
-        cities: ['Kanpur', 'Lucknow', 'Noida', 'Other'],
+        cities: [
+          'Agra',
+          'Allahabad',
+          'Ghaziabad',
+          'Jhansi',
+          'Kanpur',
+          'Lucknow',
+          'Noida',
+          'Varanasi',
+          'Others',
+        ],
       },
       {
         name: 'Uttarakhand',
-        cities: ['Dehradun', 'Other'],
+        cities: ['Dehradun', 'Others'],
       },
       {
         name: 'West Bengal',
-        cities: ['Kolkata', 'Other'],
+        cities: ['Kolkata', 'Others'],
       },
     ],
   },
@@ -163,7 +189,7 @@ export const countries = [
     states: [
       {
         name: 'Dubai',
-        cities: ['Dubai', 'Other'],
+        cities: ['Dubai', 'Others'],
       },
     ],
   },
