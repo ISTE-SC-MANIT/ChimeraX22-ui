@@ -65,7 +65,7 @@ const Test: React.FC<ComponentProps> = ({
       time.setTime(time.getTime() + (1 * 1000))
       const currentTime = moment(time, 'hh:mm:ss');
       const enableTime = moment('16:00:00', 'hh:mm:ss');
-      const disableTime = moment('16:05:00', 'hh:mm:ss');
+      const disableTime = moment('16:08:00', 'hh:mm:ss');
       if (currentTime.isBetween(enableTime, disableTime)) {
         setButtonDisable(false);
       } else {
