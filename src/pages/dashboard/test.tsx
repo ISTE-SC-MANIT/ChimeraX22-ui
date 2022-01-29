@@ -12,6 +12,8 @@ import { GetQuizStatus } from '../../lib/queries/GetQuizStatusQuery';
 import { useMutation, useQuery } from '@apollo/client';
 import { StartQuiz } from '../../lib/mutations/StartQuizMutation';
 import moment from 'moment';
+import axios from 'axios';
+
 
 const Test: React.FC<ComponentProps> = ({
   viewer,
@@ -24,6 +26,7 @@ const Test: React.FC<ComponentProps> = ({
   );
 
   const [disableButton, setButtonDisable] = React.useState(true);
+  const [time, setTime] = React.useState<Date>(new Date());
   const { data, error, loading } = useQuery<GetQuizStatusQuery>(GetQuizStatus);
   const router = useRouter();
 
@@ -41,21 +44,38 @@ const Test: React.FC<ComponentProps> = ({
     }
   }, []);
 
-  //  React.useEffect(() => {
-  //    const timer = setInterval(() => {
-  //      const currentTime = moment(new Date());
-  //      const enableTime = moment('19:00:00', 'hh:mm:ss');
-  //      const disableTime = moment('19:06:00', 'hh:mm:ss');
-  //      if (currentTime.isBetween(enableTime, disableTime)) {
-  //        setButtonDisable(false);
-  //      } else {
-  //        setButtonDisable(true);
-  //        if (currentTime.isAfter(disableTime)) clearInterval(timer);
-  //      }
-  //    }, 1000);
+  const currTime = async () => {
+    try {
+      await axios.get('https://worldtimeapi.org/api/timezone/Asia/Kolkata').then((response) => {
+        setTime(new Date(response.data.datetime))
+        // console.log(response.data)
+      })
 
-  //    return () => clearTimeout(timer);
-  //  });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  React.useEffect(() => {
+    currTime()
+  }, [])
+
+  React.useEffect(() => {
+    console.log(time);
+    const timer = setInterval(() => {
+      time.setTime(time.getTime() + (1 * 1000))
+      const currentTime = moment(time, 'hh:mm:ss');
+      const enableTime = moment('16:00:00', 'hh:mm:ss');
+      const disableTime = moment('16:05:00', 'hh:mm:ss');
+      if (currentTime.isBetween(enableTime, disableTime)) {
+        setButtonDisable(false);
+      } else {
+        setButtonDisable(true);
+        if (currentTime.isAfter(disableTime)) clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
   React.useEffect(() => {
     if (data) {
       setQuizStatus(data.getQuizDetails.userQuizStatus);
@@ -98,14 +118,14 @@ const Test: React.FC<ComponentProps> = ({
       />
       <Grid container spacing={0} alignItems='center' justifyContent='center'>
         <Box marginBottom={4}>
-          {/* <Button
+          <Button
             onClick={handleStartQuiz}
-            disabled={false}
+            disabled={disableButton}
             variant='contained'
             color='primary'
           >
             Start Quiz
-          </Button> */}
+          </Button>
         </Box>
       </Grid>
     </>

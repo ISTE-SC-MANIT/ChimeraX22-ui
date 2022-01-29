@@ -167,25 +167,25 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                 <ListItem>
 
                   <ListItemText>
-                  1{')'} The test will begin at <b>4:00 pm IST and end at 4:30 pm IST</b>.
+                    1{')'} The test will begin at <b>4:00 pm IST and end at 4:30 pm IST</b>.
                   </ListItemText>
                 </ListItem>{' '}
 
-                <ListItem> 
+                <ListItem>
                   <ListItemText>
                     2{')'} <b>The “Start Test” button will be disabled at sharp 4:05 pm IST.</b> The
                     button will not be enabled again. Hence, all participants must start the quiz by
                     4:05 pm IST.{' '}
                   </ListItemText>
                 </ListItem>{' '}
-                
-                <ListItem> 
+
+                <ListItem>
                   <ListItemText>
                     3{')'} If you reload or refresh, or even attempt to do so, remember that
-                       all previously answered questions will become unsolved again.{' '}
+                    all previously answered questions will become unsolved again.{' '}
                   </ListItemText>
                 </ListItem>{' '}
-                
+
                 <ListItem>
 
                   <ListItemText>
@@ -199,7 +199,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   <ListItemText>
                     5{')'} The team leader and team helper both will be able to see the questions
                     but only the team leader can answer, see the statistics and submit the quiz. The
-                    team helper won’t be able to do any of the above actions.
+                    team helper won&apos;t be able to do any of the above actions.
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
@@ -213,7 +213,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
 
                   <ListItemText>
                     7{')'} There are 30 questions, All are compulsory.
-                    </ListItemText>
+                  </ListItemText>
                 </ListItem>
                 <ListItem>
 

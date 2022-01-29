@@ -92,6 +92,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   media: {
     height: 200,
   },
+  inputs : {
+    marginTop: '17px',
+    boxSizing: 'border-box' ,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '9px',
+    },
+  }
 }));
 
 export interface DialogTitleProps extends WithStyles<typeof styles> {
@@ -180,7 +187,7 @@ const QuestionComponent: React.FC<Props> = ({
     const index = questions.findIndex(
       (question) => question.id === currentQuestion.id
     );
-    setCurrentQuestion(questions[index + 1]);
+      setCurrentQuestion(questions[index + 1]);
   };
 
   const handlePrevious = () => {
@@ -284,6 +291,7 @@ const QuestionComponent: React.FC<Props> = ({
               <TextField
                 fullWidth
                 multiline
+                className={classes.inputs}
                 label={question.firstAnswerLabel}
                 onChange={(e) => {
                   setLocalState(e.target.value);
@@ -298,6 +306,7 @@ const QuestionComponent: React.FC<Props> = ({
                 <TextField
                   fullWidth
                   multiline
+                  className={classes.inputs}
                   label={question.secondAnswerLabel}
                   onChange={(e) => {
                     setLocalState2(e.target.value);
@@ -363,7 +372,9 @@ const QuestionComponent: React.FC<Props> = ({
             )}
             {role === 'TEAM_LEADER' && (
               <Button
-                onClick={saveAnswer}
+                onClick={currentQuestion.questionNo === 30 ?  saveAnswer : function(event){ 
+                    saveAnswer(); handleNext()}
+                }
                 variant='contained'
                 color='primary'
                 disabled={Boolean(
@@ -373,7 +384,7 @@ const QuestionComponent: React.FC<Props> = ({
                   )
                 )}
               >
-                Save Answer
+                Save Answer & Next
               </Button>
             )}
           </DialogActions>

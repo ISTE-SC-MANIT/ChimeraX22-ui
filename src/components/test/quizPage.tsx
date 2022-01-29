@@ -115,7 +115,7 @@ const QuizPage: React.FC<QuizPageProps> = ({
     }
   }, [questionsResponse.data]);
 
-  const alertUser = (e: { preventDefault: () => void; returnValue: string; }) => {
+  const alertUser = (e: any) => {
     e.preventDefault()
     e.returnValue = ''
   }
