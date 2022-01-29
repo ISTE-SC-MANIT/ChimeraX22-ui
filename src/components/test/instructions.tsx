@@ -146,6 +146,7 @@ const Instructions: React.FC<Props> = ({
             setOpen={setOpen}
             setSuccessMessage={setSuccessMessage}
             setErrorMessage={setErrorMessage}
+            teamDetailResponse={teamDetailResponse}
           />
           <Navbar
             setOpen={setOpen}
@@ -164,20 +165,6 @@ const Instructions: React.FC<Props> = ({
             textAlign='center'
             margin={3}
           >
-            <Box>
-              <Typography>
-                {teamDetailResponse.data?.getTeamDetails.teamName}
-              </Typography>
-              <Typography>
-                {teamDetailResponse.data?.getTeamDetails.status}
-              </Typography>
-              <Typography>
-                {teamDetailResponse.data?.getTeamDetails.teamLeader.name}
-              </Typography>
-              <Typography>
-                {teamDetailResponse.data?.getTeamDetails.teamHelper?.name}
-              </Typography>
-            </Box>
             <Typography variant='h3'>
               <b>Instructions</b>
             </Typography>
