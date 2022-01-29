@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Divider } from '@mui/material';
 import moment from 'moment';
 import { GetQuizStartTimeQuery } from '../../__generated__/GetQuizStartTimeQuery';
+import axios from 'axios';
 
 interface Props {
   startTime: GetQuizStartTimeQuery | undefined;
@@ -9,7 +10,25 @@ interface Props {
 }
 
 const Timer: React.FC<Props> = ({ startTime, onTimeUp }) => {
-  const currentTime = moment(new Date().toISOString());
+
+  const [findCurrentTime, setFindCurrentTime] = React.useState<Date>(new Date());
+  const currTime = async () => {
+    try {
+      await axios.get('https://worldtimeapi.org/api/timezone/Asia/Kolkata').then((response) => {
+        setFindCurrentTime(response.data.datetime)
+        // console.log(response.data)
+      })
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  React.useEffect(() => {
+    currTime()
+  }, [])
+
+
+  const currentTime = moment(findCurrentTime);
   const quizStartTime = moment(startTime?.getQuizDetails.quizStartTime);
   const minutesDiff = currentTime.diff(quizStartTime, 'minutes');
   const secondDiff = currentTime.diff(quizStartTime, 'second');
