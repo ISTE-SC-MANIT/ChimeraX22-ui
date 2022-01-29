@@ -92,6 +92,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   media: {
     height: 200,
   },
+  inputs : {
+    marginTop: '17px',
+    boxSizing: 'border-box' ,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '9px',
+    },
+  }
 }));
 
 export interface DialogTitleProps extends WithStyles<typeof styles> {
@@ -284,6 +291,7 @@ const QuestionComponent: React.FC<Props> = ({
               <TextField
                 fullWidth
                 multiline
+                className={classes.inputs}
                 label={question.firstAnswerLabel}
                 onChange={(e) => {
                   setLocalState(e.target.value);
@@ -298,6 +306,7 @@ const QuestionComponent: React.FC<Props> = ({
                 <TextField
                   fullWidth
                   multiline
+                  className={classes.inputs}
                   label={question.secondAnswerLabel}
                   onChange={(e) => {
                     setLocalState2(e.target.value);
