@@ -28,6 +28,7 @@ export interface GetTeamDetailsQuery_getTeamDetails {
   teamLeader: GetTeamDetailsQuery_getTeamDetails_teamLeader;
   teamHelper: GetTeamDetailsQuery_getTeamDetails_teamHelper | null;
   status: TeamStatus;
+  teamName: string | null;
 }
 
 export interface GetTeamDetailsQuery {

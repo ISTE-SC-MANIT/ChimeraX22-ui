@@ -14,6 +14,7 @@ export const GetTeamDetails = gql`
         userId
       }
       status
+      teamName
     }
   }
 `;

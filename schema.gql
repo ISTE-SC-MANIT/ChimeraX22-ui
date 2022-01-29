@@ -43,6 +43,12 @@ input AcceptInvitationInput {
   receiverId: String!
 }
 
+input ByPassPaymentInput {
+  TeamLeaderEmail: String!
+  TeamName: String!
+  PaymentId: String!
+}
+
 input CreateOrderInput {
   teamName: String!
   referralCode: String
@@ -114,6 +120,7 @@ type Mutation {
   submitQuiz(submitQuizInput: SubmitQuizInput!): Team!
   startQuiz: StartQuizResponse!
   createReferralCode(createReferralCodeInput: CreateReferralCodeInput!): CreateReferralCodeResponse!
+  byPassPayment(byPassPaymentInput: ByPassPaymentInput!): Team!
 }
 
 type Order {
@@ -247,6 +254,7 @@ type TeamResponse {
   teamLeader: Member!
   teamHelper: Member
   status: TeamStatus!
+  teamName: String
 }
 
 """tells wether player is individual or team"""

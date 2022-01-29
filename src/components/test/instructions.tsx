@@ -1,17 +1,14 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@mui/styles';
-import { Theme } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles';
 import {
   Box,
   ListItem,
   ListItemText,
   Paper,
-
   Button,
   ListItemIcon,
-
   List,
-
   Grid,
   Typography,
 } from '@mui/material';
@@ -20,8 +17,10 @@ import { useRouter } from 'next/dist/client/router';
 import Navbar from '../navbar/Navbar';
 import CustomDrawer from '../navbar/customDrawer';
 import { ComponentProps } from '../../pages/_app';
-
-
+import { useQuery } from '@apollo/client';
+import { GetTeamDetailsQuery } from '../../__generated__/GetTeamDetailsQuery';
+import { GetTeamDetails } from '../../lib/queries/GetTeamDetailsQuery';
+import LoadingScreen from '../loadingScreen';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -115,18 +114,27 @@ interface Props extends ComponentProps {
   page: string;
 }
 
-const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErrorMessage }) => {
+const Instructions: React.FC<Props> = ({
+  page,
+  viewer,
+  setSuccessMessage,
+  setErrorMessage,
+}) => {
   const classes = useStyles();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
 
-
-
+  const teamDetailResponse = useQuery<GetTeamDetailsQuery>(GetTeamDetails, {
+    fetchPolicy: 'network-only',
+  });
 
   const quizHandle = () => {
     router.push('/dashboard/test');
   };
 
+  if (teamDetailResponse.loading) {
+    return <LoadingScreen loading={true} />;
+  }
   return (
     <div className={classes.root}>
       {page === 'instructions' ? (
@@ -149,116 +157,135 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
         <></>
       )}
       <Grid container onClick={() => setOpen(false)}>
-
-        <Grid container alignItems="center" justifyContent="center">
-          <Box display="flex" flexDirection="column" textAlign="center" margin={3}>
-            <Typography variant="h3">
+        <Grid container alignItems='center' justifyContent='center'>
+          <Box
+            display='flex'
+            flexDirection='column'
+            textAlign='center'
+            margin={3}
+          >
+            <Box>
+              <Typography>
+                {teamDetailResponse.data?.getTeamDetails.teamName}
+              </Typography>
+              <Typography>
+                {teamDetailResponse.data?.getTeamDetails.status}
+              </Typography>
+              <Typography>
+                {teamDetailResponse.data?.getTeamDetails.teamLeader.name}
+              </Typography>
+              <Typography>
+                {teamDetailResponse.data?.getTeamDetails.teamHelper?.name}
+              </Typography>
+            </Box>
+            <Typography variant='h3'>
               <b>Instructions</b>
             </Typography>
-            <Typography variant="h5">
+            <Typography variant='h5'>
               Read the instructions carefully before attempting the quiz.
             </Typography>
           </Box>
         </Grid>
-        <Grid container alignItems="center" justifyContent="center">
+        <Grid container alignItems='center' justifyContent='center'>
           <Box>
             <Paper className={classes.paper} elevation={8}>
-              <List component="nav" aria-label="Instructions for Test">
-                <ListItem>
-
-                  <ListItemText>
-                    1{')'} The test will begin at <b>4:00 pm IST and end at 4:30 pm IST</b>.
-                  </ListItemText>
-                </ListItem>{' '}
-
+              <List component='nav' aria-label='Instructions for Test'>
                 <ListItem>
                   <ListItemText>
-                    2{')'} <b>The “Start Test” button will be disabled at sharp 4:05 pm IST.</b> The
-                    button will not be enabled again. Hence, all participants must start the quiz by
-                    4:05 pm IST.{' '}
-                  </ListItemText>
-                </ListItem>{' '}
-
-                <ListItem>
-                  <ListItemText>
-                    3{')'} If you reload or refresh, or even attempt to do so, remember that
-                    all previously answered questions will become unsolved again.{' '}
-                  </ListItemText>
-                </ListItem>{' '}
-
-                <ListItem>
-
-                  <ListItemText>
-                    4{')'} There can be a maximum of 2 members in a team. The member who made the
-                    payment is the Team Leader and the other member (if it’s a team) will be the
-                    Team Helper.
+                    1{')'} The test will begin at{' '}
+                    <b>4:00 pm IST and end at 4:30 pm IST</b>.
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-
                   <ListItemText>
-                    5{')'} The team leader and team helper both will be able to see the questions
-                    but only the team leader can answer, see the statistics and submit the quiz. The
-                    team helper won&apos;t be able to do any of the above actions.
+                    2{')'}{' '}
+                    <b>
+                      The “Start Test” button will be disabled at sharp 4:05 pm
+                      IST.
+                    </b>{' '}
+                    The button will not be enabled again. Hence, all
+                    participants must start the quiz by 4:05 pm IST.{' '}
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
-
                   <ListItemText>
-                    6{')'} Replacement of any participant of a team is not allowed after
-                    registration.
+                    3{')'} If you reload or refresh, or even attempt to do so,
+                    remember that all previously answered questions will become
+                    unsolved again.{' '}
+                  </ListItemText>
+                </ListItem>{' '}
+                <ListItem>
+                  <ListItemText>
+                    4{')'} There can be a maximum of 2 members in a team. The
+                    member who made the payment is the Team Leader and the other
+                    member (if it’s a team) will be the Team Helper.
+                  </ListItemText>
+                </ListItem>{' '}
+                <ListItem>
+                  <ListItemText>
+                    5{')'} The team leader and team helper both will be able to
+                    see the questions but only the team leader can answer, see
+                    the statistics and submit the quiz. The team helper
+                    won&apos;t be able to do any of the above actions.
+                  </ListItemText>
+                </ListItem>{' '}
+                <ListItem>
+                  <ListItemText>
+                    6{')'} Replacement of any participant of a team is not
+                    allowed after registration.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-
                   <ListItemText>
                     7{')'} There are 30 questions, All are compulsory.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-
                   <ListItemText>
-                    8{')'} Each correct answer gets 2 marks and no marks will be deducted for a
-                    wrong answer or an unanswered question.{' '}
+                    8{')'} Each correct answer gets 2 marks and no marks will be
+                    deducted for a wrong answer or an unanswered question.{' '}
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-
                   <ListItemText>
-                    9{')'} Some questions are divided into 2 parts. Each part will hold 1 mark for
-                    the correct answer and 0 for wrong or unattempted.
-                  </ListItemText>
-                </ListItem>
-                <ListItem>
-
-                  <ListItemText>
-                    10{')'} Make sure to save your answers whenever a question is attempted.
-                  </ListItemText>
-                </ListItem>
-                <ListItem>
-
-                  <ListItemText>
-                    11{')'} Marked for review questions would not be evaluated and counted as
+                    9{')'} Some questions are divided into 2 parts. Each part
+                    will hold 1 mark for the correct answer and 0 for wrong or
                     unattempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
                   <ListItemText>
-                    12{')'} Do not use special characters {'('}ex: !/*=#${')'}. Make sure to use an
-                    appropriate single space between 2 words in an answer and no more than that.
-                    Write full words and use their correct spellings.
+                    10{')'} Make sure to save your answers whenever a question
+                    is attempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-
                   <ListItemText>
-                    13{')'} The quiz will automatically submit once the timer runs out.
+                    11{')'} Marked for review questions would not be evaluated
+                    and counted as unattempted.
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-
                   <ListItemText>
-                    <Grid container alignItems="center" className={classes.list}>
+                    12{')'} Do not use special characters {'('}ex: !/*=#${')'}.
+                    Make sure to use an appropriate single space between 2 words
+                    in an answer and no more than that. Write full words and use
+                    their correct spellings.
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemText>
+                    13{')'} The quiz will automatically submit once the timer
+                    runs out.
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemText>
+                    <Grid
+                      container
+                      alignItems='center'
+                      className={classes.list}
+                    >
                       <Box>
                         <Paper
                           elevation={6}
@@ -270,7 +297,11 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                       </Box>
                       <Box pl={2}>Answered Questions</Box>
                     </Grid>
-                    <Grid container alignItems="center" className={classes.list}>
+                    <Grid
+                      container
+                      alignItems='center'
+                      className={classes.list}
+                    >
                       <Box>
                         <Paper
                           elevation={6}
@@ -282,7 +313,11 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                       </Box>
                       <Box pl={2}>Questions not answered</Box>
                     </Grid>
-                    <Grid container alignItems="center" className={classes.list}>
+                    <Grid
+                      container
+                      alignItems='center'
+                      className={classes.list}
+                    >
                       <Box>
                         <Paper
                           elevation={6}
@@ -294,7 +329,7 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                       </Box>
                       <Box pl={2}>Questions marked for review</Box>
                     </Grid>
-                    <Grid container alignItems="center">
+                    <Grid container alignItems='center'>
                       <Box>
                         <Paper
                           elevation={6}
@@ -309,10 +344,9 @@ const Instructions: React.FC<Props> = ({ page, viewer, setSuccessMessage, setErr
                   </ListItemText>
                 </ListItem>
                 <ListItem>
-
                   <ListItemText>
-                    <Box textAlign="center">
-                      <Typography variant="h6">
+                    <Box textAlign='center'>
+                      <Typography variant='h6'>
                         <b>Best of Luck!</b>
                       </Typography>
                     </Box>
