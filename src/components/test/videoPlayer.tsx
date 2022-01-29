@@ -1,5 +1,6 @@
 import ReactPlayer from 'react-player';
 import React from 'react';
+import { Grid } from '@mui/material';
 
 interface VideoProps {
   src: string;
@@ -7,7 +8,9 @@ interface VideoProps {
 const VideoPlayer: React.FC<VideoProps> = ({ src }) => {
   return (
     <>
-      <ReactPlayer url={src} controls={true} width={'100%'} height='auto' />
+      <Grid container justifyContent="center" alignItems="center">
+        <ReactPlayer url={src} controls={true} width={'80%'} height='200px' />
+      </Grid>
     </>
   );
 };

@@ -92,9 +92,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   media: {
     height: 200,
   },
-  inputs : {
+  inputs: {
     marginTop: '17px',
-    boxSizing: 'border-box' ,
+    boxSizing: 'border-box',
     [theme.breakpoints.down('sm')]: {
       marginTop: '9px',
     },
@@ -187,7 +187,7 @@ const QuestionComponent: React.FC<Props> = ({
     const index = questions.findIndex(
       (question) => question.id === currentQuestion.id
     );
-      setCurrentQuestion(questions[index + 1]);
+    setCurrentQuestion(questions[index + 1]);
   };
 
   const handlePrevious = () => {
@@ -263,7 +263,7 @@ const QuestionComponent: React.FC<Props> = ({
                     <Image
                       layout={'responsive'}
                       height={100}
-                      width={300}
+                      width={200}
                       src={
                         question.questionAssets ? question.questionAssets : ''
                       }
@@ -372,8 +372,9 @@ const QuestionComponent: React.FC<Props> = ({
             )}
             {role === 'TEAM_LEADER' && (
               <Button
-                onClick={currentQuestion.questionNo === 30 ?  saveAnswer : function(event){ 
-                    saveAnswer(); handleNext()}
+                onClick={currentQuestion.questionNo === 30 ? saveAnswer : function (event) {
+                  saveAnswer(); handleNext()
+                }
                 }
                 variant='contained'
                 color='primary'
