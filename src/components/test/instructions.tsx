@@ -196,9 +196,8 @@ const Instructions: React.FC<Props> = ({
                 </ListItem>{' '}
                 <ListItem>
                   <ListItemText>
-                    3{')'} If you reload or refresh, or even attempt to do so,
-                    remember that all previously answered questions will become
-                    unsolved again.{' '}
+                    3{')'}Refreshing/Reloading is prohibited.
+                     Any attempt to do so will result in erasure of responses.{' '}
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
@@ -224,7 +223,7 @@ const Instructions: React.FC<Props> = ({
                 </ListItem>
                 <ListItem>
                   <ListItemText>
-                    7{')'} There are 30 questions, All are compulsory.
+                    7{')'} The total number of questions in the quiz is 30.
                   </ListItemText>
                 </ListItem>
                 <ListItem>

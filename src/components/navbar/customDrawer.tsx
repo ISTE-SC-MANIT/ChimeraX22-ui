@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: theme.spacing(2),
     zIndex: theme.zIndex.drawer,
   },
+
+  title : {
+     padding:'12px',
+  } ,
   upperHalf: {},
   lowerHalf: {},
 }));
@@ -160,7 +164,7 @@ const CustomDrawer: React.FC<DrawerProps> = ({
         <div>
           <Box
             paddingTop={2}
-            paddingBottom={2}
+            paddingBottom={8}
             display='flex'
             alignItems='center'
             justifyContent='center'
@@ -169,26 +173,26 @@ const CustomDrawer: React.FC<DrawerProps> = ({
             {teamDetailResponse && (
               <>
                 <Fade in={open}>
-                  <Typography variant='subtitle2'>
+                  <Typography variant='subtitle2' className={classes.title} >
                     Team Name:{' '}
                     {teamDetailResponse.data?.getTeamDetails.teamName}
                   </Typography>
                 </Fade>
                 <Fade in={open}>
-                  <Typography variant='subtitle2'>
+                  <Typography variant='subtitle2'  className={classes.title}>
                     Team Status:{' '}
                     {teamDetailResponse.data?.getTeamDetails.status}
                   </Typography>
                 </Fade>
                 <Fade in={open}>
-                  <Typography variant='subtitle2'>
+                  <Typography variant='subtitle2'  className={classes.title}>
                     Team Leader:{' '}
                     {teamDetailResponse.data?.getTeamDetails.teamLeader.name}
                   </Typography>
                 </Fade>
                 {teamDetailResponse.data?.getTeamDetails.teamHelper && (
                   <Fade in={open}>
-                    <Typography variant='subtitle2'>
+                    <Typography variant='subtitle2'  className={classes.title}>
                       Team Helper:{' '}
                       {teamDetailResponse.data?.getTeamDetails.teamHelper?.name}
                     </Typography>
