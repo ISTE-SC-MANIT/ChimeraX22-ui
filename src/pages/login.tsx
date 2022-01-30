@@ -221,14 +221,14 @@ const Login: React.FC<ComponentProps> = ({
           </Box>
           <Box className={classes.signinBtn}>
             <Grid container justifyContent='center' alignItems='center'>
-              <SigninButton
+              {/* <SigninButton
                 sx={{ color: '#7638FF' }}
                 onClick={() => {
                   router.push('/signup');
                 }}
               >
                 Sign Up
-              </SigninButton>
+              </SigninButton> */}
             </Grid>
           </Box>
           <VectorImg classes={classes} />
@@ -346,13 +346,13 @@ const Login: React.FC<ComponentProps> = ({
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link
+                    {/* <Link
                       onClick={() => router.push('/signup')}
                       variant='body2'
                       className={classes.link}
                     >
                       {"Don't have an account? Sign Up"}
-                    </Link>
+                    </Link> */}
                   </Grid>
                 </Grid>
                 <Box mt={5}>

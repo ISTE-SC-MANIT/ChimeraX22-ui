@@ -295,6 +295,7 @@ const Team: React.FC<ComponentProps> = ({
                             setOpenDialog(true);
                           }}
                           className={classes.proceed_button_main}
+                          disabled
                         >
                           PROCEED TO PAY
                         </Button>
@@ -362,7 +363,8 @@ const Team: React.FC<ComponentProps> = ({
                   <Button
                     variant='contained'
                     color='primary'
-                    disabled={receiver === null}
+                    // disabled={receiver === null}
+                    disabled
                     onClick={handleSendInvitation}
                     className={classes.invitation_button}
                   >
