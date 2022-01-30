@@ -180,24 +180,24 @@ const Instructions: React.FC<Props> = ({
                 <ListItem>
                   <ListItemText>
                     1{')'} The test will begin at{' '}
-                    <b>4:00 pm IST and end at 4:30 pm IST</b>.
+                    <b>7:30 pm IST and end at 8:00 pm IST</b>.
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
                   <ListItemText>
                     2{')'}{' '}
                     <b>
-                      The “Start Test” button will be disabled at sharp 4:05 pm
+                      The “Start Test” button will be disabled at sharp 7:35 pm
                       IST.
                     </b>{' '}
                     The button will not be enabled again. Hence, all
-                    participants must start the quiz by 4:05 pm IST.{' '}
+                    participants must start the quiz by 7:35 pm IST.{' '}
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
                   <ListItemText>
                     3{')'}Refreshing/Reloading is prohibited.
-                     Any attempt to do so will result in erasure of responses.{' '}
+                    Any attempt to do so will result in erasure of responses.{' '}
                   </ListItemText>
                 </ListItem>{' '}
                 <ListItem>
