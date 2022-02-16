@@ -213,7 +213,7 @@ const Landing: React.FC = () => {
               variant='contained'
               onClick={() => router.push('/signup')}
               className={classes.menuBtn}
-            // disabled
+              disabled
             >
               Sign up
             </Button>
@@ -252,14 +252,13 @@ const Landing: React.FC = () => {
             <Box className={classes.margin}>
               <Box marginBottom={5}>
                 <Typography variant='h5' align='center'>
-                  Prelims
+                  {/* Prelims
                   <br />
-                  30th Jan&apos; 2022
-                  <br />
+                  30th Jan&apos; 2022 */}
                   Registrations are now closed
                 </Typography>
               </Box>
-              <Box className={classes.flexColumn} lineHeight={2}>
+              {/* <Box className={classes.flexColumn} lineHeight={2}>
                 <Btn sx={{ color: '#7638FF' }} onClick={() => router.push('/signup')}>Register Now</Btn>
                 <Link
                   className={classes.Link}
@@ -268,7 +267,7 @@ const Landing: React.FC = () => {
                 >
                   How to get registered?
                 </Link>
-              </Box>
+              </Box> */}
             </Box>
           </Grid>
         </Grid>

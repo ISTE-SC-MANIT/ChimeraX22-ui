@@ -323,18 +323,16 @@ const SignUp: NextPage<ComponentProps> = ({
               >
                 {status === Status.LOADING
                   ? `Submitting...`
-                  : `Registration are now closed`}
+                  : `Create new account`}
               </Button>
               <Box mt={5}>
                 {' '}
-
                 <Typography align='center' variant='subtitle1'>
-                  Please Login to continue
-                  {/* Or Sign up with other social platforms */}
+                  Or Sign up with other social platforms
                 </Typography>
               </Box>
               <Box>
-                {/* <Grid container justifyContent='center' alignItems='center'>
+                <Grid container justifyContent='center' alignItems='center'>
                   <IconButton
                     onClick={() =>
                       googleLogin(
@@ -371,7 +369,7 @@ const SignUp: NextPage<ComponentProps> = ({
                       className={classes.logoIcon}
                     />
                   </IconButton>
-                </Grid> */}
+                </Grid>
               </Box>
             </Form>
           </Formik>
