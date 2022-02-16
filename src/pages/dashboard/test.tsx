@@ -120,7 +120,7 @@ const Test: React.FC<ComponentProps> = ({
         <Box marginBottom={4}>
           <Button
             onClick={handleStartQuiz}
-            disabled={disableButton}
+            // disabled={disableButton}
             variant='contained'
             color='primary'
           >
