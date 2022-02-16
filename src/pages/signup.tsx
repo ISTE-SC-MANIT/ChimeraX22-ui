@@ -318,8 +318,7 @@ const SignUp: NextPage<ComponentProps> = ({
                 variant='contained'
                 className={classes.submit}
                 color='primary'
-                // disabled={!status}
-                disabled
+                disabled={!status}
               >
                 {status === Status.LOADING
                   ? `Submitting...`

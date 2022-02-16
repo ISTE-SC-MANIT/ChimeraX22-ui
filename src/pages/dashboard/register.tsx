@@ -492,7 +492,6 @@ const Register: React.FC<ComponentProps> = ({
                       color='primary'
                       variant='contained'
                       className={classes.button}
-                      disabled
 
                     >
                       Proceed
