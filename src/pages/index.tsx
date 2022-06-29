@@ -12,7 +12,7 @@ import ThemeToggleButton from '../components/theme/modeToggle';
 import { useRouter } from 'next/router';
 import Footer from '../components/footer/contact';
 import { About } from '../components/about';
-import Sponsors from '../components/sponsors';
+// import Sponsors from '../components/sponsors';
 import Prize from '../components/prize';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -271,7 +271,7 @@ const Landing: React.FC = () => {
         </Grid>
       </div>
       <Prize />
-      <Sponsors />
+      {/* <Sponsors /> */}
     </>
   );
 };
