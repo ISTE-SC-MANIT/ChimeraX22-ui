@@ -1,7 +1,7 @@
 ## ChimeraX
 
 Step 1: 
-Go to the event webpage at http://chimerax.istemanit.in/ You must login from here to reach your dashboard and complete your registration process. If you wish to sign up with us using a different email, then continue to step 2, otherwise move on to step 3 if you have logged in using your Google account.<br/><br/>
+Go to the event webpage at https://chimerax22.vercel.app/ You must login from here to reach your dashboard and complete your registration process. If you wish to sign up with us using a different email, then continue to step 2, otherwise move on to step 3 if you have logged in using your Google account.<br/><br/>
 
 
 ![alt text](https://github.com/ISTE-SC-MANIT/chimerax22-ui/blob/main/readme_images/Homepage.jpeg)<br/><br/><br/>
